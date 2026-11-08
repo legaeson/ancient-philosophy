@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Философия и натурфилософия Платона: полное академическое руководство</title>
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-alt: #f1f5f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --tag-bg: #e0f2fe;
+      --tag-text: #0369a1;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0f172a;
+        --bg-surface: #1e293b;
+        --bg-alt: #334155;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+        --accent-color: #3b82f6;
+        --accent-hover: #60a5fa;
+        --accent-soft: #1e293b;
+        --tag-bg: #0369a1;
+        --tag-text: #e0f2fe;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.7;
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    .layout {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 340px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 2.5rem 1.5rem;
+      border-right: 1px solid var(--border-color);
+      background-color: var(--bg-surface);
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item {
+      margin-bottom: 0.35rem;
+    }
+
+    .toc-link {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .toc-link:hover {
+      background-color: var(--accent-soft);
+      color: var(--accent-color);
+    }
+
+    .toc-sublist {
+      list-style: none;
+      padding-left: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    .toc-sublist .toc-link {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 980px;
+    }
+
+    header {
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background-color: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      line-height: 1.25;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-top: 3.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-top: 2.2rem;
+      margin-bottom: 0.85rem;
+      color: var(--text-main);
+    }
+
+    h4 {
+      font-size: 1.05rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+    }
+
+    ul, ol {
+      margin-bottom: 1.3rem;
+      padding-left: 1.6rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    blockquote {
+      background-color: var(--accent-soft);
+      border-left: 4px solid var(--accent-color);
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+    }
+
+    blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .source-label {
+      font-weight: 700;
+      font-style: normal;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dialogue-box {
+      background: var(--bg-alt);
+      border-left: 3px solid var(--text-muted);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .dialogue-box strong {
+      color: var(--accent-color);
+    }
+
+    .visual-scheme {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.75rem 1.25rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .scheme-root {
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+      color: #ffffff;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.85rem 1.2rem;
+      border-radius: 8px;
+      max-width: 650px;
+      margin: 0 auto;
+      letter-spacing: 0.02em;
+      box-shadow: var(--shadow-sm);
+      font-size: 0.95rem;
+    }
+
+    .scheme-stem {
+      width: 2px;
+      height: 22px;
+      background: var(--accent-color);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .scheme-stem::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--accent-color);
+    }
+
+    .scheme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .scheme-node {
+      background: var(--bg-alt);
+      border: 1px solid var(--border-color);
+      border-top: 3px solid var(--accent-color);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scheme-node-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent-color);
+      margin-bottom: 0.35rem;
+    }
+
+    .scheme-node-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .polyhedron-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .polyhedron-card {
+      background: var(--bg-alt);
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-color);
+      padding: 1rem;
+    }
+
+    .polyhedron-card strong {
+      display: block;
+      color: var(--accent-color);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .polyhedron-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        padding: 2rem 1.5rem;
+      }
+      h1 {
+        font-size: 1.9rem;
+      }
+    }
+    /* ===== Озвучка лекции (TTS) ===== */
+    body {
+      padding-bottom: 150px;
+    }
+
+    .tts-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(820px, calc(100vw - 24px));
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 18px 40px -12px rgb(15 23 42 / 0.35), 0 6px 16px -8px rgb(15 23 42 / 0.25);
+    }
+
+    .tts-panel[hidden] {
+      display: none;
+    }
+
+    .tts-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tts-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      color: var(--text-main);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .tts-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .tts-btn:hover {
+      color: var(--accent-color);
+      background: var(--accent-soft);
+      border-color: var(--accent-color);
+    }
+
+    .tts-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    .tts-play {
+      width: 48px;
+      height: 48px;
+      color: #ffffff;
+      background: var(--accent-color);
+      border-color: transparent;
+      border-radius: 50%;
+      box-shadow: 0 6px 14px -6px rgb(37 99 235 / 0.8);
+    }
+
+    .tts-play:hover {
+      color: #ffffff;
+      background: var(--accent-hover);
+      border-color: transparent;
+    }
+
+    .tts-play .tts-i-pause {
+      display: none;
+    }
+
+    .tts-panel.is-playing .tts-play .tts-i-play {
+      display: none;
+    }
+
+    .tts-panel.is-playing .tts-play .tts-i-pause {
+      display: block;
+    }
+
+    .tts-meta {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .tts-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tts-counter {
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+
+    .tts-seek {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .tts-time {
+      flex: 0 0 auto;
+      min-width: 36px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-variant-numeric: tabular-nums;
+      text-align: left;
+    }
+
+    .tts-time:last-child {
+      text-align: right;
+    }
+
+    .tts-track {
+      position: relative;
+      flex: 1 1 auto;
+      height: 6px;
+      background: var(--bg-alt);
+      border-radius: 999px;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .tts-track:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 3px;
+    }
+
+    .tts-knob {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgb(15 23 42 / 0.35);
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+
+    .tts-track:hover .tts-knob,
+    .tts-track:focus-visible .tts-knob,
+    .tts-panel.is-playing .tts-knob {
+      opacity: 1;
+    }
+
+    .tts-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+      border-radius: inherit;
+    }
+
+    .tts-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .tts-settings {
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 18px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .tts-panel.is-open .tts-settings {
+      display: flex;
+    }
+
+    .tts-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .tts-field select {
+      max-width: 260px;
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      background: var(--bg-alt);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .tts-field input[type="range"] {
+      width: 120px;
+      accent-color: var(--accent-color);
+    }
+
+    .tts-field b {
+      display: inline-block;
+      min-width: 2.8em;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .tts-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .tts-check input {
+      accent-color: var(--accent-color);
+    }
+
+    .tts-wide {
+      width: auto;
+      padding: 0 12px;
+      font-size: 0.8rem;
+    }
+
+    .tts-hint {
+      flex: 1 1 100%;
+      margin: 0;
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-main);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent-color);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .tts-hint[hidden] {
+      display: none;
+    }
+
+    .tts-fab {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      color: #ffffff;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 50%;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+    }
+
+    .tts-fab svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .tts-fab.is-visible {
+      display: inline-flex;
+    }
+
+    .tts-fab.is-live {
+      animation: ttsPulse 1.9s ease-out infinite;
+    }
+
+    @keyframes ttsPulse {
+      0% { box-shadow: 0 0 0 0 rgb(37 99 235 / 0.45); }
+      70% { box-shadow: 0 0 0 14px rgb(37 99 235 / 0); }
+      100% { box-shadow: 0 0 0 0 rgb(37 99 235 / 0); }
+    }
+
+    .tts-speaking {
+      position: relative;
+    }
+
+    .tts-speaking::before {
+      content: "";
+      position: absolute;
+      left: -1.5rem;
+      top: 0.1rem;
+      bottom: 0.1rem;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--accent-color);
+      opacity: 0.7;
+    }
+
+    .tts-speaking > h2 {
+      color: var(--accent-color);
+      border-bottom-color: var(--accent-color);
+    }
+
+    @media (max-width: 992px) {
+      .tts-speaking::before {
+        left: -0.75rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: 140px;
+      }
+      .tts-panel {
+        width: calc(100vw - 16px);
+        bottom: 8px;
+        padding: 10px;
+      }
+      .tts-play {
+        width: 42px;
+        height: 42px;
+      }
+      .tts-actions {
+        gap: 4px;
+      }
+      .tts-actions .tts-btn {
+        width: 32px;
+        height: 32px;
+      }
+      .tts-counter {
+        font-size: 0.7rem;
+      }
+      .tts-field {
+        flex: 1 1 100%;
+      }
+      .tts-field select {
+        flex: 1 1 auto;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- Боковое оглавление -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Содержание курса</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a class="toc-link" href="#intro">Введение и план курса</a></li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-1">1. Жизнь и становление Платона</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-1-1">1.1. Происхождение, даты и имя Аристокл</a></li>
+          <li><a class="toc-link" href="#sec-1-2">1.2. Пелопоннесская война и полисный кризис</a></li>
+          <li><a class="toc-link" href="#sec-1-3">1.3. Образование и учителя: Кратил и Сократ</a></li>
+          <li><a class="toc-link" href="#sec-1-4">1.4. Странствия, Сицилия и плен на Эгине</a></li>
+          <li><a class="toc-link" href="#sec-1-5">1.5. Академия в Афинах (386 г. до н. э.)</a></li>
+        </ul>
+      </li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-2">2. Корпус текстов и классификация диалогов</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-2-1">2.1. Форма диалога: экзотерическое и эзотерическое</a></li>
+          <li><a class="toc-link" href="#sec-2-2">2.2. Пять хронологических групп диалогов</a></li>
+          <li><a class="toc-link" href="#sec-2-3">2.3. Специфика стиля и проблема систематизации</a></li>
+        </ul>
+      </li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-3">3. Онтология: идеализм и мир идей</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-3-1">3.1. Борьба материалистов и идеалистов</a></li>
+          <li><a class="toc-link" href="#sec-3-2">3.2. Символ пещеры: чувственный мир теней</a></li>
+          <li><a class="toc-link" href="#sec-3-3">3.3. Философ и Сократ: трагедия просветителя</a></li>
+          <li><a class="toc-link" href="#sec-3-4">3.4. Эволюция понятия: от Демокрита к эйдосу</a></li>
+          <li><a class="toc-link" href="#sec-3-5">3.5. Свойства, объём и апории «Парменида»</a></li>
+        </ul>
+      </li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-4">4. Физика и космология «Тимея»</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-4-1">4.1. Космогоническая триада: Демиург, Идеи, Материя</a></li>
+          <li><a class="toc-link" href="#sec-4-2">4.2. Мировая Душа: структура и функции</a></li>
+          <li><a class="toc-link" href="#sec-4-3">4.3. Тело Космоса и геометрия 4 стихий</a></li>
+        </ul>
+      </li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-5">5. Учение о человеке и медицина</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-5-1">5.1. Вместилище двух душ (божественная и смертная)</a></li>
+          <li><a class="toc-link" href="#sec-5-2">5.2. Телесные недуги: диспропорция стихий</a></li>
+          <li><a class="toc-link" href="#sec-5-3">5.3. Душевные болезни: безумие и невежество</a></li>
+          <li><a class="toc-link" href="#sec-5-4">5.4. Соразмерность, три вида движения и диететика</a></li>
+        </ul>
+      </li>
+      <li class="toc-item">
+        <a class="toc-link" href="#section-6">6. Теория познания (гносеология)</a>
+        <ul class="toc-sublist">
+          <li><a class="toc-link" href="#sec-6-1">6.1. Мнение (докса) против истинного знания</a></li>
+          <li><a class="toc-link" href="#sec-6-2">6.2. Математика и числа как методологический мост</a></li>
+          <li><a class="toc-link" href="#sec-6-3">6.3. Концепция припоминания (анамнезис)</a></li>
+          <li><a class="toc-link" href="#sec-6-4">6.4. Диалектика как метод актуализации анамнезиса</a></li>
+          <li><a class="toc-link" href="#sec-6-5">6.5. Диалектическая способность разума</a></li>
+          <li><a class="toc-link" href="#sec-6-6">6.6. Две части диалектического пути</a></li>
+          <li><a class="toc-link" href="#sec-6-7">6.7. Ценность «физики» Платона</a></li>
+        </ul>
+      </li>
+      <li class="toc-item"><a class="toc-link" href="#conclusions">Заключение и выводы</a></li>
+    </ul>
+  </aside>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <header>
+      <span class="badge">Тема 2 • Античная классика</span>
+      <h1>Философия и натурфилософия Платона: учение об идеях, космология «Тимея» и теория познания</h1>
+      <p class="subtitle">Полный академический конспект лекционного курса: биографический контекст, систематизация диалогов, онтология эйдосов, космогенез и учение об анамнезисе и метод диалектики</p>
+    </header>
+
+    <!-- Введение -->
+    <section id="intro">
+      <h2>Введение и план курса</h2>
+      <p>Изучение классического периода древнегреческой философии неразрывно связано с именем <strong>Платона</strong>. В рамках лекционного курса раскрывается четыре взаимосвязанных узловых вопроса:</p>
+      <ol>
+        <li><strong>Биография и социально-исторические истоки:</strong> становление личности мыслителя на фоне упадка афинского полиса, путешествия и открытие Академии;</li>
+        <li><strong>Систематизация творческого наследия:</strong> классификация платоновского корпуса текстов, разделение на экзотерическую и эзотерическую традиции, роль диалога <em>«Тимей»</em> в программе практических занятий;</li>
+        <li><strong>Физика и онтология:</strong> разграничение материализма и идеализма, символ пещеры, эволюция термина «эйдос», триада начал космогенеза и геометрический атомизм стихий;</li>
+        <li><strong>Теория познания (гносеология) и антропология:</strong> разграничение знания и мнения, учение о соразмерности души и тела, причины болезней, концепция припоминания (<em>анамнезис</em>) и диалектика как метод её актуализации.</li>
+      </ol>
+      <p>Труды Платона представляют собой не отвлеченную схоластику, а выверенный лекционный и методический материал, заложенный в основание первой высшей исследовательской школы античности.</p>
+    </section>
+
+    <!-- Раздел 1 -->
+    <section id="section-1">
+      <h2>1. Жизнь и становление Платона</h2>
+
+      <div class="visual-scheme">
+        <div class="scheme-root">ЖИЗНЕННЫЙ ПУТЬ ПЛАТОНА (427–347 гг. до н. э.)</div>
+        <div class="scheme-stem"></div>
+        <div class="scheme-grid">
+          <div class="scheme-node">
+            <div class="scheme-node-title">1. Происхождение</div>
+            <div class="scheme-node-desc">Родился на о. Эгина в семье Аристона. Царский род Кодра. Родственники Критий и Хармид. Подлинное имя — Аристокл.</div>
+          </div>
+          <div class="scheme-node">
+            <div class="scheme-node-title">2. Ученичество</div>
+            <div class="scheme-node-desc">Уроки Кратила (гераклитизм). С 20 лет в кружке Сократа (407–399 гг. до н. э.) вплоть до трагической казни учителя.</div>
+          </div>
+          <div class="scheme-node">
+            <div class="scheme-node-title">3. Странствия и плен</div>
+            <div class="scheme-node-desc">Мегары (Евклид), Кирена (математик Феодор), Египет. Сицилийские поездки к Дионисию. Рабство и выкуп Анникеридом.</div>
+          </div>
+          <div class="scheme-node">
+            <div class="scheme-node-title">4. Академия (386 г. до н. э.)</div>
+            <div class="scheme-node-desc">Основание школы в Афинах. Культ геометрии. 915 лет непрерывной работы (до 529 г. н. э.). Умер в возрасте 80 лет.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sec-1-1">
+        <h3>1.1. Происхождение, историографические даты и имя Аристокл</h3>
+        <p>Платон родился в <strong>427 году до н. э.</strong> на острове <strong>Эгина</strong>, где его отец Аристон имел земельные владения. Он скончался в возрасте 80 лет в <strong>347 году до н. э.</strong></p>
+        
+        <div class="dialogue-box">
+          <strong>Академическая справка о датировке:</strong> Вопрос о годе рождения вызывает дискуссии в историографии (некоторые авторы указывают 428 или 429 гг. до н. э., разница составляет около двух лет). Дата 427 г. до н. э. принята на основе фундаментальных академических изданий (в частности, многотомного академического труда «История философии» Института философии АН СССР / РАН), обладающих наивысшей степенью научной достоверности. Дата смерти (347 г. до н. э.) сомнений не вызывает. Продолжительность жизни в 80 лет для античной эпохи была исключительно солидным возрастом.
+        </div>
+
+        <p>По социальному положению Платон принадлежал к высшей афинской аристократии:</p>
+        <ul>
+          <li>По отцу его род восходил к последнему царю Аттики <strong>Кодру</strong>;</li>
+          <li>По материнской линии родственниками Платона были виднейшие политические деятели Афин — <strong>Хармид</strong> и <strong>Критий</strong> (позже возглавившие олигархический режим Тридцати тиранов; оба выведены действующими лицами в платоновских диалогах).</li>
+        </ul>
+        <p>Подлинное имя философа — <strong>Аристокл</strong> (др.-греч. <em>Aristokles</em>). Имя <em>Платон</em> — прозвище, данное ему за физическую стать от греческого слова <strong>«платюс» (platys)</strong> — <em>широкий, широкоплечий</em> (по другим свидетельствам — за ширину лба или широту мыслительного кругозора).</p>
+      </div>
+
+      <div id="sec-1-2">
+        <h3>1.2. Пелопоннесская война и истоки социально-политических реформ</h3>
+        <p>Детство и юность Платона пришлись на период <strong>Пелопоннесской войны (431–404 гг. до н. э.)</strong>, закончившейся сокрушительным военным и политическим поражением Афин. Война подорвала экономический фундамент полиса, вызвала острую социальную деградацию и привела к установлению жестокой тирании, а затем — к судебной расправе над Сократом.</p>
+        
+        <div class="dialogue-box">
+          <strong>Вопрос студента:</strong> «То есть Платон решил, что поражение стало следствием неправильного управления?»<br>
+          <strong>Ответ лектора:</strong> «Нет, Пелопоннесская война стала следствием общего кризиса полиса. Но видя его последствия, Платон стремился помочь правителям реконструировать государственное устройство, дать импульс к возрождению Афин и вывести общество на принципиально иной уровень развития через правление мудрых».
+        </div>
+      </div>
+
+      <div id="sec-1-3">
+        <h3>1.3. Образование и учителя: Кратил и Сократ</h3>
+        <p>Платон получил всестороннее классическое образование афинского гражданина: занимался музыкой, литературой, гимнастикой, писал дифирамбы, стихотворения и трагедии. В становлении его мысли ключевую роль сыграли два наставника:</p>
+        <ol>
+          <li><strong>Кратил:</strong> последователь Гераклита, прививший Платону идею о вечной текучести и изменчивости материального, чувственного бытия;</li>
+          <li><strong>Сократ:</strong> знакомство произошло приблизительно в <strong>407–406 гг. до н. э.</strong> В 20-летнем возрасте Платон вошел в кружок Сократа и оставался его преданным учеником вплоть до трагической казни учителя в 399 г. до н. э.</li>
+        </ol>
+      </div>
+
+      <div id="sec-1-4">
+        <h3>1.4. Странствия, Сицилийский опыт и пленение на Эгине</h3>
+        <p>Казнь Сократа потрясла Платона, вынудив его покинуть Афины на целое десятилетие:</p>
+        <ul>
+          <li><strong>Мегары:</strong> пребывание у соратника по кружку Сократа — Евклида Мегарского;</li>
+          <li><strong>Кирена и Египет:</strong> изучение геометрии и математических наук у Феодора Киренского, знакомство со жреческой культурой Востока;</li>
+          <li><strong>Южная Италия и Сицилия (389 г. до н. э.):</strong> сближение с пифагорейцами, заложившее фундамент платоновского математического идеализма.</li>
+        </ul>
+        <p>В Сиракузах Платон попытался убедить правителя <strong>Дионисия Старшего</strong> реформировать полис на основах справедливости. Тиран отверг проект идеального государства, сочтя его неосуществимым и опасным. Платон был тайно передан спартанскому послу Поллиду и продан в рабство на острове Эгина. На невольничьем рынке его узнал и выкупил киренаик <strong>Анникерид</strong>, вернув мыслителю свободу.</p>
+      </div>
+
+      <div id="sec-1-5">
+        <h3>1.5. Основание Академии в Афинах (ок. 387–386 гг. до н. э.)</h3>
+        <p>Вернувшись в Афины около <strong>387–386 гг. до н. э.</strong>, Платон основал школу в роще аттического героя <strong>Академа</strong>. Особенности Академии:</p>
+        <ul>
+          <li><strong>Общедоступность и бесплатность:</strong> слушатели съезжались со всей Эллады;</li>
+          <li><strong>Политическое влияние:</strong> к Платону за советами и законодательными проектами обращались правители (македонские цари, правители греческих городов);</li>
+          <li><strong>Культ математики:</strong> девиз <em>«Не геометр да не войдет»</em> утверждал числа и геометрические формы как обязательную ступень очищения ума перед переходом к созерцанию бестелесных идей;</li>
+          <li><strong>Историческая долговечность:</strong> школа просуществовала <strong>915 лет</strong> (до 529 г. н. э., когда была закрыта эдиктом христианского императора Юстиниана).</li>
+        </ul>
+        <p>В возрасте около 60 лет Платон предпринял вторую и третью поездки в Сицилию к молодому тирану <strong>Дионисию Младшему</strong>, надеясь выступить законодателем. Попытки завершились неудачей, доказав неосуществимость реформ без глубокого философского просвещения властвующих элит.</p>
+      </div>
+    </section>
+
+    <!-- Раздел 2 -->
+    <section id="section-2">
+      <h2>2. Корпус текстов и периодизация наследия</h2>
+
+      <div id="sec-2-1">
+        <h3>2.1. Форма диалога: экзотерическое и эзотерическое знание</h3>
+        <p>Платоновское наследие насчитывает <strong>35 произведений</strong> (один монолог — <em>«Апология Сократа»</em> — и 34 диалога, часть из которых в современной критике признана сомнительной или подложной). Тексты распадаются на два уровня:</p>
+        <ul>
+          <li><strong>Экзотерические сочинения:</strong> художественные диалоги, написанные для широкой публики с целью пробудить интерес к поиску добродетели;</li>
+          <li><strong>Эзотерические беседы («устные речи»):</strong> углубленные математические и метафизические курсы внутри Академии для подготовленных слушателей.</li>
+        </ul>
+      </div>
+
+      <div id="sec-2-2">
+        <h3>2.2. Пять хронологических групп платоновских диалогов</h3>
+        <div class="card-grid">
+          <div class="card">
+            <h4>1. Сократические диалоги</h4>
+            <p>Период ученичества. Воспроизводят этические поиски Сократа без собственной развитой онтологии: <em>«Лахет»</em> (о мужестве), <em>«Хармид»</em> (о благоразумии), <em>«Лисид»</em> (о любви и дружбе), <em>«Критон»</em> (о долге гражданина), <em>I книга «Государства»</em>.</p>
+          </div>
+          <div class="card">
+            <h4>2. Переходные диалоги</h4>
+            <p>Формирование собственного учения: <em>«Горгий»</em> (о добродетели и риторике), <em>«Кратил»</em> (о происхождении имен), <em>«Менон»</em> (добродетель и знание), <em>«Гиппий Больший»</em> (<strong>впервые вводится и теоретизируется категория «эйдос»</strong>).</p>
+          </div>
+          <div class="card">
+            <h4>3. Диалоги зрелого платонизма</h4>
+            <p>Классическое изложение теории идей: <em>«Менексен»</em>, <em>«Пир»</em> (восхождение к Благу через любовь), <em>«Федр»</em> (душа и идея красоты), <em>«Федон»</em> (бессмертие души), <em>«Государство»</em> (книги II–X).</p>
+          </div>
+          <div class="card">
+            <h4>4. Поздний критический период</h4>
+            <p>Глубокая диалектическая ревизия онтологии и натурфилософия: <em>«Теэтет»</em>, <em>«Софист»</em>, <em>«Парменид»</em> (апории идей), <em>«Политик»</em>, <em>«Филеб»</em>, <em>«Критий»</em>, <em>«Тимей»</em> (космология).</p>
+          </div>
+          <div class="card">
+            <h4>5. Завершающий этап</h4>
+            <p>Монументальный социально-политический трактат <em>«Законы»</em> (12 книг), написанный в глубокой старости.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="sec-2-3">
+        <h3>2.3. Специфика стиля и проблема систематизации</h3>
+        <p>Сочинения Платона не похожи на современные систематические научные монографии: изложение свободно, насыщено поэтическими мифами и ассоциациями. Однако каждый диалог внутренне завершен. Сам философ не создал единого учебника догматического характера — реконструкция и систематизация его метафизики была выполнена последующими поколениями исследователей Академии.</p>
+      </div>
+    </section>
+
+    <!-- Раздел 3 -->
+    <section id="section-3">
+      <h2>3. Онтология Платона: идеализм и мир идей</h2>
+
+      <div id="sec-3-1">
+        <h3>3.1. Борьба материалистов и идеалистов (диалог «Софист»)</h3>
+        <p>Платон первым в истории мысли четко зафиксировал водораздел двух философских партий:</p>
+        <ul>
+          <li><strong>Материалисты:</strong> <em>«всё совлекают с неба на землю»</em>, признавая реальным исключительно то, к чему можно прикоснуться руками (тела, частицы, стихии);</li>
+          <li><strong>Идеалисты:</strong> настаивают, что подлинное бытие — это умопостигаемые, бестелесные, вечные сущности (эйдосы). Сам Платон выступает основателем последовательного объективного идеализма.</li>
+        </ul>
+      </div>
+
+      <div id="sec-3-2">
+        <h3>3.2. Символ пещеры: чувственный мир теней</h3>
+        <p>В VII книге диалога <em>«Государство»</em> Платон формулирует ключевой натурфилософский и гносеологический образ — <strong>аллегорию подземной пещеры</strong>:</p>
+        <blockquote>
+          <span class="source-label">Платон, «Государство», Книга VII:</span>
+          <p>«Люди сидят в пещере с оковами на шее и ногах, не имея возможности повернуть голову. Сзади на высоте горит огонь, а между огнем и узниками возведена ширма. За ширмой проносят различную утварь, статуи животных и людей из камня и дерева. Узники никогда не видели реальных предметов и принимают тени на стене перед собой за единственную истинную реальность...»</p>
+        </blockquote>
+
+        <div class="visual-scheme">
+          <div class="scheme-root">ОНТОЛОГИЧЕСКАЯ МОДЕЛЬ «МИФА О ПЕЩЕРЕ»</div>
+          <div class="scheme-stem"></div>
+          <div class="scheme-grid">
+            <div class="scheme-node">
+              <div class="scheme-node-title">Пещера</div>
+              <div class="scheme-node-desc">Чувственный физический мир, в котором протекает обыденная жизнь людей.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Тени на стене</div>
+              <div class="scheme-node-desc">Видимые природные явления и предметы — лишь проекции вечных первообразов.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Выход наружу</div>
+              <div class="scheme-node-desc">Процесс очищения ума через науки, отказ от чувственных иллюзий к свету истины.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Солнце</div>
+              <div class="scheme-node-desc">Идея Блага — верховная причина бытия, порядка, гармонии и познаваемости.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sec-3-3">
+        <h3>3.3. Философ и Сократ: трагедия просветителя</h3>
+        <p>Человек, вырвавшийся на свет, переживает резь в глазах: к свету идей нужно привыкнуть. Когда же он возвращается назад, чтобы спасти узников, те смеются над его ослепшими во тьме глазами, отвергают весть о высшем мире и готовы растерзать любого, кто попытается снять с них цепи привычного мнения.</p>
+        
+        <div class="dialogue-box">
+          <strong>Реплика студентки:</strong> «Узник, который вернулся и был убит, — это прямая аналогия с казненным Сократом?»<br>
+          <strong>Разъяснение лектора:</strong> «Безусловно. Казнь учителя стала для Платона тяжелейшей душевной травмой на всю жизнь. Но одновременно в образе освободившегося узника Платон позиционирует и самого себя, и любого истинного философа-ученого, стремящегося спасти сограждан от плена иллюзий».
+        </div>
+      </div>
+
+      <div id="sec-3-4">
+        <h3>3.4. Эволюция понятия: от Демокрита к платоновскому «эйдосу»</h3>
+        <p>Категория <strong>«эйдос» (eidos)</strong> / <strong>«идея» (idea)</strong> восходит к глаголу <em>eido</em> («вижу, созерцаю»). Эволюция термина:</p>
+        <ul>
+          <li><strong>Обиходная речь:</strong> внешний вид, форма, наружность, видимый облик предмета;</li>
+          <li><strong>Демокрит:</strong> впервые использовал термин в философии, называя атомы «идеями» за их неизменную пространственно-геометрическую фигуру;</li>
+          <li><strong>Платон:</strong> совершил переворот, перенеся термин из плоскости зримого вещества в область <em>бестелесного умопостигаемого бытия</em>. Эйдос — это внутренняя сверхчувственная сущность, закон и прообраз вещи, созерцаемый исключительно «очами разума».</li>
+        </ul>
+      </div>
+
+      <div id="sec-3-5">
+        <h3>3.5. Свойства, объём и апории «Парменида»</h3>
+        <p>В диалогах <em>«Пир»</em>, <em>«Федр»</em> и <em>«Федон»</em> фиксируются свойства мира идей: вечность, неизменность, пребывание в «занебесной области» вне физического пространства, непричастность старению и становлению.</p>
+        
+        <h4>Апории Парменида и объем идеального мира</h4>
+        <p>В диалоге <em>«Парменид»</em> старец Парменид вопрошает юного Сократа:</p>
+        <ul>
+          <li>Существуют ли идеи Единого, Многого, Подобия? — <em>Сократ: «Да»</em>.</li>
+          <li>Существуют ли идеи Человека, Огня, Воды? — <em>Сократ впадает в сомнение</em>.</li>
+          <li>Существуют ли идеи грязи, сора, нечистот, преступлений и войн? — <em>Сократ отвечает решительным отказом, опасаясь впасть в нелепость</em>.</li>
+        </ul>
+        <p><strong>Фундаментальный вывод Платона:</strong> мир идей — это <strong>царство исключительно благих и совершенных сущностей</strong>! Разрушительные, грязные и хаотические явления не имеют собственных эйдосов, являясь лишь признаком ущербности, нехватки бытия и хаотического сопротивления материи. Вершина иерархии — <strong>Идея Блага</strong>, источник космической соразмерности и красоты.</p>
+      </div>
+    </section>
+
+    <!-- Раздел 4 -->
+    <section id="section-4">
+      <h2>4. Физика и космология диалога «Тимей»</h2>
+
+      <div id="sec-4-1">
+        <h3>4.1. Космогоническая триада: Демиург, Идеи и Материя</h3>
+        <p>В диалоге <em>«Тимей»</em> излагается космогенез — сотворение Вселенной через упорядочивание трех начал:</p>
+        <ol>
+          <li><strong>Демиург (Божественный Ум):</strong> благой Создатель, Отец и Устроитель видимого мира;</li>
+          <li><strong>Вечный образец (Мир Идей):</strong> совершенный первообраз, служащий Демиургу ориентиром целесообразности;</li>
+          <li><strong>Первоматерия (Хора):</strong> восприемница становления. До творения пребывала в состоянии <em>беспорядочного, слепого, нестройного движения (хаоса)</em>. Творение состоит во внедрении идей в материю в качестве целесообразных причин.</li>
+        </ol>
+      </div>
+
+      <div id="sec-4-2">
+        <h3>4.2. Мировая Душа: структура и космические функции</h3>
+        <p>Демиург творит <strong>Мировую Душу раньше тела космоса</strong>, делая ее главенствующей над материальным миром. Состав Души Космоса:</p>
+        <ul>
+          <li>Часть <strong>Тождественного</strong> (неделимая сущность идей);</li>
+          <li>Часть <strong>Иного</strong> (делимая текучая сущность материи);</li>
+          <li><strong>Смешанная сущность</strong>, рожденная их слиянием.</li>
+        </ul>
+        <p>Мировая Душа охватывает Вселенную снаружи и изнутри, выполняя две фундаментальные функции: <strong>движения</strong> (вращение сферы неподвижных звезд и орбит планет, Луны и Солнца) и <strong>познания</strong> (выражает гармонию того, чему вещи тождественны и в отношении чего они иные).</p>
+      </div>
+
+      <div id="sec-4-3">
+        <h3>4.3. Тело Космоса и геометрия 4 стихий (Платоновы тела)</h3>
+        <p>Тело Вселенной имеет форму идеальной <strong>сферы</strong>. Оно состоит из четырех стихий, наделенных строгой геометрической структурой:</p>
+
+        <div class="polyhedron-grid">
+          <div class="polyhedron-card">
+            <strong>Огонь • Тетраэдр</strong>
+            <span>4 треугольные грани. Пирамидальная форма сообщает пламени исключительную подвижность и остроту.</span>
+          </div>
+          <div class="polyhedron-card">
+            <strong>Воздух • Октаэдр</strong>
+            <span>8 треугольных граней. Обладает промежуточной плотностью и подвижностью.</span>
+          </div>
+          <div class="polyhedron-card">
+            <strong>Вода • Икосаэдр</strong>
+            <span>20 треугольных граней. Самое многогранное и округлое тело из треугольных, обуславливающее текучесть.</span>
+          </div>
+          <div class="polyhedron-card">
+            <strong>Земля • Куб</strong>
+            <span>6 квадратных граней. Наиболее неподвижное, тяжелое и устойчивое тело.</span>
+          </div>
+        </div>
+
+        <p><strong>Закон физических трансформаций у Платона:</strong> огонь, воздух и вода сложены из одинаковых базовых <em>равносторонних треугольников</em> (собираемых из прямоугольных неравнобедренных элементов), поэтому они способны распадаться и взаимно переходить друг в друга. Земля же состоит из <em>квадратов</em> (составленных из равнобедренных прямоугольных треугольников), в силу чего <strong>земля никогда не превращается в три остальные стихии</strong>.</p>
+      </div>
+    </section>
+
+    <!-- Раздел 5 -->
+    <section id="section-5">
+      <h2>5. Учение о человеке и медицина Платона</h2>
+
+      <div id="sec-5-1">
+        <h3>5.1. Вместилище двух душ: божественная и смертная</h3>
+        <p>Человек представляет собой <strong>микрокосм</strong>, анатомия которого подчинена структуре души:</p>
+        <ol>
+          <li><strong>Разумная (божественная, бессмертная) душа:</strong> сотворена Демиургом и локализована в сферическом своде <em>головного мозга</em>;</li>
+          <li><strong>Смертная душа:</strong> сотворена низшими богами для земного существования и разделена на два уровня:
+            <ul>
+              <li><em>Яростная (мужественная) часть:</em> сосредоточена в области <strong>сердца</strong> (источник воли и благородного гнева);</li>
+              <li><em>Вожделеющая (низменная) часть:</em> помещена ниже диафрагмы в <strong>брюшную полость</strong> (отвечает за аппетит и половое влечение).</li>
+            </ul>
+          </li>
+        </ol>
+        <p>Остальные органы тела выступают защитной «колесницей», сохраняющей целостность божественного семени разума.</p>
+      </div>
+
+      <div id="sec-5-2">
+        <h3>5.2. Причины телесных недугов: нарушение пропорций стихий</h3>
+        <p>Болезни тела Платон объясняет через концепцию нарушения природной меры: недуги возникают тогда, когда нарушается правильная математическая пропорция четырех стихий (земли, огня, воды, воздуха), когда стихии меняются местами либо переполняют ткани, разрушая кровь, кости и мозг.</p>
+      </div>
+
+      <div id="sec-5-3">
+        <h3>5.3. Душевные болезни: безумие, невежество и аффекты</h3>
+        <p>Недуги души проистекают либо из дурного состояния тела (поражение мозга желчью и слизью), либо из потери чувства меры. Платон выделяет <strong>два вида неразумия</strong>:</p>
+        <ul>
+          <li><strong>Безумие (мания):</strong> острое аффективное помешательство;</li>
+          <li><strong>Невежество:</strong> упорство в ложном мнении, нежелание очищать ум.</li>
+        </ul>
+        <p>Главной причиной душевных расстройств объявляется <strong>чрезмерность удовольствий и страданий</strong>. Испытывая крайнюю радость или глубокое отчаяние, человек слепнет и глохнет для рассудка: его ум помрачен, и он теряет способность к разумным суждениям.</p>
+      </div>
+
+      <div id="sec-5-4">
+        <h3>5.4. Соразмерность, три вида движения и диететика</h3>
+        <p>Здоровье человека покоится на <strong>соразмерности (симметрии) души и тела</strong>. Великая мысль в немощном теле истощает его, а превосходящее мощное тело при слабой душе тупит познавательные силы. Платон выстраивает строгую иерархию движений:</p>
+        <ol>
+          <li><strong>Наилучшее движение:</strong> движение, порождаемое внутри себя самим собой (самодеятельность разума и естественная гимнастика);</li>
+          <li><strong>Менее совершенное движение:</strong> движение под воздействием внешней силы (пассивное перемещение в повозке или на корабле);</li>
+          <li><strong>Худшее состояние:</strong> когда тело покоится в бездействии, а его части насильственно приводятся в движение извне.</li>
+        </ol>
+        <p>Отсюда вытекает платоновская терапия: <em>«недуги следует укрощать упорядоченным образом жизни, нежели дразнить их лекарствами»</em>. Применение сильнодействующих снадобий лишь запутывает пути природы, если человек не исправил корень болезни — свой образ жизни.</p>
+      </div>
+    </section>
+
+    <!-- Раздел 6 -->
+    <section id="section-6">
+      <h2>6. Теория познания (гносеология): учение об анамнезисе</h2>
+
+      <div id="sec-6-1">
+        <h3>6.1. Мнение (докса) против истинного знания</h3>
+        <p>Чувственные восприятия и ощущения никогда не дают подлинного знания — они формируют лишь зыбкое <strong>мнение (докса)</strong>. Платон строго классифицирует объекты и познавательные способности:</p>
+
+        <div class="visual-scheme">
+          <div class="scheme-root">ГНОСЕОЛОГИЧЕСКАЯ ИЕРАРХИЯ ПЛАТОНА</div>
+          <div class="scheme-stem"></div>
+          <div class="scheme-grid">
+            <div class="scheme-node">
+              <div class="scheme-node-title">Догадка и уподобление</div>
+              <div class="scheme-node-desc">Область мнения: восприятие отражений, теней, живописных копий и иллюзий.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Предмет доверия (Вера)</div>
+              <div class="scheme-node-desc">Область мнения: наблюдение за реальными природными чувственными телами и вещами.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Предмет размышления</div>
+              <div class="scheme-node-desc">Область науки: математические сущности, геометрические чертежи и числа.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Истинное знание</div>
+              <div class="scheme-node-desc">Область разума: непосредственное созерцание бестелесных идей (эйдосов) в понятиях.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sec-6-2">
+        <h3>6.2. Математика и числа как методологический мост</h3>
+        <p>Математика занимает у Платона срединное положение между миром чувственных теней и чистым бытием идей. Числа неизменны и вечны, как идеи, но множественны, как вещи. Поэтому овладение математическим аппаратом выступает единственным спасительным инструментом («мостом»), освобождающим человеческий ум от оков материальной пещеры.</p>
+      </div>
+
+      <div id="sec-6-3">
+        <h3>6.3. Концепция припоминания (анамнезис) и миссия философа</h3>
+        <p>В диалогах <em>«Менон»</em> и <em>«Федон»</em> Платон раскрывает свою концепцию <strong>припоминания (анамнезис)</strong>:</p>
+        <ol>
+          <li>Бессмертная душа человека до своего вселения в бренное тело пребывала в мире идей, где непосредственно лицезрела истины;</li>
+          <li>При соединении с телом душа погружается во тьму забвения;</li>
+          <li>Созерцая несовершенные земные предметы, человек испытывает внутреннее пробуждение и <strong>вспоминает</strong> идеальные прообразы, виденные душой прежде;</li>
+          <li><strong>Задача философа:</strong> не механически передавать готовые факты, а методом диалектической беседы помочь ученику отрешиться от чувств, погрузиться в глубины собственной души и возродить в ней воспоминания о вечных идеях.</li>
+        </ol>
+      </div>
+
+      <!-- 6.4 -->
+      <div id="sec-6-4">
+        <h3>6.4. Диалектика как метод актуализации анамнезиса</h3>
+        <p>Если анамнезис описывает <strong>механизм</strong> возвращения души к знанию идей, то диалектика определяет <strong>метод</strong>, которым этот механизм приводится в действие. Методом, позволяющим осуществить процесс актуализации воспоминания души об идеях, Платон считал диалектику. Заслуга Платона состоит в разработке особого методологического инструментария, который впоследствии был воспринят другими мыслителями — вплоть до систематической диалектики Гегеля.</p>
+        <blockquote>
+          <span class="source-label">«Кратил»</span>
+          <p>Диалектика обозначала у Платона умение задавать вопросы и отвечать на них для разрешения философских проблем.</p>
+        </blockquote>
+        <p>Диалектиком Платон называет человека, умеющего спрашивать и отвечать. Именно такую — сократическую — форму вопросов и ответов мы наблюдаем в «Тимее». Как ученик Сократа, Платон продолжает её и называет этот метод диалектикой.</p>
+        <p>Поэтому диалектика выступает у Платона как <strong>искусство устной речи</strong> — метод живого собеседования учителя и ученика об идеях. Предметом диалога являются не вещи, а идеи — духовные сущности. Не случайно большинство трудов Платона написано в диалогической форме: они представляют собой практическое воплощение и репрезентацию того, что такое диалектика.</p>
+        <blockquote>
+          <span class="source-label">«Федон»</span>
+          <p>Диалектика есть логическая теория — метод правильного соединения и разъединения понятий.</p>
+        </blockquote>
+        <p>В «Федоне» Платон осмысляет уже не внешнюю форму собеседования, а внутреннюю суть метода: то, <strong>как диалектик оперирует понятиями</strong>. Идеи постигаются только через понятия, поэтому, научившись правильно соединять и разъединять понятия, мы тем самым проникаем в мир идей. Речь идёт об умении зафиксировать под понятием определённое значение, обосновать его логически, внести в понятие спектр семантических значений и разграничить его с другими понятиями.</p>
+      </div>
+
+      <!-- 6.5 -->
+      <div id="sec-6-5">
+        <h3>6.5. Диалектическая способность разума: восхождение и нисхождение</h3>
+        <p>Согласно Платону, диалектическая способность разума состоит в двух встречных движениях:</p>
+        <ol>
+          <li><strong>движение вверх — к началу всех вещей</strong>, то есть к первоисточникам, к духовной сущности и духовным понятиям;</li>
+          <li><strong>движение вниз — от начала всех вещей</strong>, то есть от наивысшей идеи к остальным идеям, от общего к частному.</li>
+        </ol>
+        <div class="visual-scheme">
+          <div class="scheme-root">ДИАЛЕКТИЧЕСКОЕ ДВИЖЕНИЕ МЫСЛИ</div>
+          <div class="scheme-stem"></div>
+          <div class="scheme-grid">
+            <div class="scheme-node">
+              <div class="scheme-node-title">Восхождение</div>
+              <div class="scheme-node-desc">Движение вверх: от частного к общему, к началу всех вещей и духовной сущности.</div>
+            </div>
+            <div class="scheme-node">
+              <div class="scheme-node-title">Нисхождение</div>
+              <div class="scheme-node-desc">Движение вниз: от наивысшей идеи к остальным идеям, от общего к частному.</div>
+            </div>
+          </div>
+        </div>
+        <p>Здесь работает принцип <strong>иерархии</strong> и <strong>многоуровневости</strong>, применимый у Платона практически к любому вопросу. Иерархия прослеживается и в цепочке живого: Демиург — боги — космос — четыре рода живых существ (человек, пернатые, водные существа; рыбы — самые низшие). Все роды взаимосвязаны и представляют разные проявления одной божественной сущности, всё менее совершенные по мере нисхождения.</p>
+        <p>Та же иерархия выстраивается и в мире идей. Высшая идея — <strong>идея блага</strong>; она проявляет себя через идеи более низкого порядка. Не каждая вещь имеет свою идею, а только благие вещи, поэтому идеи также многоуровневы.</p>
+      </div>
+
+      <!-- 6.6 -->
+      <div id="sec-6-6">
+        <h3>6.6. Две части диалектического пути</h3>
+        <ol>
+          <li><strong>Первая часть</strong> диалектического пути есть процесс <strong>отвлечения, обобщения</strong>;</li>
+          <li><strong>Вторая часть</strong> — процесс <strong>подчинения частных идей более общим идеям</strong>.</li>
+        </ol>
+        <blockquote>
+          <p>В этом умозрительном, интеллектуальном движении мышление не пользуется ничем чувственным, но имеет дело с самими идеями, движется посредством идей и для идей.</p>
+        </blockquote>
+        <p>Речь идёт о сугубо интеллектуальной работе, связанной с оперированием понятиями и числами. Числа у Платона — предмет размышления, тогда как эмпирическое поле — это поле человека, который стремится выстроить определённую систему знаний.</p>
+      </div>
+
+      <!-- 6.7 -->
+      <div id="sec-6-7">
+        <h3>6.7. Ценность «физики» Платона</h3>
+        <p>Ценность «физики» Платона заключается в возможности понимания:</p>
+        <ol>
+          <li><strong>Мира идей — духовных сущностей, стоящих за миром вещей и постигаемых разумом.</strong> При этом не каждая вещь содержит идею: только благие вещи содержат идею, которую человек способен познать. Этот аспект может быть экстраполирован на научно-исследовательскую работу, смысл которой — вскрыть незримые для обыденного человека закономерности, скрытые механизмы и характеристики. Их можно получить лишь через специальные процедуры сбора, анализа, синтеза и интерпретации данных.</li>
+          <li><strong>Главных смыслов науки.</strong> Концепция Платона заложила и теоретически обосновала понимание науки как постижения незримых сущностей, стоящих за внешней формой чувственных вещей.</li>
+          <li><strong>Методологического инструментария.</strong> Платон предлагает математику, диалектику и концепцию памяти — теорию воспоминаний души. Именно душа несёт в себе знание первоначала, и задача состоит в актуализации этой способности.</li>
+          <li><strong>Значимости разума.</strong> Платон актуализирует разум человека, способного логически обосновать и доказать истинность знания.</li>
+          <li><strong>Всеобщей взаимосвязи.</strong> Всё в мире взаимосвязано, и эта взаимосвязь устроена Демиургом наилучшим образом — через иерархию от высшего начала к низшему. Поэтому объект природы, рассматриваемый как самостоятельный, должен осмысляться в контексте глобальной системы мира.</li>
+        </ol>
+        <p>Эти идеи применимы и в логике выстраивания научных выводов: получив выводы на основе эмпирических данных, исследователь может двигаться от общей идеи к нескольким частным, от глобальных обобщений — к объяснению частностей, а от частных результатов — к более общим идеям.</p>
+      </div>
+    </section>
+
+    <!-- Заключение -->
+    <section id="conclusions">
+      <h2>Заключение и выводы</h2>
+      <ol>
+        <li><strong>Теоретический синтез античной мысли:</strong> преодолев гераклитовский релятивизм Кратила и натурфилософский материализм, Платон объединил сократовскую этику с пифагорейской математикой в целостную систему объективного идеализма.</li>
+        <li><strong>Институционализация высшего образования:</strong> основанная Платоном в 386 г. до н. э. Академия утвердила бесплатный, открытый характер научных исследований и на 915 лет стала эталоном европейского университета.</li>
+        <li><strong>Двумирная онтология:</strong> радикальное разграничение преходящего мира физических явлений («теней») и непреходящего царства умопостигаемых благих сущностей («идей») сформировало категориальный фундамент европейской метафизики.</li>
+        <li><strong>Математическая космология:</strong> в диалоге <em>«Тимей»</em> Платон заложил основы теоретического естествознания: космос разумен, целесообразен, а четыре стихии сводятся к строгим пространственным законам геометрии (платоновым телам).</li>
+        <li><strong>Гносеологический рационализм:</strong> утвердив учение об анамнезисе и отвергнув чувства в пользу чистых понятий и математического размышления, Платон навсегда провозгласил примат теории и доказательного разума над эмпирической иллюзией.</li>
+        <li><strong>Диалектика как метод познания:</strong> определив диалектику как умение спрашивать и отвечать, как искусство живого собеседования об идеях и как логическую теорию соединения и разъединения понятий, Платон создал методологический инструментарий, ставший истоком европейской диалектической традиции.</li>
+        <li><strong>Ценность «физики» Платона:</strong> учение об идеях, иерархии и всеобщей взаимосвязи заложило теоретические основания научного познания — поиск незримых сущностей и закономерностей, стоящих за чувственной видимостью, и требование логического доказательства истинности знания.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Курс «История и философия науки» • Лекция №2: Философия Платона (Полная версия)</p>
+    </footer>
+  </main>
+</div>
+
+<!-- ===== Плеер озвучки лекции ===== -->
+<audio id="ttsAudio" preload="metadata"></audio>
+<div class="tts-panel" id="ttsPanel" role="region" aria-label="Озвучка лекции">
+  <div class="tts-bar">
+    <button class="tts-btn tts-play" id="ttsPlay" type="button" aria-label="Слушать лекцию" title="Слушать / пауза">
+      <svg class="tts-i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="tts-i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+    </button>
+    <div class="tts-meta">
+      <div class="tts-title" id="ttsTitle">Озвучка лекции</div>
+      <div class="tts-counter" id="ttsCounter">Нейро-озвучка · нажмите ▶</div>
+    </div>
+    <div class="tts-actions">
+      <button class="tts-btn" id="ttsPrev" type="button" aria-label="Предыдущий раздел" title="Предыдущий раздел">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3 6 9-6v12z"/></svg>
+      </button>
+      <button class="tts-btn" id="ttsNext" type="button" aria-label="Следующий раздел" title="Следующий раздел">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6h-2v12h2zM6 6v12l9-6z"/></svg>
+      </button>
+      <button class="tts-btn" id="ttsStop" type="button" aria-label="Остановить" title="Остановить">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+      </button>
+      <button class="tts-btn" id="ttsSettingsBtn" type="button" aria-label="Настройки озвучки" title="Настройки: голос, скорость">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </button>
+      <button class="tts-btn" id="ttsMinimize" type="button" aria-label="Свернуть плеер" title="Свернуть плеер">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="tts-seek">
+    <span class="tts-time" id="ttsCur">0:00</span>
+    <div class="tts-track" id="ttsTrack" role="slider" tabindex="0" aria-label="Перемотка лекции" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="tts-fill" id="ttsFill"></div>
+      <span class="tts-knob" id="ttsKnob"></span>
+    </div>
+    <span class="tts-time" id="ttsDur">0:00</span>
+  </div>
+  <div class="tts-settings" id="ttsSettings">
+    <label class="tts-field">
+      <span>Голос</span>
+      <select id="ttsVoice">
+        <option value="baya">Женский — нейро (Бая)</option>
+        <option value="aidar">Мужской — нейро (Айдар)</option>
+      </select>
+    </label>
+    <label class="tts-field">
+      <span>Скорость <b id="ttsRateVal">1,0×</b></span>
+      <input type="range" id="ttsRate" min="0.5" max="2" step="0.1" value="1">
+    </label>
+    <label class="tts-check">
+      <input type="checkbox" id="ttsFollow" checked>
+      <span>Автопрокрутка</span>
+    </label>
+    <button class="tts-btn tts-wide" id="ttsRestart" type="button" title="Начать лекцию с начала">С начала</button>
+    <p class="tts-hint" id="ttsHint" hidden></p>
+  </div>
+</div>
+
+<button class="tts-fab" id="ttsFab" type="button" aria-label="Открыть плеер озвучки" title="Открыть плеер озвучки">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L8 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+</button>
+
+<script>
+(function () {
+  "use strict";
+
+  var CHAPTERS = {
+  "baya": [
+    {
+      "title": "Введение",
+      "start": 0.0
+    },
+    {
+      "title": "Введение и план курса",
+      "start": 21.025
+    },
+    {
+      "title": "1. Жизнь и становление Платона",
+      "start": 94.775
+    },
+    {
+      "title": "2. Корпус текстов и периодизация наследия",
+      "start": 456.988
+    },
+    {
+      "title": "3. Онтология Платона: идеализм и мир идей",
+      "start": 591.85
+    },
+    {
+      "title": "4. Физика и космология диалога «Тимей»",
+      "start": 849.812
+    },
+    {
+      "title": "5. Учение о человеке и медицина Платона",
+      "start": 1002.45
+    },
+    {
+      "title": "6. Теория познания (гносеология): учение об анамнезисе",
+      "start": 1175.7
+    },
+    {
+      "title": "Заключение и выводы",
+      "start": 1297.775
+    }
+  ],
+  "aidar": [
+    {
+      "title": "Введение",
+      "start": 0.0
+    },
+    {
+      "title": "Введение и план курса",
+      "start": 21.275
+    },
+    {
+      "title": "1. Жизнь и становление Платона",
+      "start": 97.338
+    },
+    {
+      "title": "2. Корпус текстов и периодизация наследия",
+      "start": 465.925
+    },
+    {
+      "title": "3. Онтология Платона: идеализм и мир идей",
+      "start": 603.025
+    },
+    {
+      "title": "4. Физика и космология диалога «Тимей»",
+      "start": 860.375
+    },
+    {
+      "title": "5. Учение о человеке и медицина Платона",
+      "start": 1015.1
+    },
+    {
+      "title": "6. Теория познания (гносеология): учение об анамнезисе",
+      "start": 1191.6
+    },
+    {
+      "title": "Заключение и выводы",
+      "start": 1317.05
+    }
+  ]
+};
+  var AUDIO_BASE = "audio/lecture2-";
+
+  var panel = document.getElementById("ttsPanel");
+  var fab = document.getElementById("ttsFab");
+  var audio = document.getElementById("ttsAudio");
+  if (!panel || !audio) return;
+
+  var els = {
+    play: document.getElementById("ttsPlay"),
+    prev: document.getElementById("ttsPrev"),
+    next: document.getElementById("ttsNext"),
+    stop: document.getElementById("ttsStop"),
+    settingsBtn: document.getElementById("ttsSettingsBtn"),
+    minimize: document.getElementById("ttsMinimize"),
+    restart: document.getElementById("ttsRestart"),
+    title: document.getElementById("ttsTitle"),
+    counter: document.getElementById("ttsCounter"),
+    fill: document.getElementById("ttsFill"),
+    cur: document.getElementById("ttsCur"),
+    dur: document.getElementById("ttsDur"),
+    track: document.getElementById("ttsTrack"),
+    knob: document.getElementById("ttsKnob"),
+    voice: document.getElementById("ttsVoice"),
+    rate: document.getElementById("ttsRate"),
+    rateVal: document.getElementById("ttsRateVal"),
+    follow: document.getElementById("ttsFollow"),
+    hint: document.getElementById("ttsHint")
+  };
+
+  function store(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
+  function recall(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function formatTime(seconds) {
+    if (!isFinite(seconds) || seconds < 0) seconds = 0;
+    var minutes = Math.floor(seconds / 60);
+    var rest = Math.floor(seconds % 60);
+    return minutes + ":" + (rest < 10 ? "0" : "") + rest;
+  }
+
+  var state = {
+    voice: "baya",
+    rate: 1,
+    follow: true,
+    chapter: -1,
+    dragging: false,
+    finished: false
+  };
+
+  var chapters = CHAPTERS[state.voice];
+  var pendingSeek = null;
+  var lastSave = 0;
+
+  var unitEls = [];
+  var main = document.querySelector("main.main-content") || document.querySelector("main");
+  if (main) {
+    var headerEl = main.querySelector("header");
+    if (headerEl) unitEls.push(headerEl);
+    Array.prototype.forEach.call(main.children, function (child) {
+      if (child.tagName === "SECTION") unitEls.push(child);
+    });
+  }
+
+  function duration() {
+    return isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+  }
+
+  function chapterAt(time) {
+    for (var i = chapters.length - 1; i >= 0; i--) {
+      if (time >= chapters[i].start - 0.2) return i;
+    }
+    return 0;
+  }
+
+  function updateMediaSession() {
+    if (!("mediaSession" in navigator)) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: "Лекция 2. Философия Платона",
+        artist: state.voice === "aidar" ? "Нейро-озвучка · Айдар" : "Нейро-озвучка · Бая",
+        album: "История и философия науки"
+      });
+    } catch (e) {}
+  }
+
+  function setChapter(index, scroll) {
+    if (index < 0 || index >= chapters.length) return;
+    state.chapter = index;
+    els.title.textContent = chapters[index].title;
+    els.counter.textContent = "Раздел " + (index + 1) + " из " + chapters.length;
+
+    unitEls.forEach(function (el, i) {
+      el.classList.toggle("tts-speaking", i === index);
+    });
+
+    if (scroll && state.follow) {
+      var el = unitEls[index];
+      if (el) {
+        var top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      }
+    }
+    updateMediaSession();
+  }
+
+  function render() {
+    var total = duration();
+    var current = audio.currentTime || 0;
+    var percent = total ? Math.min(100, Math.max(0, (current / total) * 100)) : 0;
+
+    els.cur.textContent = formatTime(current);
+    els.dur.textContent = formatTime(total);
+    els.fill.style.width = percent + "%";
+    els.knob.style.left = percent + "%";
+    els.track.setAttribute("aria-valuenow", String(Math.round(percent)));
+
+    if (!state.dragging && total) {
+      var index = chapterAt(current);
+      if (index !== state.chapter) setChapter(index, true);
+    }
+  }
+
+  function savePosition() {
+    var total = duration();
+    if (!total) return;
+    if (audio.currentTime > 5 && audio.currentTime < total - 8) {
+      store("tts_pos_" + state.voice, String(Math.round(audio.currentTime)));
+    } else {
+      store("tts_pos_" + state.voice, "");
+    }
+  }
+
+  function play() {
+    if (state.finished) {
+      state.finished = false;
+      audio.currentTime = 0;
+    }
+    var promise = audio.play();
+    if (promise && promise.catch) {
+      promise.catch(function () {
+        els.counter.textContent = "Нажмите ▶ ещё раз";
+      });
+    }
+  }
+
+  function nextChapter() {
+    var target = state.chapter + 1;
+    if (target >= chapters.length) {
+      audio.pause();
+      audio.currentTime = duration();
+      return;
+    }
+    audio.currentTime = chapters[target].start + 0.01;
+    setChapter(target, true);
+    render();
+    savePosition();
+  }
+
+  function prevChapter() {
+    var index = state.chapter;
+    if (index < 0) index = 0;
+    if (audio.currentTime - chapters[index].start > 4 || index === 0) {
+      audio.currentTime = chapters[index].start;
+    } else {
+      index -= 1;
+      audio.currentTime = chapters[index].start;
+      setChapter(index, true);
+    }
+    render();
+    savePosition();
+  }
+
+  function loadVoice(key, options) {
+    if (!CHAPTERS[key]) return;
+    state.voice = key;
+    chapters = CHAPTERS[key];
+    els.voice.value = key;
+    store("tts_voice", key);
+    pendingSeek = options || {};
+    audio.src = AUDIO_BASE + key + ".mp3";
+    audio.load();
+  }
+
+  function onLoaded() {
+    var total = duration();
+    els.dur.textContent = formatTime(total);
+
+    var target = 0;
+    if (pendingSeek && pendingSeek.chapter != null) {
+      var chapter = chapters[pendingSeek.chapter] || chapters[0];
+      target = chapter.start + (pendingSeek.offset || 0);
+    } else if (pendingSeek && pendingSeek.restore) {
+      var saved = parseFloat(recall("tts_pos_" + state.voice));
+      if (saved > 5 && saved < total - 8) target = saved;
+    }
+
+    target = Math.min(Math.max(0, target), Math.max(0, total - 0.5));
+    audio.currentTime = target;
+    state.chapter = -1;
+    setChapter(chapterAt(target), false);
+    render();
+
+    if (pendingSeek && pendingSeek.play) play();
+    pendingSeek = null;
+  }
+
+  function switchVoice(key) {
+    if (key === state.voice || !CHAPTERS[key]) return;
+    var wasPlaying = !audio.paused;
+    var index = state.finished ? 0 : state.chapter;
+    var offset = state.finished ? 0 : Math.max(0, audio.currentTime - (chapters[index] ? chapters[index].start : 0));
+    savePosition();
+    state.finished = false;
+    loadVoice(key, { chapter: index, offset: offset, play: wasPlaying });
+  }
+
+  function seekToPointer(event) {
+    var total = duration();
+    if (!total) return;
+    var rect = els.track.getBoundingClientRect();
+    var ratio = (event.clientX - rect.left) / rect.width;
+    ratio = Math.min(1, Math.max(0, ratio));
+    audio.currentTime = ratio * total;
+    state.finished = false;
+    render();
+  }
+
+  els.play.addEventListener("click", function () {
+    if (audio.paused) play();
+    else audio.pause();
+  });
+
+  els.next.addEventListener("click", nextChapter);
+  els.prev.addEventListener("click", prevChapter);
+
+  els.stop.addEventListener("click", function () {
+    audio.pause();
+    var index = state.chapter < 0 ? 0 : state.chapter;
+    audio.currentTime = chapters[index].start;
+    savePosition();
+    render();
+  });
+
+  els.restart.addEventListener("click", function () {
+    state.finished = false;
+    audio.currentTime = 0;
+    setChapter(0, true);
+    render();
+    savePosition();
+  });
+
+  els.settingsBtn.addEventListener("click", function () {
+    panel.classList.toggle("is-open");
+  });
+
+  els.minimize.addEventListener("click", function () {
+    panel.hidden = true;
+    fab.classList.add("is-visible");
+  });
+
+  fab.addEventListener("click", function () {
+    panel.hidden = false;
+    fab.classList.remove("is-visible");
+  });
+
+  els.voice.addEventListener("change", function () {
+    switchVoice(els.voice.value);
+  });
+
+  els.rate.addEventListener("input", function () {
+    state.rate = parseFloat(els.rate.value) || 1;
+    audio.playbackRate = state.rate;
+    if ("preservesPitch" in audio) audio.preservesPitch = true;
+    els.rateVal.textContent = state.rate.toFixed(1).replace(".", ",") + "×";
+    store("tts_rate", String(state.rate));
+  });
+
+  els.follow.addEventListener("change", function () {
+    state.follow = els.follow.checked;
+    store("tts_follow", state.follow ? "1" : "0");
+  });
+
+  els.track.addEventListener("pointerdown", function (event) {
+    state.dragging = true;
+    try { els.track.setPointerCapture(event.pointerId); } catch (e) {}
+    seekToPointer(event);
+    event.preventDefault();
+  });
+
+  els.track.addEventListener("pointermove", function (event) {
+    if (state.dragging) seekToPointer(event);
+  });
+
+  ["pointerup", "pointercancel"].forEach(function (name) {
+    els.track.addEventListener(name, function (event) {
+      if (!state.dragging) return;
+      state.dragging = false;
+      try { els.track.releasePointerCapture(event.pointerId); } catch (e) {}
+      savePosition();
+    });
+  });
+
+  els.track.addEventListener("keydown", function (event) {
+    var total = duration();
+    if (!total) return;
+    var step = event.shiftKey ? 30 : 5;
+    if (event.key === "ArrowRight") {
+      audio.currentTime = Math.min(total, audio.currentTime + step);
+      event.preventDefault();
+      render();
+    } else if (event.key === "ArrowLeft") {
+      audio.currentTime = Math.max(0, audio.currentTime - step);
+      event.preventDefault();
+      render();
+    } else if (event.key === "Home") {
+      audio.currentTime = 0;
+      event.preventDefault();
+      render();
+    } else if (event.key === "End") {
+      audio.currentTime = total;
+      event.preventDefault();
+      render();
+    }
+  });
+
+  audio.addEventListener("loadedmetadata", onLoaded);
+
+  audio.addEventListener("play", function () {
+    panel.classList.add("is-playing");
+    fab.classList.add("is-live");
+  });
+
+  audio.addEventListener("pause", function () {
+    panel.classList.remove("is-playing");
+    fab.classList.remove("is-live");
+    savePosition();
+  });
+
+  audio.addEventListener("timeupdate", function () {
+    render();
+    if (Date.now() - lastSave > 3000) {
+      lastSave = Date.now();
+      savePosition();
+    }
+    if ("mediaSession" in navigator && duration()) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: duration(),
+          playbackRate: audio.playbackRate,
+          position: Math.min(audio.currentTime, duration())
+        });
+      } catch (e) {}
+    }
+  });
+
+  audio.addEventListener("ended", function () {
+    state.finished = true;
+    panel.classList.remove("is-playing");
+    fab.classList.remove("is-live");
+    els.title.textContent = "Лекция прослушана";
+    els.counter.textContent = "Нажмите ▶, чтобы начать заново";
+    els.fill.style.width = "100%";
+    els.knob.style.left = "100%";
+    store("tts_pos_" + state.voice, "");
+    unitEls.forEach(function (el) { el.classList.remove("tts-speaking"); });
+  });
+
+  audio.addEventListener("error", function () {
+    els.title.textContent = "Аудио не найдено";
+    els.counter.textContent = "Проверьте папку audio рядом с файлом";
+    els.hint.hidden = false;
+    els.hint.textContent = "Не удалось открыть нейро-озвучку. Папка audio с файлами lecture2-baya.mp3 и lecture2-aidar.mp3 должна лежать рядом с этим HTML-файлом.";
+  });
+
+  if ("mediaSession" in navigator) {
+    try {
+      navigator.mediaSession.setActionHandler("play", play);
+      navigator.mediaSession.setActionHandler("pause", function () { audio.pause(); });
+      navigator.mediaSession.setActionHandler("stop", function () {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      navigator.mediaSession.setActionHandler("previoustrack", prevChapter);
+      navigator.mediaSession.setActionHandler("nexttrack", nextChapter);
+      navigator.mediaSession.setActionHandler("seekbackward", function () {
+        audio.currentTime = Math.max(0, audio.currentTime - 15);
+      });
+      navigator.mediaSession.setActionHandler("seekforward", function () {
+        audio.currentTime = Math.min(duration(), audio.currentTime + 15);
+      });
+    } catch (e) {}
+  }
+
+  window.addEventListener("pagehide", savePosition);
+
+  var savedRate = parseFloat(recall("tts_rate"));
+  if (savedRate >= 0.5 && savedRate <= 2) state.rate = savedRate;
+  state.follow = recall("tts_follow") !== "0";
+  var savedVoice = recall("tts_voice");
+  if (CHAPTERS[savedVoice]) state.voice = savedVoice;
+
+  els.rate.value = state.rate;
+  els.rateVal.textContent = state.rate.toFixed(1).replace(".", ",") + "×";
+  els.follow.checked = state.follow;
+  els.voice.value = state.voice;
+  audio.playbackRate = state.rate;
+  if ("preservesPitch" in audio) audio.preservesPitch = true;
+
+  updateMediaSession();
+  loadVoice(state.voice, { restore: true });
+})();
+</script>
+
+
+<!-- Mobile Back Button -->
+<a href="index.html" class="mobile-nav-pill" style="position:fixed; bottom:20px; right:20px; z-index:9999; background:#2563eb; color:#ffffff; padding:10px 18px; border-radius:30px; font-weight:600; font-size:0.86rem; text-decoration:none; box-shadow:0 4px 18px rgba(37,99,235,0.4); display:inline-flex; align-items:center; gap:6px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; transition:transform 0.15s; -webkit-tap-highlight-color:transparent;">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+  Меню
+</a>
+</body>
+
+</html>

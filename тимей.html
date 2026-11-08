@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Платон — Тимей (51c–79e) | Apple Books Edition</title>
+  <style>
+    :root {
+      --bg: #f5f0e6;
+      --text: #2c2724;
+      --accent: #8c5825;
+      --accent-light: rgba(140, 88, 37, 0.12);
+      --card-bg: #fcf9f2;
+      --stephanus: #9e9382;
+      --border: #e6dfd1;
+      --active-passage: #eedfc7;
+      --sheet-bg: #faf6ee;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system-ui-serif, "New York", "Charter", "Georgia", serif;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      padding-bottom: 120px;
+    }
+
+    /* Верхняя панель */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(245, 240, 230, 0.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .book-title {
+      font-family: -apple-system, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .bar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .icon-btn {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.78rem;
+      font-family: -apple-system, sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .book-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .book-header h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 6px; }
+    .book-header p {
+      font-family: -apple-system, sans-serif;
+      font-size: 0.82rem;
+      color: #786f63;
+    }
+
+    /* Фрагменты текста */
+    .passage {
+      position: relative;
+      margin-bottom: 22px;
+      padding: 14px;
+      border-radius: 14px;
+      background: transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .passage:hover { background: rgba(140, 88, 37, 0.05); }
+    .passage.active-playing {
+      background: var(--active-passage);
+      border-color: var(--accent);
+      box-shadow: 0 4px 15px rgba(140, 88, 37, 0.1);
+    }
+
+    .passage-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .stephanus-badge {
+      font-family: -apple-system, monospace;
+      font-size: 0.75rem;
+      color: var(--stephanus);
+      font-weight: 700;
+    }
+    .passage-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+
+    .passage-text {
+      font-family: -apple-system-ui-serif, Georgia, serif;
+      line-height: 1.75;
+      font-size: 1.02rem;
+    }
+    .passage-text p {
+      margin-bottom: 0.85em;
+    }
+    .passage-text p:last-child {
+      margin-bottom: 0;
+    }
+    .mini-play-btn {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1;
+    }
+    .mini-play-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .passage.active-playing .mini-play-btn {
+      background: var(--accent);
+      color: #fff;
+    }
+    .sheet-play-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: -apple-system, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(140, 88, 37, 0.25);
+    }
+    .sheet-play-btn:hover {
+      opacity: 0.92;
+    }
+    .stephanus {
+      font-family: -apple-system, monospace;
+      font-size: 0.74rem;
+      color: var(--stephanus);
+      font-weight: bold;
+      vertical-align: super;
+      user-select: none;
+      margin-right: 2px;
+    }
+
+    .tap-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-family: -apple-system, sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      user-select: none;
+    }
+
+    /* Нижняя панель плеера */
+    .audio-player-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(245, 240, 230, 0.98);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 10px 16px 14px 16px;
+      z-index: 60;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+    }
+    .player-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .player-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: -apple-system, sans-serif;
+      font-size: 0.78rem;
+      color: #6b6357;
+      margin-bottom: 8px;
+    }
+    .now-reading-title {
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 65%;
+    }
+    .player-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ctrl-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .play-btn {
+      background: var(--accent);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      box-shadow: 0 3px 10px rgba(140, 88, 37, 0.3);
+    }
+    .mode-select, .speed-btn {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: -apple-system, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* iOS Шторка (Bottom Sheet) */
+    .sheet-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .sheet-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .bottom-sheet {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: var(--sheet-bg);
+      color: var(--text);
+      border-radius: 22px 22px 0 0;
+      z-index: 101;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.25);
+    }
+    .bottom-sheet.active { transform: translateY(0); }
+
+    .sheet-handle {
+      width: 40px; height: 5px;
+      background: #c7beaf;
+      border-radius: 4px;
+      margin: 10px auto 4px auto;
+    }
+    .sheet-header {
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .sheet-title {
+      font-family: -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+    .close-btn {
+      background: rgba(0,0,0,0.06);
+      border: none;
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #6b6357;
+    }
+    .sheet-body {
+      padding: 18px;
+      overflow-y: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      -webkit-overflow-scrolling: touch;
+    }
+    .quote-box {
+      background: rgba(140, 88, 37, 0.08);
+      border-left: 3.5px solid var(--accent);
+      padding: 10px 14px;
+      font-family: -apple-system-ui-serif, Georgia, serif;
+      font-size: 0.92rem;
+      font-style: italic;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+    }
+    .sheet-body h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sheet-body ul { margin-left: 18px; margin-bottom: 12px; }
+    .sheet-body li { margin-bottom: 6px; }
+
+    /* ==========================================
+       МОДАЛЬНОЕ ОКНО ЛЕКЦИЙ И МАТЕРИАЛОВ КУРСА
+       ========================================== */
+    .lectures-modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 92%; max-width: 600px;
+      max-height: 82vh;
+      background: var(--sheet-bg);
+      border-radius: 20px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+      z-index: 110;
+      display: none;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+    .lectures-modal.active {
+      display: flex;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .lectures-list {
+      padding: 16px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: -apple-system, sans-serif;
+    }
+    .lecture-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+    .lecture-card:hover {
+      background: var(--active-passage);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .lecture-card.active {
+      border-color: var(--accent);
+      background: rgba(196, 155, 102, 0.12);
+    }
+    .lecture-card-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+    }
+    .lecture-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .lecture-card-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--stephanus);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .lecture-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .lecture-card-desc {
+      font-size: 0.78rem;
+      color: #9c9488;
+      line-height: 1.4;
+    }
+    .lecture-card-arrow {
+      font-size: 1.1rem;
+      color: var(--stephanus);
+      flex-shrink: 0;
+      transition: transform 0.15s, color 0.15s;
+    }
+    .lecture-card:hover .lecture-card-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    /* ==========================================
+       ХАЙЛАЙТЫ И МАРКЕРЫ В ТЕКСТЕ
+       ========================================== */
+    .user-hl {
+      padding: 1px 3px;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .user-hl.hl-yellow {
+      background: rgba(254, 240, 138, 0.32);
+      color: #fff9db;
+      border-bottom: 2px solid #eab308;
+    }
+    .user-hl.hl-green {
+      background: rgba(187, 247, 208, 0.32);
+      color: #e6ffed;
+      border-bottom: 2px solid #22c55e;
+    }
+    .user-hl.hl-blue {
+      background: rgba(186, 230, 253, 0.32);
+      color: #e0f2fe;
+      border-bottom: 2px solid #0ea5e9;
+    }
+    .user-hl.hl-pink {
+      background: rgba(251, 207, 232, 0.32);
+      color: #fdf2f8;
+      border-bottom: 2px solid #ec4899;
+    }
+    .user-hl:hover {
+      filter: brightness(1.22);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+
+    @keyframes hlGlowPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.95);
+        outline: 2px solid rgba(234, 179, 8, 1);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 28px 10px rgba(234, 179, 8, 0.75);
+        outline: 3px solid rgba(234, 179, 8, 1);
+        transform: scale(1.025);
+      }
+      70% {
+        box-shadow: 0 0 16px 5px rgba(234, 179, 8, 0.4);
+        outline: 2px solid rgba(234, 179, 8, 0.7);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0);
+        outline: 2px solid transparent;
+        transform: scale(1);
+      }
+    }
+    .hl-glow-pulse {
+      animation: hlGlowPulse 2.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+      display: inline-block;
+      border-radius: 4px;
+    }
+
+    /* Всплывающая плавающая панель маркерных цветов при выделении */
+    .hl-floating-toolbar {
+      position: absolute;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      background: rgba(24, 22, 19, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(196, 155, 102, 0.45);
+      border-radius: 30px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      z-index: 150;
+      user-select: none;
+      animation: hlPop 0.18s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+    .hl-floating-toolbar.visible {
+      display: flex;
+    }
+    @keyframes hlPop {
+      0% { opacity: 0; transform: translateY(6px) scale(0.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .hl-color-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .hl-color-btn:hover {
+      transform: scale(1.22);
+      border-color: #fff;
+    }
+    .hl-color-btn.yellow { background: #facc15; }
+    .hl-color-btn.green  { background: #4ade80; }
+    .hl-color-btn.blue   { background: #38bdf8; }
+    .hl-color-btn.pink   { background: #f472b6; }
+    .hl-toolbar-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.18);
+      margin: 0 2px;
+    }
+    .hl-toolbar-btn {
+      background: transparent;
+      border: none;
+      color: #d8d0c5;
+      font-size: 0.88rem;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .hl-toolbar-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Быстрое меню по клику на существующий хайлайт в тексте */
+    .hl-quick-popup {
+      position: absolute;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      background: rgba(24, 22, 19, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(196, 155, 102, 0.45);
+      border-radius: 20px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+      z-index: 150;
+      animation: hlPop 0.15s ease-out;
+    }
+    .hl-quick-popup.visible {
+      display: flex;
+    }
+
+    /* Модальное окно хайлайтов и цитат */
+    .highlights-modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 92%; max-width: 580px;
+      max-height: 82vh;
+      background: var(--sheet-bg);
+      border-radius: 20px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+      z-index: 110;
+      display: none;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+    .highlights-modal.active {
+      display: flex;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .hl-modal-tools {
+      padding: 14px 18px 10px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hl-search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .hl-search-input:focus {
+      border-color: var(--accent);
+    }
+    .hl-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .hl-filter-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .hl-filter-chip:hover {
+      border-color: var(--accent);
+    }
+    .hl-filter-chip.active {
+      background: rgba(196, 155, 102, 0.2);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .hl-list {
+      padding: 14px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: -apple-system, sans-serif;
+    }
+    .hl-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hl-item:hover {
+      background: var(--active-passage);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .hl-item.border-yellow { border-left-color: #eab308; }
+    .hl-item.border-green  { border-left-color: #22c55e; }
+    .hl-item.border-blue   { border-left-color: #0ea5e9; }
+    .hl-item.border-pink   { border-left-color: #ec4899; }
+
+    .hl-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hl-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hl-item-tag {
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: var(--stephanus);
+      font-weight: 700;
+      background: rgba(140, 130, 115, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .hl-item-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .hl-item-date {
+      font-size: 0.7rem;
+      color: #78716c;
+    }
+    .hl-item-quote {
+      font-family: -apple-system-ui-serif, Georgia, serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #e7e5e4;
+      font-style: italic;
+      padding: 6px 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      word-break: break-word;
+    }
+    .hl-item-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .hl-action-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.75rem;
+      padding: 5px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .hl-action-btn:hover {
+      background: rgba(196, 155, 102, 0.2);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .hl-action-btn.del-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+    .hl-empty {
+      text-align: center;
+      padding: 35px 20px;
+      color: #8c8273;
+    }
+
+    /* Прогресс-бар аудиоплеера */
+    .audio-progress-wrap {
+      width: 100%;
+      height: 5px;
+      background: rgba(140, 88, 37, 0.16);
+      border-radius: 3px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      position: relative;
+      transition: height 0.15s;
+    }
+    .audio-progress-wrap:hover {
+      height: 8px;
+    }
+    .audio-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    .audio-time-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: #8c8273;
+      margin-bottom: 6px;
+      font-family: -apple-system, monospace;
+    }
+    .engine-badge {
+      font-family: -apple-system, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .engine-badge:hover {
+      background: var(--active-passage);
+      transform: scale(1.03);
+    }
+
+    
+    .settings-hint a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    .engine-toggle-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .engine-toggle-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .engine-toggle-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(140, 88, 37, 0.15);
+    }
+    .play-btn.loading {
+      animation: pulse 1s infinite alternate;
+      background: #b4783b;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.96); opacity: 0.85; }
+      100% { transform: scale(1.04); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Фоновое аудио для предотвращения засыпания плеера при выключении экрана -->
+  <audio id="silentAudio" loop preload="auto">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
+
+  <!-- Верхняя строка -->
+  <div class="top-bar">
+    <div class="book-title">Платон • Тимей</div>
+    <div class="bar-actions">
+      <button class="icon-btn" onclick="openLecturesModal()" title="Лекции курса и материалы"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px; margin-right: 5px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>Лекции</button>
+      <button class="icon-btn" onclick="openHighlightsModal()" title="Сохраненные цитаты"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px; margin-right: 5px;"><path d="m9 11-6 6v3h3l6-6"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path></svg>Хайлайты (<span id="hlCount">0</span>)</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="book-header">
+      <h1>Тимей</h1>
+      <p>Полный текст диалога (51c — 79e)<br>Нажми на любой фрагмент для разбора или включи озвучку внизу</p>
+    </div>
+
+    <!-- Текстовый контейнер (генерируется со 100% сохранением всех слов) -->
+    <div id="passagesList"></div>
+  </div>
+
+  <!-- Панель аудиоплеера -->
+  <div class="audio-player-bar">
+    <div class="player-inner">
+      <div class="player-info">
+        <span class="now-reading-title" id="playerTitle">Готов к чтению</span>
+        <span class="engine-badge" id="audioEngineBadge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>Аудиокнига</span>
+      </div>
+      <div class="audio-progress-wrap"<div class="audio-progress-wrap" id="progressWrap" onclick="seekAudio(event)" title="Нажмите для перемотки">
+        <div class="audio-progress-bar" id="progressBar"></div>
+      </div>
+      <div class="audio-time-row">
+        <span id="currentTime">0:00</span>
+        <span id="playerSubTitle" style="font-size: 0.72rem; color: #8c8273;">Студийная начитка диалога</span>
+        <span id="totalTime">0:00</span>
+      </div>
+      <div class="player-controls">
+        <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()" title="Скорость воспроизведения">1.0x</button>
+        <div class="main-controls">
+          <button class="ctrl-btn" onclick="playPrev()" title="Предыдущий фрагмент"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+          <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()" title="Воспроизведение / Пауза"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="ctrl-btn" onclick="playNext()" title="Следующий фрагмент"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+        </div>
+        <button class="icon-btn" onclick="stopAudio()" title="Остановить"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px; margin-right: 4px;"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Шторка разбора -->
+  <div class="sheet-overlay" id="overlay" onclick="closeAllModals()"></div>
+  <div class="bottom-sheet" id="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title" id="sheetTitle">Разбор</div>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="sheet-body" id="sheetBody"></div>
+  </div>
+
+  <!-- Плавающая панель маркерных цветов при выделении текста -->
+  <div class="hl-floating-toolbar" id="hlFloatingToolbar">
+    <div class="hl-color-btn yellow" onclick="applyHighlight('yellow')" title="Желтый маркер"></div>
+    <div class="hl-color-btn green" onclick="applyHighlight('green')" title="Зеленый маркер"></div>
+    <div class="hl-color-btn blue" onclick="applyHighlight('blue')" title="Голубой маркер"></div>
+    <div class="hl-color-btn pink" onclick="applyHighlight('pink')" title="Розовый маркер"></div>
+    <div class="hl-toolbar-sep"></div>
+    <button class="hl-toolbar-btn" onclick="copySelectedText()" title="Скопировать цитату"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="hideHlToolbar()" title="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+  </div>
+    <div class="hl-color-btn green" onclick="applyHighlight('green')" title="Зеленый маркер"></div>
+    <div class="hl-color-btn blue" onclick="applyHighlight('blue')" title="Голубой маркер"></div>
+    <div class="hl-color-btn pink" onclick="applyHighlight('pink')" title="Розовый маркер"></div>
+    <div class="hl-toolbar-sep"></div>
+    <button class="hl-toolbar-btn" onclick="copySelectedText()" title="Скопировать выделенную цитату"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="hideHlToolbar()" title="Закрыть панель">✕</button>
+  </div>
+
+  <!-- Быстрое меню по клику на существующий хайлайт в тексте -->
+  <div class="hl-quick-popup" id="hlQuickPopup">
+    <div class="hl-color-btn yellow" onclick="changeCurrentHighlightColor('yellow')" title="Желтый"></div>
+    <div class="hl-color-btn green" onclick="changeCurrentHighlightColor('green')" title="Зеленый"></div>
+    <div class="hl-color-btn blue" onclick="changeCurrentHighlightColor('blue')" title="Голубой"></div>
+    <div class="hl-color-btn pink" onclick="changeCurrentHighlightColor('pink')" title="Розовый"></div>
+    <div class="hl-toolbar-sep"></div>
+    <button class="hl-toolbar-btn" onclick="copyCurrentHighlightQuote()" title="Копировать цитату"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="deleteCurrentHighlight()" title="Удалить хайлайт" style="color:#ef4444;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="hideHlQuickPopup()" title="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+  </div>
+    <div class="hl-color-btn green" onclick="changeCurrentHighlightColor('green')" title="Зеленый"></div>
+    <div class="hl-color-btn blue" onclick="changeCurrentHighlightColor('blue')" title="Голубой"></div>
+    <div class="hl-color-btn pink" onclick="changeCurrentHighlightColor('pink')" title="Розовый"></div>
+    <div class="hl-toolbar-sep"></div>
+    <button class="hl-toolbar-btn" onclick="copyCurrentHighlightQuote()" title="Копировать цитату"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="deleteCurrentHighlight()" title="Удалить хайлайт" style="color:#ef4444;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+    <button class="hl-toolbar-btn" onclick="hideHlQuickPopup()" title="Закрыть">✕</button>
+  </div>
+
+  <!-- Модальное окно лекций и материалов курса -->
+  <div class="lectures-modal" id="lecturesModal">
+    <div class="sheet-header">
+      <div class="sheet-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px; margin-right: 5px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>Материалы курса и лекции</div>
+      <button class="close-btn" onclick="closeAllModals()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="lectures-list">
+      
+      <!-- Текущий диалог -->
+      <a href="index.html" class="lecture-card active">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17V5a2 2 0 0 0-2-2H4"></path><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"></path><path d="M8 21v-4a2 2 0 0 1 2-2h9"></path></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Текущий материал</div>
+          <div class="lecture-card-title">Платон — Диалог «Тимей» (51c — 79e)</div>
+          <div class="lecture-card-desc">30 ключевых фрагментов текста со студийной аудиокнигой, разбором каждого отрывка и маркерами.</div>
+        </div>
+        <div class="lecture-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </a>
+
+      <!-- Лекция 1 -->
+      <a href="lecture1.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="20" y2="21"></line><line x1="4" y1="3" x2="20" y2="3"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Лекция 1</div>
+          <div class="lecture-card-title">Предпосылки возникновения науки в античности</div>
+          <div class="lecture-card-desc">От мифа к логосу: Милетская школа, элеаты, пифагорейцы, софисты, Академия Платона и Ликей Аристотеля.</div>
+        </div>
+        <div class="lecture-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+      </a>
+
+      <!-- Лекция 2 -->
+      <a href="lecture2.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0-7-7h1"></path><circle cx="9" cy="9" r="2"></circle><path d="m14 5 3-3 4 4-3 3"></path><path d="m12 7 5 5"></path></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Лекция 2 </div>
+          <div class="lecture-card-title">Философия и натурфилософия Платона</div>
+          <div class="lecture-card-desc">Полное академическое руководство: демиург, четыре элемента, геометрический атомизм и аудиогид (Байя / Айдар).</div>
+        </div>
+        <div class="lecture-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+      </a>
+
+      <!-- Тест -->
+      <a href="test_lecture1.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Самопроверка</div>
+          <div class="lecture-card-title">Интерактивный тест: Лекция 1</div>
+          <div class="lecture-card-desc">10 проверочных вопросов по ключевым концепциям ранней греческой натурфилософии с мгновенным результатом.</div>
+        </div>
+        <div class="lecture-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+      </a>
+
+      <!-- Пересказ -->
+      <a href="timay_summary_17-30.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Конспект</div>
+          <div class="lecture-card-title">«Тимей» (§§17–30) — Полный пересказ</div>
+          <div class="lecture-card-desc">Аналитический конспект-пересказ с цитатами: рождение космоса, геометрия стихий и механика природы.</div>
+        </div>
+        <div class="lecture-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+      </a>
+
+    </div>
+  </div>
+        <div class="lecture-card-arrow">✓</div>
+      </a>
+
+      <!-- Лекция 1 -->
+      <a href="lecture1.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="20" y2="21"></line><line x1="4" y1="3" x2="20" y2="3"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Лекция 1</div>
+          <div class="lecture-card-title">Предпосылки возникновения науки в античности</div>
+          <div class="lecture-card-desc">От мифа к логосу: Милетская школа, элеаты, пифагорейцы, софисты, Академия Платона и Ликей Аристотеля.</div>
+        </div>
+        <div class="lecture-card-arrow">➜</div>
+      </a>
+
+      <!-- Лекция 2 -->
+      <a href="lecture2.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0-7-7h1"></path><circle cx="9" cy="9" r="2"></circle><path d="m14 5 3-3 4 4-3 3"></path><path d="m12 7 5 5"></path></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Лекция 2  </div>
+          <div class="lecture-card-title">Философия и натурфилософия Платона</div>
+          <div class="lecture-card-desc">Полное академическое руководство: демиург, четыре элемента, геометрический атомизм и аудиогид (Байя / Айдар).</div>
+        </div>
+        <div class="lecture-card-arrow">➜</div>
+      </a>
+
+      <!-- Тест -->
+      <a href="test_lecture1.html" class="lecture-card">
+        <div class="lecture-card-icon">✍️</div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Самопроверка</div>
+          <div class="lecture-card-title">Интерактивный тест: Лекция 1</div>
+          <div class="lecture-card-desc">10 тестовых вопросов по ключевым концепциям ранней греческой натурфилософии с мгновенным результатом.</div>
+        </div>
+        <div class="lecture-card-arrow">➜</div>
+      </a>
+
+      <!-- Пересказ -->
+      <a href="timay_summary_17-30.html" class="lecture-card">
+        <div class="lecture-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+        <div class="lecture-card-content">
+          <div class="lecture-card-badge">Конспект</div>
+          <div class="lecture-card-title">«Тимей» (§§17–30) — Полный пересказ</div>
+          <div class="lecture-card-desc">Аналитический конспект-пересказ с цитатами: рождение космоса, геометрия стихий и механика природы.</div>
+        </div>
+        <div class="lecture-card-arrow">➜</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Модалка хайлайтов и цитат -->
+  <div class="highlights-modal" id="highlightsModal">
+    <div class="sheet-header">
+      <div class="sheet-title">Ваши хайлайты (<span id="hlCountModal">0</span>)</div>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="hl-modal-tools">
+      <input type="text" class="hl-search-input" id="hlSearchInput" placeholder="Поиск по сохраненным цитатам..." oninput="onHlSearchInput(this.value)">
+      <div class="hl-filter-bar">
+        <div class="hl-filter-chip active" id="filterChip-all" onclick="setHighlightFilter('all')">Все цвета</div>
+        <div class="hl-filter-chip" id="filterChip-yellow" onclick="setHighlightFilter('yellow')"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#facc15;margin-right:4px;"></span> Желтые</div>
+        <div class="hl-filter-chip" id="filterChip-green" onclick="setHighlightFilter('green')"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#4ade80;margin-right:4px;"></span> Зеленые</div>
+        <div class="hl-filter-chip" id="filterChip-blue" onclick="setHighlightFilter('blue')"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#38bdf8;margin-right:4px;"></span> Голубые</div>
+        <div class="hl-filter-chip" id="filterChip-pink" onclick="setHighlightFilter('pink')"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#f472b6;margin-right:4px;"></span> Розовые</div>
+      </div>
+    </div>
+    <div class="hl-list" id="hlList"></div>
+  </div>
+
+  
+    </div>
+  </div>
+
+  <script>
+    // БАЗА ДАННЫХ: Полный текст (100% без сокращений) и все разборы
+    const DATA = [
+      {
+        id: 1,
+        steph: "51c – 51e",
+        title: "1. Ум и истинное мнение (Бытие Идей)",
+        text: `Однако нам следует определить наш предмет еще более точно и для этого рассмотреть, есть ли такая вещь, как огонь сам по себе, и обстоит ли дело таким же образом с прочими вещами, о каждой из которых мы привыкли говорить как о существующей самой по себе? cИли же только то, что мы видим либо вообще воспринимаем телесными ощущениями, обладает подобной истинностью, а помимо этого вообще ничего и нигде нет? Может быть, мы понапрасну говорим об умопостигаемой идее каждой вещи, и идея эта не более чем слово? Нехорошо было бы оставить такой вопрос неисследованным и нерешенным, ограничившись простым утверждением, что дело-де обстоит так и не иначе; с другой стороны, не стоит отягощать нашу и так пространную речь еще и пространным отступлением. dПоэтому, если бы удалось в немногих словах определить многое, это было бы наилучшим выходом. Итак, вот каков мой приговор. Если ум и истинное мнение – два разных рода, в таком случае идеи, недоступные нашим ощущениям и постигаемые одним лишь умом, безусловно, существуют сами по себе; если же, как представляется некоторым, истинное мнение ничем не отличается от ума, тогда следует приписать наибольшую достоверность тому, что воспринимается телесными ощущениями. Но следует признать, что это – два различных [рода]: они и рождены порознь, и осуществляют себя неодинаково. eТак, ум рождается в нас от наставления, а истинное мнение – от убеждения; первый всегда способен отдать себе во всем правильный отчет, второе – безотчетно; первый не может быть сдвинут с места убеждением, второе подвластно переубеждению; наконец, истинное мнение, как приходится признать, дано любому человеку, ум же есть достояние богов и лишь малой горстки людей. [84]`,
+        quote: "«...ум рождается в нас от наставления, а истинное мнение – от убеждения; первый всегда способен отдать себе во всем правильный отчет, второе – безотчетно...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Платон доказывает: мир вечных невидимых законов (Идей) реально существует, а не является просто словами.</p>
+          <h3>Разбор</h3>
+          <p>Мнение — это когда человек случайно угадал ответ или ему внушили факт. Он не знает доказательства, и его легко сбить с толку. Мнение есть у всех. Ум — это знание законов и причин, добытое учебой. Его нельзя разрушить спором. Раз существует способность понимать вечные законы, значит, сами вечные законы и образцы (Идеи) реально существуют.</p>
+        `
+      },
+      {
+        id: 2,
+        steph: "52a – 52d",
+        title: "2. Три начала бытия: Идея, Вещь и Пространство (Хора)",
+        text: `52Если все это так, приходится признать, во-первых, что есть тождественная идея, нерожденная и негибнущая, ничего не воспринимающая в себя откуда бы то ни было и сама ни во что не входящая, незримая и никак иначе не ощущаемая, но отданная на попечение мысли. Во-вторых, есть нечто подобное этой идее и носящее то же имя – ощутимое, рожденное, вечно движущееся, возникающее в некоем месте и вновь из него исчезающее, и оно воспринимается посредством мнения, соединенного с ощущением. В-третьих, есть еще один род, а именно пространство:bоно вечно, не приемлет разрушения, дарует обитель всему роду, но само воспринимается вне ощущения, посредством некоего незаконного умозаключения, и поверить в него почти невозможно. Мы видим его как бы в грезах и утверждаем, будто всякому бытию непременно должно быть где-то, в каком-то месте и занимать какое-то пространство, а то, что не находится ни на земле, ни на небесах, будто бы и не существует. Эти и родственные им понятия мы в сонном забытьи переносим и на непричастную сну природу истинного бытия,cа пробудившись, оказываемся не в силах сделать разграничение и молвить истину, а именно что, поскольку образ не в себе самом носит причину собственного рождения, но неизменно являет собою призрак чего-то иного, ему и должно родиться внутри чего-то иного, как бы прилепившись к сущности, или вообще не быть ничем. Между тем на подмогу истинному бытию выступает тот безупречно истинный довод, согласно которому, если некая вещь представляется то чем-то одним, то другим, причем ни то, ни другое взаимно друг друга не порождает, то вещь эта будет одновременно единой и раздельной.`,
+        quote: "«...есть тождественная идея... Во-вторых, есть нечто подобное этой идее... В-третьих, есть еще один род, а именно пространство: оно вечно, не приемлет разрушения...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Мир держится на трех китах: 1. Идея (вечный оригинал), 2. Вещь (изменчивая тень оригинала), 3. Пространство (чистая сцена, где эта тень появляется).</p>
+          <h3>Разбор</h3>
+          <p>Пространство воспринимается «незаконным умозаключением»: его нельзя потрогать и нельзя помыслить как геометрию. Мы понимаем его по остаточному принципу: если убрать все вещи, останется пустое место («где»), без которого материальному миру просто негде быть.</p>
+        `
+      },
+      {
+        id: 3,
+        steph: "52d – 53c",
+        title: "3. Докосмический хаос и механизм сита",
+        text: `dИтак, согласно моему приговору, краткий вывод таков: есть бытие, есть пространство и есть возникновение, и эти три [рода] возникли порознь еще до рождения неба. А о Кормилице рождения скажем вот что: поскольку она и растекается влагой, и пламенеет огнем, и принимает формы земли и воздуха, и претерпевает всю чреду подобных состояний,eявляя многообразный лик, и поскольку наполнявшие ее силы не были ни взаимно подобны, ни взаимно уравновешены и сама она ни в одной своей части не имела равновесия, она повсюду была неравномерно сотрясаема и колеблема этими силами и в свою очередь сама колебала их своим движением. То, что приводилось в движение, все время дробилось, и образовавшиеся части неслись в различных направлениях точно так, как это бывает при провеивании зерна и отсеивании мякины:53плотное и тяжелое ложится в одном месте, рыхлое и легкое отлетает в сторону и находит для себя иное пристанище. Вот наподобие этого и четыре упомянутых рода [стихии] были тогда колеблемы Восприемницей, которая в движении своем являла собой как бы сито: то, что наименее сходно между собой, она разбрасывала дальше всего друг от друга, а то, что более всего сходно, просеивала ближе всего друг к другу; таким образом, четыре рода обособились в пространстве еще до того, как пришло время рождаться устрояемой из них Вселенной. bРанее в них не было ни разума, ни меры: хотя огонь и вода, земля и воздух являли кое-какие приметы присущей им своеобычности, однако они пребывали всецело в таком состоянии, в котором свойственно находиться всему, чего еще не коснулся бог. Поэтому последний, приступая к построению космоса, начал с того, что упорядочил эти четыре рода с помощью образов и чисел. [85] То, что они были приведены богом к наивысшей возможной для них красоте и к наивысшему совершенству из совсем иного состояния, пусть останется для нас преимущественным и незыблемым, утверждением; но теперь мне следует попытаться пояснить вам устройство и рождение каждого из четырех родов. cРассказ мой будет непривычен, но, раз вы сроднились с теми путями научения, без которых не обойтись моим речам, вы последуете за мной.`,
+        quote: "«...части неслись в различных направлениях точно так, как это бывает при провеивании зерна и отсеивании мякины... Ранее в них не было ни разума, ни меры...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Вначале материя была диким кипящим хаосом без меры и смысла.</p>
+          <h3>Разбор</h3>
+          <p>Платон приводит аналогию с веялкой: крестьянин трясет сито на ветру, и тяжелое зерно падает под ноги, а шелуху сдувает прочь. Точно так же слепые толчки хаоса растолкали будущие элементы: тяжелое сбилось с тяжелым (земля), легкое — с легким (огонь). Но Космосом это стало только тогда, когда Бог навел порядок через числа и геометрию.</p>
+        `
+      },
+      {
+        id: 4,
+        steph: "53c – 54b",
+        title: "4. Геометрические кирпичики: два базовых треугольника",
+        text: `Во-первых, каждому, разумеется, ясно, что огонь и земля, вода и воздух суть тела, а всякое тело имеет глубину. Между тем любая глубина по необходимости должна быть ограничена некоторыми поверхностями; притом всякая прямолинейная поверхность состоит из треугольников. Однако все вообще треугольники восходят к двум, из которых каждый имеет по одному прямому углу и по два острых, dно при этом у одного по обе стороны от прямого угла лежат равные углы величиной в одну и ту же долю прямого угла, ограниченные равными сторонами, а у другого – неравные углы, ограниченные неравными сторонами. Здесь-то мы и полагаем начало огня и всех прочих тел, следуя в этом вероятности, соединенной с необходимостью; те же начала, что лежат еще ближе к истоку, ведает бог, а из людей разве что тот, кто друг богу.
+
+Теперь дóлжно сказать, каковы же те четыре рожденных тела, прекраснейшие из всех, которые не подобны друг другу, однако способны, разрушаясь, друг в друга перерождаться. Если нам удастся попасть в точку, у нас в руках будет истина о рождении земли и огня, а равно и тех [стихий], что стоят между ними как средние члены пропорции. Тогда мы никому не уступили бы в том, что нет видимых тел более прекрасных, чем эти, притом каждое из них прекрасно в своем роде. Поэтому надо приложить старания к тому, чтобы привести в соответствие четыре отличающихся красотой рода тел и доказать, что мы достаточно уразумели их природу. Из двух названных раньше треугольников равнобедренный получил в удел одну природу,54тогда как неравнобедренный – бесчисленное их множество. Из этого множества нам дóлжно избрать наилучшее, если мы хотим приступить к делу надлежащим образом. Что ж, если кто-нибудь выберет и назовет нечто еще более прекрасное, предназначенное для того, чтобы создавать эти [четыре тела], мы подчинимся ему не как неприятелю, но как другу; нам же представляется, что между множеством треугольников есть один, прекраснейший, ради которого мы оставим все прочие, а именно тот, который в соединении с подобным ему образует третий треугольник – равносторонний. bОбосновывать это было бы слишком долго (впрочем, если бы кто изобличил нас и доказал обратное, мы охотно признали бы его победителем). Итак, нам приходится отдать предпочтение двум треугольникам как таким, из которых составлено тело огня и [трех] прочих тел: один из них равнобедренный, а другой таков, что в нем квадрат большой стороны в три раза больше квадрата меньшой.`,
+        quote: "«...всякая прямолинейная поверхность состоит из треугольников. Однако все вообще треугольники восходят к двум...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Вся материя собирается из двух видов прямоугольных треугольников.</p>
+          <h3>Разбор</h3>
+          <p>Тела объемны, грани плоские, плоскости делятся на треугольники. Базовые кирпичики мира: 1. Равнобедренный (45°-45°-90°) — из четырех таких складывается квадрат. 2. Вытянутый (30°-60°-90° с пропорцией сторон 1 к корню из 3 к 2) — из шести таких складывается равносторонний треугольник.</p>
+        `
+      },
+      {
+        id: 5,
+        steph: "54b – 55c",
+        title: "5. Построение Платоновых тел (3D-фигур)",
+        text: `Но мы обязаны более четко определить одну вещь, о которой прежде говорилось неясно. В самом деле, нам казалось, будто все четыре рода могут последовательно перерождаться друг в друга, но такая видимость была неправильной.cВедь четыре рода действительно рождаются из выбранных нами треугольников: три рода слагаются из одного и того же неравнобедренного треугольника и только четвертый род – из равнобедренного, а значит, не все роды могут разрешаться друг в друга и рождаться один из другого путем соединения большого количества малых [величин] в малое количество больших, и обратно. Если это и возможно, то лишь для вышеназванных первых трех [родов], ведь коль скоро все они произошли из единой [основы], то при разрушении более крупных [тел] из их [частей] составится множество малых, принимающих свойственные им очертания; dи, напротив, если разъять много малых [тел] на отдельные треугольники, они образуют единое количество однородной массы, из которой возникнет единое большое [тело] иного вида. Вот как обстоит дело с их переходом друг в друга. Следующей нашей задачей будет изложить, какой вид имеет каждое тело и из сочетания каких чисел оно рождается.
+
+Начнем с первого вида, состоящего из самых малых частей: его первоначало – треугольник, у которого гипотенуза вдвое длиннее меньшего катета. Если такие треугольники сложить, совмещая их гипотенузы,eи повторить такое действие трижды, притом так, чтобы меньшие катеты и гипотенузы сошлись в одной точке как в своем центре, то из шестикратного числа треугольников будет рожден один, и он будет равносторонним. Когда же четыре равносторонних треугольника окажутся соединенными в три двугранных угла, они образуют один объемный угол, 55а именно такой, который занимает место вслед за самым тупым из плоских углов. Завершив построение четырех таких углов, мы получаем первый объемный вид, имеющий свойство делить всю описанную около него сферу на равные и подобные части.
+
+Второй вид строится из таких же исходных треугольников, соединившихся в восемь равносторонних треугольников и образующих каждый раз из четырех плоских углов по одному объемному; когда таких объемных углов шесть, второе тело получает завершенность.
+
+Третий вид образуется из сложения ста двадцати исходных треугольников и двенадцати объемных углов, каждый из которых охвачен пятью bравносторонними треугольными плоскостями, так что все тело имеет двадцать граней, являющих собой равносторонние треугольники.
+
+На этом порождении и кончилась задача первого из первоначал. Но равнобедренный треугольник породил природу четвертого [вида], и притом так, что четыре треугольника, прямые углы которых встречались в одном центре, образовывали квадрат; а из сложения шести квадратов возникало восемь объемных углов, cкаждый из которых гармонично охватывается тремя плоскими прямыми углами. Составившееся таким образом тело имело очертания куба, наделенного шестью квадратными плоскими гранями. В запасе оставалось еще пятое многогранное построение, его бог определил для Вселенной и прибегнул к нему в качестве образца.`,
+        quote: "«...первый объемный вид [тетраэдр]... Второй вид... из восьми равносторонних треугольников [октаэдр]... Третий... имеет двадцать граней [икосаэдр]... очертания куба... пятое... для Вселенной».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Из базовых треугольников собираются 5 правильных многогранников.</p>
+          <h3>Разбор</h3>
+          <p>1. Тетраэдр (пирамидка, 4 грани). 2. Октаэдр (8 граней). 3. Икосаэдр (20 граней, 120 исходных треугольников). 4. Куб (6 граней из квадратов). 5. Додекаэдр (12 граней-пятиугольников) — взят Богом как каркас сферической формы всего Космоса (12 знаков зодиака).</p>
+        `
+      },
+      {
+        id: 6,
+        steph: "55c – 56c",
+        title: "6. Привязка фигур к 4 стихиям",
+        text: `Если бы теперь кто-нибудь, тщательно обдумывая все сказанное, задался вопросом, следует ли допустить бесчисленные космосы или ограниченное их число, ему пришлось бы заключить, что вывод относительно неограниченности этого числа позволительно делать разве что тому,dкто сам очень ограничен, и притом в вопросах, которые следовало бы знать. Если, однако, поставить иной вопрос – существует ли один космос или их на самом деле пять, то здесь, естественно, причин для затруднения было бы куда больше. Что касается нас, то мы, согласно правдоподобным словам и указаниям бога, утверждаем, что существует один космос; но другой, взглянув на вещи иначе, составит себе, пожалуй, иное мнение. Как бы то ни было, оставим этот вопрос и начнем разделять роды, только что рожденные в нашем слове, на огонь, землю, воду и воздух.
+
+Земле мы, конечно, припишем вид куба, ведь из всех четырех родов наиболее неподвижна и пригодна к образованию тел именно земля,eа потому ей необходимо иметь самые устойчивые основания. Между тем не только из наших исходных треугольников равнобедренный, если взять его как основание, по природе устойчивее неравностороннего, но и образующийся из сложения двух равнобедренных треугольников квадрат с необходимостью более устойчив, нежели равносторонний треугольник, причем соотношение это сохраняет силу как для частей, так и для целого.56Значит, мы не нарушим правдоподобия, если назначим этот удел земле, а равно и в том случае, если наименее подвижный из остальных видов отведем воде, наиболее подвижный – огню, а средний – воздуху; далее, наименьшее тело – огню, наибольшее – воде, а среднее – воздуху, и, наконец, самое остроугольное тело – огню, следующее за ним – воздуху, а третье – воде. Но из всех вышеназванных тел наиболее подвижно по природе своей и по необходимости то, у которого наименьшее число оснований, bибо оно со всех сторон имеет наиболее режущие грани и колющие углы, а к тому же оно и самое легкое, коль скоро в его состав входит наименьшее число исходных частей. То тело, которое обладает такими же свойствами, но второго порядка, и место займет второе, а то, которое обладает третьим порядком этих свойств, – третье. Пусть же объемный образ пирамиды и будет, в согласии со справедливым рассуждением и с правдоподобием, первоначалом и семенем огня; второе по рождению тело мы назовем воздухом, третье же – водой. Но при этом мы должны представить себе, что все эти [тела] до такой степени малы, что единичное [тело] каждого из перечисленных родовcпо причине своей малости для нас невидимо, и лишь складывающиеся из их множеств массы бросаются нам в глаза. [86] Что же касается их количественных соотношений, их движений и вообще их сил, то бог привел все это в правильную соразмерность, упорядочивая все тщательно и пропорционально, насколько это допускала позволившая себя переубедить природа необходимости.`,
+        quote: "«Земле мы, конечно, припишем вид куба... образ пирамиды и будет... семенем огня; второе по рождению тело мы назовем воздухом, третье же – водой».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Свойства стихий выводятся напрямую из геометрии.</p>
+          <h3>Разбор</h3>
+          <p>Земля = Куб (устойчив, прочен). Огонь = Пирамида (тетраэдр: самый острый, легкий, режет и колет ткани). Воздух = Октаэдр (средний по подвижности). Вода = Икосаэдр (почти круглый мяч из 20 граней, легко катится и течет). Сами частицы микроскопичны — мы видим лишь их массы.</p>
+        `
+      },
+      {
+        id: 7,
+        steph: "56c – 57d",
+        title: "7. Химические реакции и исключительность Земли",
+        text: `Исходя из всего того, что было сказано выше об этих четырех родах, дело наиболее правдоподобно можно описать следующим образом.dКогда земля встречается с огнем и бывает рассеяна его остротой, она несется, распадаясь либо в самом огне, либо в толще воздуха или воды, если ей придется там оказаться, покуда ее частицы, повстречавшись друг с другом, не соединятся сызнова, чтобы она опять стала землей: ведь она не может принять иную форму. Напротив, вода, дробимая огнем или воздухом, позволяет образоваться одному телу огня и двум воздушным телам, равно как и осколки одной рассеченной части воздуха могут породить из себя два тела огня. eНо и наоборот, когда малая толика огня, оказавшись в больших толщах воздуха, воды или земли, подхватывается их движением, сокрушается в борьбе и дробится, два тела огня сплачиваются в единый вид воздуха; или когда воздух претерпевает насилие и разрушение, из двух его тел с половиной оказывается составлен один цельный вид воды. И вот что еще нам нужно принять в расчет: когда какой-либо иной род, охваченный огнем, рассекается лезвиями его граней и остриями его углов, 57этому роду достаточно принять природу огня, чтобы его дробление прекратилось, ибо никакой подобный и тождественный самому себе род не может ни понудить к изменениям такой же род, ни принять от него какие-либо изменения. Но до тех пор пока нечто, оказавшись слабее чего-то иного, ведет с этим иным неравную борьбу, оно продолжает разрушаться. Поэтому, если немногочисленные и меньшие тела, окруженные многочисленными и бóльшими, дробятся и уничтожаются ими и в то же время готовыbсоединиться в вид возобладавшего [тела], их уничтожение прекратится, с тем чтобы либо из огня родился воздух, либо из воздуха – вода; но, если они сойдутся вместе и схватятся с каким-либо из остальных родов, они не перестанут разрушаться, пока не произойдет одно из двух: либо они, вконец теснимые и разрушающиеся, спасутся бегством к тому, что им сродно, либо, уступив в борьбе, начнут сплачиваться воедино, уподобляясь возобладавшему роду, и останутся вместе с ним. [87]
+
+cПретерпевая это, все роды, без сомнения, меняются местами, ибо, если их массы в силу движения Восприемницы распределяются в пространстве отдельно друг от друга, тогда то, что утратило собственное подобие и восприняло чужое, при каждом сотрясении отбрасывается в область того, чему эти роды уподобились.
+
+Таковы причины, определившие собой рождение тел беспримесных и первичных. Но если внутри этих [основных] видов выявились еще дальнейшие родовые различия, виной этому способ построения обоих исходных [треугольников]: dдело в том, что последние первоначально являлись на свет не с единообразными для каждого рода размерами, но то меньшими, то более крупными, и разных по величине треугольников было ровно столько, сколько родов различается ныне внутри [основных] видов. Сочетание их между собой и с другими треугольниками дало беспредельное многообразие, созерцателем которого надлежит стать любому, кто вознамерится изречь о природе правдоподобное слово.`,
+        quote: "«...вода, дробимая огнем... позволяет образоваться одному телу огня и двум воздушным телам... земля... не может принять иную форму».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Огонь, воздух и вода пересобираются друг в друга. Земля не превращается ни во что.</p>
+          <h3>Разбор</h3>
+          <p>Грани огня (4), воздуха (8) и воды (20) состоят из одинаковых треугольников. 1 Вода (20) при кипении распадается на 1 Огонь (4) + 2 Воздуха (8+8=16). Но земля состоит из квадратов — ее кирпичики несовместимы с другими стихиями. Раскрошенная земля летает в хаосе, пока снова не слипнется в землю.</p>
+        `
+      },
+      {
+        id: 8,
+        steph: "57d – 58c",
+        title: "8. Почему Космос движется вечно (нет пустоты)",
+        text: `Что касается движения и покоя, точнее, того, как и при каких условиях они возникают, то, не придя здесь к согласию, мы встретим в дальнейшем нашем рассуждении немало помех.eКое-какие замечания тут уже были сделаны, но сейчас нам необходимо добавить к сказанному вот что: внутри того, что однородно, движения быть не может. Ведь трудно, вернее сказать, невозможно представить себе движимое без движущего или, напротив, движущее без движимого, а движение немыслимо без того и другого; между тем никак нельзя движущему и движимому быть однородным. Итак, раз и навсегда отнесем покой к однородному, а движение – к тому, что совсем не однородно.58Причина же отклонений – это неравенство; а как родилось это неравенство, мы уже описали. [88] Остается необъясненным, почему тела, распределившись по родам, не прекращают взаимопересекающегося движения и перемещения? Скажем же и об этом. Дело в том, что круговращение Вселенной, включающее в себя эти роды, по причине своей закругленности и природного стремления замкнуться на себе все сжимает и не позволяет ни одной части пространства остаться пустой.bОгонь имеет наибольшую способность во все внедряться, воздух непосредственно за ним следует, ибо занимает второе место по тонкости своих частиц, и так далее; ведь то, что образовалось из самых крупных частиц, имеет в своем составе больше всего оставшегося между частями пустого места, а то, что возникло из самых мелких частиц, – меньше всего. Значит, когда происходит сжимание, меньшие тела втискиваются в промежутки между бóльшими: и вот когда они оказываются рядом, так что меньшие силятся расторгнуть связь между бóльшими, а бóльшие сводят воедино меньшие, происходит перемещение их всех либо вверх, либо вниз к своим местам. cВедь каждое тело, меняя свою величину, меняет и свое местоположение. Таким-то образом и под действием таких-то причин обеспечивается беспрестанное воспроизведение неоднородности, а уж она в свою очередь поддерживает и постоянно будет поддерживать вечное движение тел.`,
+        quote: "«...раз и навсегда отнесем покой к однородному, а движение – к тому, что совсем не однородно... круговращение Вселенной... все сжимает и не позволяет ни одной части пространства остаться пустой...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Вселенная замкнута, внутри нее нет вакуума, а мелкие частицы вечно толкают крупные.</p>
+          <h3>Разбор</h3>
+          <p>Однородность дает покой. Неоднородность дает движение. Сферический космос сжимает все тела. Острые микропирамидки огня лезут в зазоры между глыбами воды и земли, раскалывая их. Возникает вечная толкотня частиц, как в переполненном автобусе.</p>
+        `
+      },
+      {
+        id: 9,
+        steph: "58c – 59c",
+        title: "9. Металлы — это «плавкая вода» (Золото, Медь, Ржавчина)",
+        text: `Кроме того, дóлжно принять во внимание, что существует много родов огня, из которых можно назвать пламя, затем истечение пламени, которое не жжет, но доставляет глазам свет, и, наконец, то, чтó после угасания пламени остается в тлеющих угольях. dТак обстоит дело и с воздухом, прозрачнейшая разновидность которого зовется эфиром, а более мутная – туманом и мглой, притом существуют у него и безымянные виды, рожденные из неравенства [исходных] треугольников. Что касается воды, то она делится прежде всего на два рода: жидкий и плавкий. Первый жидок потому, что содержит в себе исходные тела воды, которые малы и притом имеют разную величину; благодаря своей неоднородности и форме своих очертаний он легко приходит в движение как сам по себе, так и под воздействием иного. Напротив, второй род состоит из крупных и однородных тел; eон устойчивее первого и тяжел, ибо однородные частицы крепко сплачиваются между собою. Однако от вторжения огня и его разрушительного действия он теряет свою однородность, вследствие чего обретает бóльшую причастность к движению; а раз став подвижной, эта вода под давлением окружающего воздуха распространяется по земле. Каждое из этих состояний получило свое имя: когда твердая масса разрушается, о ней говорят, что она плавится, а когда она затем расходится по земле – что она течет. Но если огонь снова извергнут наружу, он уходит, разумеется, не в пустоту, а потому окружающий воздух оказывается сдавлен и сам давит на влажную и пока еще подвижную массу; 59последняя вынуждена заполнить промежутки, оставленные огнем, и плотно сосредоточиться в себе. Сдавленная таким образом, она сызнова становится однородной – ведь огонь, этот виновник неоднородности, ушел – и возвращается к самотождественному состоянию. Уход огня мы именуем охлаждением, а чтобы обозначить наступившее после него уплотнение, мы говорим, что масса отвердевает.
+
+Среди всего того, чему только что было дано название плавких жидкостей, есть и то, что родилось из самых тонких и самых однородных частиц, а потому плотнее всего; bэта единственная в своем роде разновидность, причастная блеску и желтизне, – самое высокочтимое из сокровищ, золото, которое застыло, просочась сквозь камень. У золота есть и производное: по причине своей плотности оно твердо и отливает чернотой, а наречено оно адамантом. [89]
+
+По свойствам своих частиц к золоту ближе всего [род], который, однако, имеет не одну разновидность, и притом он в некоторых местах плотнее золота; вдобавок он еще и тверже, ибо в нем есть небольшая примесь тонкой земли, но легче по причине бóльших промежутков в его недрах: cэто – один из составных родов блестящих и твердых вод, а именно медь. Когда содержащаяся в меди примесь земли под действием дряхления снова отделяется и выступает на свет, она именуется ржавчиной.`,
+        quote: "«Что касается воды, то она делится прежде всего на два рода: жидкий и плавкий... родилось из самых тонких и самых однородных частиц... золото... По свойствам частиц к золоту ближе всего... медь...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Металлы — это затвердевшая вода, способная плавиться на огне.</p>
+          <h3>Разбор</h3>
+          <p>Металл при нагреве течет, как вода. Золото — чистейшая, плотная, однородная застывшая вода. Адамант (алмаз/сталь) — самое твердое черное ответвление золота. Медь — вода с примесью земли (тверже, но пористее). Когда земляные крупицы стареют и выходят на поверхность — это зеленая ржавчина (патина).</p>
+        `
+      },
+      {
+        id: 10,
+        steph: "59c – 60b",
+        title: "10. Лед, снег и 4 сока растений",
+        text: `Было бы не слишком сложным делом перебрать таким образом все прочие примеры этого рода, продолжая следовать идее правдоподобного сказания. Тот, кто отдыха ради отложит на время беседу о непреходящих вещах ради этого безобидного удовольствия – рассматривать по законам правдоподобия происхождение [вещей],dобретет в этом скромную и разумную забаву на всю жизнь. Поскольку же мы сейчас предаемся именно такой забаве, остановимся по порядку еще на нескольких вероятностях.
+
+Пока вода смешана с огнем, она тонка и текуча – а текучей она именуется как за свою подвижность, так и за то, что она как бы катится по земле; притом она еще и размягчена, ибо ее грани менее устойчивы, чем у частиц земли, а значит, податливы. Но когда она покинута огнем и отделена от воздуха, она становится более однородной и уплотняется под давлением вышедших из нее частиц огня. eЕсли она претерпевает сильное уплотнение над землей, она становится градом, а если на земле – льдом. Если же давление слабее и она уплотняется лишь наполовину, то над землей она образует снег, в то время как роса на земле застывает в иней.
+
+Но самые многочисленные виды вод, смешиваясь друг с другом, сочатся в произращенных землей растениях, и оттого их род получил имя соков. 60Поскольку же от смешений вышло большое многообразие, то большинство родов осталось без особого названия; однако четыре вида, таящие в себе огонь, получили, как особенно примечательные, свои имена. Первый из них имеет свойство разогревать душу и вместе с ней тело: он наречен вином. Второй – гладкий и вызывает рассеивание зрительного огня, а потому явлен глазу прозрачным, блестящим и лоснящимся, это вид подобных елею масел; к нему относятся смола, касторовое масло, а также сам елей и то, что имеет его свойства. bТретий обладает способностью расширять суженные поры рта до их естественного состояния, вызывая этим ощущение сладости: он получил родовое наименование меда. Наконец, четвертый имеет силу разлагать плоть жжением и пениться; он отличается от прочих соков и назван щелочью.`,
+        quote: "«...уплотнение над землей – град, на земле – лед... четыре вида [соков], таящие в себе огонь... вино... масло... мед... щелочь».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Как замерзает вода и чем отличаются соки растений.</p>
+          <h3>Разбор</h3>
+          <p>Огонь уходит из воды, воздух сжимает ее: сильное сжатие дает лед/град, слабое — снег/иней. Растительные соки с огнем: вино греет душу; масло блестит и отражает свет; мед расслабляет поры рта (дает сладость); щелочь пенится и разъедает ткани.</p>
+        `
+      },
+      {
+        id: 11,
+        steph: "60b – 61c",
+        title: "11. Виды Земли: камни, глина, соль и смеси",
+        text: `Что касается видов земли, тот из них, который пропитан водой, претворяется в каменистое тело, и притом вот каким образом. Примешавшаяся вода как раз по причине смешения дробится и принимает вид воздуха, а став воздухом, отходит в отведенное ей место.cНо вокруг нет пустого пространства, значит, вновь возникший воздух оказывает давление на окружающий. Последний под действием давления тяжело налегает отовсюду на толщу земли, сильно сжимает ее и вдавливает в те помещения, которые только что были покинуты вновь образовавшимся воздухом. Когда земля сдавлена воздухом до такой степени, что уже не может быть разрушена водой, она уплотняется в камень, красивая разновидность которого состоит из равных и однородных частиц и потому прозрачна, а некрасивая отличается противоположными свойствами.
+
+Далее, та разновидность земли, которая стремительным действием огня избавлена от влаги и потому еще суше, чем вышеназванная, наречена горшечной глиной; dоднако подчас немного влаги все же остается, и тогда рождается земля, расплавленная огнем, которая по охлаждении превращается в особый камень с черной окраской. [90]
+
+Есть еще две разновидности, из которых точно таким же образом удалена большая часть примешанной воды, однако частицы земли в их составе тоньше; обе они отличаются соленым вкусом и затвердели лишь наполовину, так что вода снова может их разрушить. Первая разновидность пригодна, чтобы отчищать масляные и земляные пятна; это щелок. Вторая же разновидность весьма хорошо включается во вкусовые ощущения рта и представляет собой соль; это любезное богам тело, как именуют ее по обычаю. [91]
+
+eТо, что состоит из соединения обеих последних разновидностей, может быть разрушено огнем, но не водой, а основывается эта связь вот на чем: прежде всего земляные толщи не расторжимы ни для огня, ни для воздуха, ибо частицы последних меньше, нежели пустоты в этой толще, так что они могут свободно проходить насквозь, не прибегая к насилию, и по этой причине не разлагают и не разрушают землю. Но частицы воды крупнее, а значит, они прокладывают себе дорогу насилием, рушат землю и разлагают ее.61Поэтому земля, если она не подвергнута насильственному сжатию, может быть разрушена только водой, а если подвергнута – только огнем, ибо тогда в нее не остается доступа ни для чего, кроме огня. Воду же, если она с особой силой уплотнена, может разрушить один лишь огонь, но если уплотнена слабее, то оба рода – как огонь, так и воздух; при этом воздух вторгается в пустóты, а огонь также и в треугольники. Наконец, воздух, если он испытал насильственное сжатие, не может быть разрушен ничем, разве что только может быть сведен к своему первоначалу; но, если он не претерпел сжатия, его разлагает один лишь огонь. С телами же, возникшими из смешения земли и воды, происходит следующее: bдо тех пор пока вода заполняет все пустоты в уплотненной с большой силой земле, частицы воды, подступающие извне, не находят доступа внутрь, обтекают вокруг всей этой массы и не могут ее разложить, в то время как частицы огня, напротив, внедряются между частицами воды и, воздействуя на воду точно так же, как вода воздействует на землю, одни оказываются в состоянии принудить смесь земли с водой расплавиться и растечься.
+
+Заметим, что из этих смесей некоторые содержат меньше воды, нежели земли; таковы все виды, родственные стеклу, cа также все так называемые плавящиеся камни. Другие, напротив, содержат больше воды; таковы все тела из разряда восков и благовонных курений.`,
+        quote: "«Когда земля сдавлена воздухом... она уплотняется в камень... горшечная глина... соль; это любезное богам тело... смеси... родственные стеклу... воски и благовония».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Как рождаются камни, глина и смеси земли с водой.</p>
+          <h3>Разбор</h3>
+          <p>Камень — земля, из которой испарилась вода, а воздух снаружи сдавил массу до монолита. Глина — земля, выжженная огнем. Соль и щелок — полурастворимые земли. Смеси: стекло (больше земли, чем воды) и воск/ладан (больше воды, чем земли).</p>
+        `
+      },
+      {
+        id: 12,
+        steph: "61c – 62b",
+        title: "12. Физиология: Жар и Холод",
+        text: `Пожалуй, мы с достаточной полнотой показали разнообразие видов, вытекающее из сочетаний и взаимопереходов фигур. Теперь попытаемся выяснить причины воздействий, производимых всем этим на нас. Прежде всего надо приписать вещам, о которых идет речь, одно свойство – постоянно быть ощущаемыми, а ведь мы еще не дошли до рождения плоти и всего того, что к ней относится, а также до рождения смертной части души. Между тем и об этих предметах немыслимо с должной основательностью рассуждать, отвлекаясь от воздействия ощущений, и говорить об ощущениях, отвлекаясь от вопросов о плоти и смертной части души, dно вести речь о том и другом сразу едва ли посильно. Значит, нам придется принять одно из двух в качестве предпосылки, а потом еще раз вернуться к этому. Так вот, чтобы нам сразу перейти от родов [тел] к оказываемым этими родами воздействиям, пусть нашей предпосылкой и будет все относящееся к телу и душе.
+
+Для начала посмотрим, почему это об огне говорят, что он горяч? На этот вопрос мы должны ответить, приняв во внимание режущее и разлагающее воздействие его на наши тела.eЕдва ли не все согласятся, что ощущение от огня – пронзительное; при этом нам следует вспомнить о тонкости его граней и остроте его углов, затем о малости его частиц и о быстроте их бега, ибо все эти свойства таковы, что сообщают огню напор и проворство, и потому ничто не может противостоять его режущей силе.62Достаточно вспомнить и принять в расчет его очертания и то, как они были рождены, чтобы уразуметь: эта природа, как никакая другая, способна проникать наши тела, тончайшим образом расщеплять их и доставлять тому, что мы соответственно зовем теплом, и его свойства и его имя. [92]
+
+Противоположное [воздействие] довольно ясно, но все же и его мы не оставим без объяснения. Когда окружающая тело и состоящая из более крупных частиц влага проникает внутрь, она вытесняет находящиеся там меньшие частицы, однако оказывается не в состоянии утвердиться на их местах и только сжимает все, что ни есть в нас влажного, доводя его до такой плотности, что оно из неоднородного и подвижного становится однородным, неподвижным и закоченевшим. bПоскольку же это происходит против природы [нашего тела], то оно в согласии со своей природой вступает в борьбу и силится отвоевать себе прежнее состояние. Эту борьбу и эти сотрясения нарекли дрожью и ознобом, в то время как все состояние в целом, а равно и то, чем оно вызывается, именуют холодом.`,
+        quote: "«...почему это об огне говорят, что он горяч? ...приняв во внимание режущее и разлагающее воздействие его... то, чем оно вызывается, именуют холодом... сжимает... Эту борьбу нарекли дрожью и ознобом».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Жар и холод — механические удары микрочастиц по плоти.</p>
+          <h3>Разбор</h3>
+          <p>Жар: острые микропирамидки огня рассекают волокна тела миллионами ножей. Холод: крупные частицы стискивают внутренние соки в лед; тело начинает судорожно трястись, сопротивляясь оцепенению — эту внутреннюю борьбу мы зовем ознобом и холодом.</p>
+        `
+      },
+      {
+        id: 13,
+        steph: "62b – 63e",
+        title: "13. Опровержение «верха» и «низа». Гравитация",
+        text: `Твердым зовется то, что заставляет податься нашу плоть, мягким – то, что под воздействием последней подается само; и вообще названия эти употребляются соотносительно. Но податливо все то, что имеет малые основания; cнапротив, вид [тела], покоящегося на квадратных основаниях и потому особо устойчивого, оказывается самым неподатливым, причем его высокая способность к отпору объясняется и тем, что как раз он плотнее всех прочих.
+
+Что касается тяжелого и легкого, то эти два состояния могут быть наилучшим образом выяснены лишь в связи с природой того, что известно под именами "верх" и "низ". Дело в том, что представление, согласно которому впрямь от природы существуют две противоположные области, разделяющие надвое Вселенную, – низ, куда устремляется все наделенное телесной массой, и верх, куда любая вещь может направиться лишь по принуждению, – оказывается неправильным.dВедь коль скоро небо в своей целостности имеет вид сферы, значит, все крайние точки, равно удаленные от центра, по своей природе одинаково крайние, между тем как центр, на одну и ту же меру отстоящий от них, должен считаться пребывающим прямо напротив каждой из них. Но если космос действительно имеет такую природу, какую же из этих точек можно назвать верхом или низом, не навлекая на себя справедливой укоризны за неуместное употребление слов? Ибо центр космоса, строго говоря, по природе лежит не внизу и не вверху, но именно в центре, в то время как поверхность сферы и центром быть не может, и не имеет в себе части, как-либо отличной от других, скажем более близкой к центру, нежели противоположная ему часть. И коль скоро космос во всех направлениях по природе своей совершенно единообразен, какую пару противоположных наименований можно к нему приложить, не погрешая против правильного словоупотребления? Допустим, что в центре Вселенной покоится некое равномерно взвешенное твердое тело; 63оно не могло бы продвинуться ни к одной из крайних точек, поскольку находится со всеми в совершенно одинаковом отношении, а если бы кто-нибудь принялся обходить это тело по кругу, вновь и вновь оказываясь собственным антиподом, ему пришлось бы обозначать одно и то же направление попеременно то как верх, то как низ. Да, поскольку целое, как только что было сказано, имеет вид сферы, значит, обозначать одно место как верх, а другое как низ не имеет смысла.
+
+Но откуда же пошли эти обозначения и как мы настолько свыклись с ними, что перенесли их на небо в целом, разделяя последнее надвое?bПрийти к согласию относительно этого мы сможем, если предварительно сделаем одно допущение. Вообразим, что некто находится в том месте Вселенной, которое преимущественно отведено природе огня, сосредоточенного там в огромном количестве и отовсюду туда устремляющегося; пусть для этого человека оказалось возможным встать там и отделять части огня, кладя их на чаши весов. Допустим далее, что он поднимает весы, насильственно водворяя отторгнутый огонь в несродный ему воздух; очевидно, что в таком случае меньшие части окажутся податливее к насилию, нежели большие. cКогда одна и та же сила поднимает в высоту две вещи, меньшая вещь по необходимости больше повинуется принуждению, а большая – меньше, и отсюда большое именуется тяжелым и стремящимся вниз, а малое – легким и стремящимся вверх. На том же самом мы можем поймать и самих себя, когда мы действуем в отведенной нам части Вселенной. В самом деле, если мы стоим на земле и отделяем части землеподобных тел, а то и самой земли, чтобы насильственно и наперекор природе ввести их в чуждую среду воздуха, то обе [стихии] проявят тяготение к тому, что им сродно,dоднако меньшие части все же легче, нежели большие, уступят насилию и дадут водворить себя в чужеродную среду; именно поэтому мы называем их самих легкими и место, в которое мы принуждаем их направляться, – верхним, а то, что противоположно тому и другому, – соответственно тяжелым и нижним. Но все это необходимо должно разнообразиться, коль скоро главные скопления тел каждого рода занимают в пространстве различные места, лежащие одно против другого: то, что легко или тяжело, высоко или низко в одном месте, eможет быть соотнесено с легким и тяжелым, высоким и низким в другом месте, противоположном первому, и оказаться ему противоположным, несоответствующим и полностью от него отличным как с точки зрения возникновения, так и с точки зрения существования. Но одно остается верным для всех случаев: стремление каждой вещи к своему роду есть то, что делает ее тяжелой, а направление, по которому она устремляется, есть низ, между тем как противоположное тому и другому и наименования носит противоположные. Таковы причины этих состояний.`,
+        quote: "«...коль скоро небо в своей целостности имеет вид сферы... обозначать одно место как верх, а другое как низ не имеет смысла... стремление каждой вещи к своему роду есть то, что делает ее тяжелой...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>В круглом космосе нет пола и потолка. Вес — это сила тяги частицы к родной массе.</p>
+          <h3>Разбор</h3>
+          <p>Космос — шар. «Верха» и «низа» нет. Камень тянется к Земле, потому что он из земли. Если выдернуть огонь в воздух, он будет рваться назад к огню. Для наблюдателя в огне огонь был бы «тяжелым», а направление к огненной массе — «низом». «Низ» — это просто дорога домой к своей стихии.</p>
+        `
+      },
+      {
+        id: 14,
+        steph: "63e – 64c",
+        title: "14. Нервная проводимость: почему стричь волосы не больно",
+        text: `Что касается причины состояний гладкости и шероховатости, то ее каждый сможет усмотреть сам и разъяснить другому: твердость в соединении с неоднородностью дает шероховатое, однородность в соединении с плотностью – гладкое.
+
+64После того как мы рассмотрели воздействия, распространяющиеся на все тело, нам осталось обсудить самое важное – причину приятных и болезненных впечатлений, да и вообще все то, что через посредство частей тела способствует ощущениям, вызывая страдание или удовольствие. Но причины любых воздействий – ощущаемых или неощущаемых – мы поймем, если для начала припомним произведенное нами раньше различия между тем, что по природе своей очень подвижно или, напротив, малоподвижно; bименно по этой тропе следует продвигаться, чтобы изловить выслеживаемую добычу. Так вот, если хотя бы мимолетное воздействие приходится на то, что по природе своей очень подвижно, это воздействие разносится по кругу от одних частиц к другим, пока не дойдет до разумного [начала] и не поведает ему о свойствах воздействующего предмета; напротив, то, что малоподвижно, слишком устойчиво, чтобы передавать воздействие по кругу, а потому вынуждено принять его лишь на себя и не приводить в движение то, что находится по соседству. cНо раз первое воздействие не переходит от одних частиц к другим, живое существо в целом так и не воспринимает его и остается к нему нечувствительным. Это верно применительно к костям, волосам и прочим частям нашего тела, которые состоят главным образом из земли, в то время как первый случай наиболее характерен для слуха и зрения, ибо в них действеннее всего проявляет себя сила огня и воздуха.`,
+        quote: "«...если воздействие приходится на то, что... очень подвижно, оно разносится по кругу... пока не дойдет до разумного [начала]... Это верно применительно к костям, волосам... состоят главным образом из земли...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Ощущение появляется, только если сигнал по цепочке долетел до разума.</p>
+          <h3>Разбор</h3>
+          <p>Кости и волосы состоят из кубиков земли. Они гасят удар на месте и не передают импульс соседу (мозг ничего не знает — стричь волосы не больно). Глаза и уши состоят из огня и воздуха — частицы толкают друг друга, как костяшки домино, моментально донося сигнал до ума.</p>
+        `
+      },
+      {
+        id: 15,
+        steph: "64c – 65b",
+        title: "15. Механизм боли и наслаждения",
+        text: `Итак, обо всем, что относится к удовольствию и страданию, дóлжно мыслить следующим образом. Всякое противное природе воздействие, оказываемое на нас с большой силой, болезненно,dв то время как полное возвращение к естественному состоянию приятно; то, что совершается тихо и постепенно, остается неощутимым, в противном же случае дело обстоит наоборот; наконец, все то, что совершается без труда, может быть весьма ощутимо, но не сопровождается ни страданием, ни удовольствием. Примером последнего может служить зрительное впечатление, ведь зрительный луч, как было сказано прежде, во время дня являет собою сросшееся с нами тело: ни рассечения, ни ожоги, ни прочие воздействия такого же рода не причиняют ему боли,eа возврат к прежнему состоянию – удовольствия, но при этом он дает самые полные и ясные ощущения всякий раз, когда испытывает на себе воздействие [тел] или сам к ним направляется и к ним прикасается. Все дело в том, что его расщепления и воссоединения чужды насильственности. Напротив, тела, состоящие из более крупных частиц, сопротивляются воздействию, но при этом передают толчок всему живому существу в целом, испытывая удовольствие и страдание: 65страдание – при изменении, удовольствие – при возврате в прежнее состояние. Но те [органы], в которых опорожнение и опустошение совершаются постепенно, а наполнение – сразу и с большой силой, к опустошению нечувствительны, к наполнению же, напротив, чувствительны и потому не доставляют смертной части души ощущения боли, по служат источником сильного удовольствия; очевидный пример тому – приятные запахи. Напротив, когда отход от естественного состояния происходит быстро, а восстановление мало-помалу и с трудом, перед нами прямо противоположный случай: его можно наблюдать при ожогах и порезах.`,
+        quote: "«Всякое противное природе воздействие... болезненно, в то время как полное возвращение к естественному состоянию приятно... наполнение – сразу и с силой... приятные запахи».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Боль — резкая поломка природного порядка. Удовольствие — починка и возврат к норме.</p>
+          <h3>Разбор</h3>
+          <p>Резкий порез рвет ткани — мозг кричит от боли. Восстановление идет медленно, поэтому кайфа от заживления нет. Чистое удовольствие дают приятные запахи: тело теряло ресурс медленно (без боли), а восполнило внезапно — человек получает восторг без предшествующего страдания.</p>
+        `
+      },
+      {
+        id: 16,
+        steph: "65b – 66c",
+        title: "16. Вкусовые ощущения (механика языка)",
+        text: `bИтак, что касается воздействий, общих для всего тела, и имен, прилагаемых к тому, что эти воздействия вызывает, то об этих вещах мы сказали почти все. Теперь попытаемся в меру наших сил сказать что-нибудь об ощущениях, связанных с определенными частями [тела], а также о причинах воздействий.
+
+cВо-первых, нам следует разъяснить, насколько это с возможно, тот предмет, который мы обошли молчанием во время наших прежних рассуждений о соках, а именно производимые ими воздействия на язык. По всей видимости, эти воздействия, как и многие другие, порождены особого рода сжатиями и расширениями, но они более других зависят от состояний шероховатости и гладкости. Например, когда частицы земли входят в те жилки, которые служат языку как бы чувствительными волокнами, протянутыми до самого сердца,dони соприкасаются там с влажной, мягкой плотью и на ней растекаются, отчего жилки сжимаются и как бы высушиваются; если эти частицы земли более шероховаты, они дают едкий вкус, если менее – терпкий. Далее, те вещества, что прочищают вышеназванные жилки и прополаскивают всю область языка, проделывая свою работу не в меру бурно и доводя дело до разрушения самой плоти языка, именуются горькими, таково свойство щелочи.eНо другие вещества, уступающие щелочи в силе и прочищающие язык лишь умеренно, имеют соленый вкус, чуждый той жесткости, которая присуща всему горькому, и кажущийся скорее приятным. Вещества еще одного разряда, приобщившись к теплоте рта и разжижаясь от нее, становятся от этого огнистыми и в свой черед обжигают то, что их разогрело, а по своей легкости несутся вверх, к органам ощущения головы, и прорезают все, что ни попадется на их пути; благодаря этой своей способности они именуются острыми. 66Но когда те же самые вещества утончаются от гниения и находят доступ в тесные жилки, то они застают там земляные частицы и частицы воздуха в правильном соотношении, приводят эти последние в движение, заставляют перемешиваться друг с другом и пениться, а вспенившись, образовывать около вторгшихся частиц полости. bИ вот при этом влага, иногда землистая, а иногда чистая, обволакивает воздух, создавая для него как бы жидкие вместилища – водяные шары с пустотами внутри; из них одни образованы чистой влагой и потому прозрачны, и называются они пузырями, между тем как другие возникли из землистой влаги, которая при этом подвижна и стремится кверху, и они-то дают так называемое брожение и закисание. Вещество, повинное во всех этих состояниях, соответственно называется кислым. Но то воздействие, которое противоположно всем только что описанным, и причину имеет противоположную: cкогда состав влаги входящих [в тело] веществ по природе своей родствен составу языка, эта влага смазывает и размягчает огрубевшее, стягивает или, напротив, расправляет все неестественно раздутое или сведенное и вообще возвращает все к распорядку природы. Каждое подобное зелье, врачующее насильственные состояния, для всех приятно и желанно, почему и зовется сладким. [93]`,
+        quote: "«...жилки сжимаются и как бы высушиваются... едкий и терпкий... разрушающие плоть языка – горькие... прочищающие умеренно – соленые... врачующее насильственные состояния – сладкое».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Вкусы — это результат механического трения, растворения и сжатия сосудов языка.</p>
+          <h3>Разбор</h3>
+          <p>Терпкое/едкое: частицы земли сушат язык. Горькое: едкая щелочь сдирает верхний слой языка. Соленое: мягко очищает налет без боли. Острое: частицы огня режут ткани языка и бьют в нос. Кислое: частицы вызывают брожение и вспенивание с микропузырьками. Сладкое: идеально подходит составу слюны, снимает спазм и возвращает язык в природный покой.</p>
+        `
+      },
+      {
+        id: 17,
+        steph: "66d – 67a",
+        title: "17. Обоняние: запахи между водой и воздухом",
+        text: `dИтак, об этом достаточно. Что касается того рода воздействий, которые относятся к ноздрям, то здесь нет определенных разновидностей. Всякий запах имеет половинчатую природу, ибо нет такой формы, которая по своему строению могла бы возбуждать определенный запах. Те жилы в нашем теле, которые для этого предназначены, слишком тесны для частиц земли и воды, но слишком просторны для частиц огня и воздуха, а потому никто и никогда не мог обонять собственного запаха какой-либо из этих [стихий]; запахи рождаются лишь от таких веществ, которые либо разжижены, либо загнивают, либо плавятся, либо испаряются. Им дает жизнь то переходное состояние, которое возникает, когда вода претворяется в воздух либо, напротив, воздух в воду.eВсе запахи являют собой либо пар, либо туман, ведь туман лежит на полпути от воздуха к воде, а пар – на полпути от воды к воздуху. Поэтому они тоньше воды, но грубее воздуха; это становится очевидным, если с усилием вдыхать воздух сквозь перекрывшую дыхание преграду и наблюдать, как все пахнущее отсеивается и воздух доходит очищенным от запахов. Понятно, что многообразие запахов остается безымянным, ибо оно не сводится к большому числу простых форм. 67Здесь существует только одно четкое двучленное разделение – на запахи приятный и неприятный. Последний оказывает насильственное и огрубляющее действие на всю полость, простирающуюся от макушки до пупа, между тем как первый смягчает загрубевшее и с приятностью возвращает его к первоначальному состоянию.`,
+        quote: "«Всякий запах имеет половинчатую природу... рождаются лишь от веществ, которые плавятся или испаряются... разделение на запахи приятный и неприятный».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Чистые стихии не пахнут. Запах есть только у переходного состояния (пар/туман).</p>
+          <h3>Разбор</h3>
+          <p>Каналы носа слишком узки для земли и воды, но слишком широки для огня и воздуха (чистый воздух не пахнет). Пахнет только то, что испаряется или плавится. Все запахи делятся всего на два типа: неприятные (грубо дерут дыхательные пути) и приятные (смягчают и умиротворяют организм).</p>
+        `
+      },
+      {
+        id: 18,
+        steph: "67a – 67c",
+        title: "18. Слух и звук (удар воздуха до самой печени)",
+        text: `Третья область наших ощущений – слух, и для получаемых им воздействий нам тоже следует отыскать обусловливающие причины.bВ общих чертах скажем, что звук – это толчок, производимый воздухом через уши на мозг и кровь и доходящий до самой души, между тем как вызванное этим толчком движение, которое начинается с головы и оканчивается в области печени, есть слышание. Если движение быстро, звук высок; чем оно медленнее, тем ниже звук. Равномерное движение дает ровный и нежный звук,cнеравномерное – грубый, сильное – громкий, слабое – тихий. Что касается созвучий, то необходимость понуждает нас отложить этот предмет напоследок.`,
+        quote: "«...звук – это толчок, производимый воздухом через уши на мозг и кровь и доходящий до самой души... движение от головы до печени есть слышание».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Звук — это механическая волна в воздухе, отдающаяся во внутренних органах.</p>
+          <h3>Разбор</h3>
+          <p>Удар воздуха входит в ухо, сотрясает мозг и через кровь доходит до печени. Быстрый ритм волны = высокий звук; медленный = низкий бас; ровная волна = мягкая мелодия; дерганая = резкий шум; сильный удар = громко.</p>
+        `
+      },
+      {
+        id: 19,
+        steph: "67c – 68d",
+        title: "19. Зрение и цвета: встреча двух огней",
+        text: `Теперь остался только четвертый род ощущений, но он являет большое многообразие, требующее расчлененного подхода. Многообразие это имеет общее имя цвета; а цвет – это пламя, струящееся от каждого отдельного тела и состоящее из частиц, соразмерных способности нашего зрения ощущать. О причинах зрения мы уже говорили прежде, а сейчас уместнее и нужнее всего как можно правдоподобнее объяснить цвета.
+
+dТе частицы, которые несутся от других тел и сталкиваются со зрительным лучом, бывают либо меньше, чем частицы последнего, либо крупнее, либо такой же величины. Те, что имеют такую же величину, неощутимы, и мы называем их прозрачными. Напротив, те, что больше, сжимают зрительный луч, а те, что меньше, расширяют его, и действие их можно сравнить с действием холодного и горячего на нашу плоть, а также с действием терпкого и обжигающего (или "острого", как мы выражаемся) на наш язык. eЭто – белое и черное, то есть впечатления, рожденные в иной области чувств, чем только что перечисленные, и потому кажущиеся иными, но на самом деле тождественные им. Так мы и назовем их: "белое" – то, что расширяет зрительный луч, "черное" – то, что его сужает. Когда же огонь иного рода, несущийся более порывисто, ударяет в зрительный луч, проникает его до самых глаз, насильственно разверзает глазные проходы и разжижает их вещество,68он заставляет излиться оттуда весь тот огонь и воду, что мы называем слезами. Поскольку же с двух сторон встречаются два огня, причем один с молниеносной силой бьет из глаз, а другой входит в глаза и там угасает от влаги, из их смешения рождаются всевозможнейшие цвета; это называют переливами, а тому, чем вызвано такое состояние, дали имена блестящего и сверкающего.
+
+bЕсть и такой род огня, который стоит посередине между двумя вышеназванными; он достигает глазной влаги и смешивается с ней, но не сияет. Мерцание этого огня сквозь растворившую его жидкость дает кровавый цвет, который мы нарекли красным.
+
+От смешения сверкающего огня с красным и белым возник желтый цвет; но о соотношении, в котором они были смешаны, не имело бы смысла толковать даже в том случае, если бы кто-нибудь его знал, ибо здесь невозможно привести не только необходимые, но даже вероятные и правдоподобные доводы.cДалее, красный цвет, смешанный с черным и белым, дает пурпурный или темно-лиловый, если все части смеси сильнее обожжены, а черного цвета примешано больше. Желтое в смешении с серым дает коричневое, серое же само есть смесь белого и черного; желтое в смешении с белым дает цвет охры. Когда же белое, сойдясь с блестящим, ложится на густо-черную основу, тогда возникает синий цвет, между тем как сочетание синего с белым дает голубой, а коричневого с черным – зеленый цвет. [94]
+
+Из этих примеров достаточно ясно, к каким смешениям можно свести все остальные цвета, не нарушая при этом правдоподобия.dНо тот, кто попытался бы строго проверить все это на деле, доказал бы, что не разумеет различия между человеческой и божественной природой, ведь если у бога достанет и знания, и мощи, дабы смесить множество в единство и сызнова разрешить единство в множество, то нет и никогда не будет такого человека, которому обе эти задачи оказались бы по силам.`,
+        quote: "«...цвет – это пламя, струящееся от тел... „белое“ – то, что расширяет зрительный луч, „черное“ – то, что его сужает... красный... пурпурный... точные пропорции ведает только бог».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Цвет — это микрочастицы света, летящие от предмета в наш глаз.</p>
+          <h3>Разбор</h3>
+          <p>Если частицы равны зрительному лучу — предмет прозрачен. Мелкие частицы расширяют луч — мы видим белое (аналог тепла). Крупные сжимают луч — мы видим черное (аналог холода). Пробой глаза ярким светом со слезами дает блеск. Огонь сквозь влагу дает красный. Смеси дают желтый, синий, зеленый, охру. Точные математические пропорции знает лишь Бог.</p>
+        `
+      },
+      {
+        id: 20,
+        steph: "68e – 69d",
+        title: "20. Две причины: Божественная и Необходимая",
+        text: `eВсе вышеназванные вещи, рожденные в то время под воздействием необходимости, взял в свои руки демиург самой прекрасной и лучшей из возникших вещей, вознамерившись породить самодовлеющего и совершеннейшего бога; причинами, которые присущи самим вещам, он пользовался как вспомогательными, но при этом сам направлял каждую из возникших вещей ко благу. Поэтому дóлжно различать два вида причин – необходимые и божественные – и отыскивать во всем причины второго рода, дабы стяжать через это для себя блаженную жизнь, 69насколько природа наша это допускает, а уже ради них нам следует заниматься и причинами первого рода, поняв, что при забвении необходимости немыслимо ни уразуметь, ни схватить, ни вообще как-либо приблизить к себе то единственное, о чем мы печемся.
+
+Теперь заготовленные причины разложены у нас по родам, как строительные припасы у плотников, и нам остается только выложить из них дальнейшую часть нашего рассуждения; вернемся, однако, к исходной точке и повторим вкратце весь наш путь вплоть до того места, которого мы только что достигли, а уже потом попытаемся дать нашему сказанию подобающее заключение.
+
+bКак было упомянуто вначале, все вещи являли состояние полной неупорядоченности, и только бог привел каждую из них к согласию с самой собою и со всеми другими вещами во всех отношениях, в каких только они могли быть причастны соотносительности и соразмерности. Ведь доселе в них не было ничего подобного, разве что по какому-нибудь случайному совпадению, и вовсе не к чему было применить те имена, которыми мы ныне именуем огонь и воду, а равно и прочие вещи;cбог впервые все это упорядочил, а затем составил из этого нашу Вселенную – единое живое существо, заключающее в себе все остальные живые существа, как смертные, так и бессмертные.
+
+При этом божественные существа создал сам демиург, а порождение смертных он доверил тем, кого сам породил. И вот они, подражая ему, приняли из его рук бессмертное начало души и заключили в смертное тело, подарив все это тело душе вместо колесницы, но, кроме того, они приладили к нему еще один, смертный, вид души, вложив в него опасные и зависящие от необходимости состояния:dдля начала – удовольствие, эту сильнейшую приманку зла, затем страдание, отпугивающее нас от блага, а в придачу двух неразумных советчиц – дерзость и боязнь – и, наконец, гнев, который не внемлет уговорам, и надежду, которая не в меру легко внемлет обольщениям. Все это они смешали с неразумным ощущением и с готовой на все любовью и так довершили по законам необходимости смертный род души.`,
+        quote: "«...дóлжно различать два вида причин – необходимые и божественные... к бессмертному началу души приладили смертный вид: удовольствие – приманку зла, страдание, страх и гнев...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Необходимые причины — это законы материи (кирпичи). Божественные причины — это благой план (архитектура).</p>
+          <h3>Разбор</h3>
+          <p>Изучать физику нужно не ради самой физики, а чтобы понять высшее благо. Сам верховный Бог сотворил бессмертную душу, а младшим богам поручил создать бренное тело и смертную душу с ее опасными страстями: похотью, страхом, яростью и болью.</p>
+        `
+      },
+      {
+        id: 21,
+        steph: "69d – 70a",
+        title: "21. Анатомия души: почему шея отделяет голову",
+        text: `Однако они, несомненно, страшились без всякой необходимости осквернить таким образом божественное начало и потому удалили от него смертную душу, устроив для нее обитель в другой части тела,eа между головой и грудью, дабы их разобщить, воздвигли шею как некий перешеек и рубеж. Ибо именно в грудь и в так называемое туловище вложили они смертную душу; поскольку одна часть души имеет более благородную природу, а другая – более низкую, они разделили полость этого туловища надвое, как бы обособляя мужскую половину дома от женской, 70а в качестве средостения поставили грудобрюшную преграду. Ту часть души, что причастна мужественному духу и возлюбила победу, они водворяли поближе к голове, между грудобрюшной преградой и шеей, дабы она внимала приказам рассудка и силой помогала ему сдерживать род вожделений, едва только те не пожелают добровольно подчиниться властному слову, исходящему из верховной твердыни акрополя.`,
+        quote: "«...боясь осквернить божественное начало, удалили смертную душу... воздвигли шею как перешеек... разделили туловище на мужскую и женскую половины диафрагмой».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Боги изолировали разум от диких страстей, построив между ними шею и диафрагму.</p>
+          <h3>Разбор</h3>
+          <p>Голова — царская крепость (акрополь), где правит разум. Шея — пограничный мост. Грудь — «мужская половина» дома, где живут благородный гнев и мужество, готовые силой защищать приказы разума. Живот за диафрагмой — темная «женская половина», царство животных инстинктов.</p>
+        `
+      },
+      {
+        id: 22,
+        steph: "70a – 70d",
+        title: "22. Мужественный дух: Сердце и подушка легких",
+        text: `Сердцу же, этому средоточию сосудов и роднику бурно гонимой по всем членам крови, bони отвели помещение стража; всякий раз, когда дух закипит гневом, приняв от рассудка весть о некоей несправедливости, совершающейся извне или, может статься, со стороны своих же вожделений, незамедлительно по всем тесным протокам, идущим от сердца к каждому органу ощущения, должны устремиться увещевания и угрозы, дабы все они оказали безусловную покорность и уступили руководство наилучшему из начал.
+
+cОднако боги предвидели наперед, что при ожидании опасностей и возбуждении духа сердце будет колотиться и что каждое такое вскипание страстей сопряжено с действием огня. И чтобы оказать сердцу помощь, они произрастили вид легких, который, во-первых, мягок и бескровен, а к тому же, наподобие губки, наделен порами, так что может вбирать в себя дыхание и питье, dохлаждать сердце и тем самым доставлять ему в жару отдых и свежесть. Для этой цели они прорубили к легким проходы от дыхательного горла и легкими, словно бы подушками, обложили сердце, дабы всякий раз, как в нем играет дух, оно глушило свои удары о податливую толщу и при этом получало охлаждение, чтобы мучения его уменьшались, а помощь, которую дух оказывает рассудку, возрастала.`,
+        quote: "«Сердцу отвели помещение стража... легкими, словно бы подушками, обложили сердце, дабы глушить удары и охлаждать жар...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Сердце мобилизует организм на битву, а легкие спасают его от перегрева.</p>
+          <h3>Разбор</h3>
+          <p>Сердце — сторожевая башня. При несправедливости разум кричит сердцу, кровь вскипает огнем, собирая тело на бой. Чтобы сердце не разорвалось от бешеного биения и жара, боги обложили его легкими, как мягкими пористыми подушками. Легкие втягивают воздух и воду, охлаждая сердце и гася его удары.</p>
+        `
+      },
+      {
+        id: 23,
+        steph: "70d – 72d",
+        title: "23. Животная душа, Печень-зеркало и Селезенка",
+        text: `Другую часть смертной души, которая несет в себе вожделение к еде, питью и ко всему прочему, в чем она нуждается по самой природе тела, они водворили между грудобрюшной преградой и областью пупа, превратив всю эту область в подобие кормушки для питания тела; eтам они и посадили эту часть души на цепь, как дикого зверя, которого невозможно укротить, но приходится питать ради его связи с целым, раз уж суждено возникнуть смертному роду. [95] Они устроили так, чтобы этот зверь вечно стоял у своей кормушки и обитал подальше от разумной души, возможно менее досаждая ей своим шумом и ревом, дабы та могла без помехи принимать свои решения 71на благо всем частям тела вместе и каждой из них в отдельности. Они знали, что он не будет понимать рассуждения, а даже если что-то из них и дойдет до него через ощущение, не в его природе будет об этом заботиться; он обречен в ночи и во время дня обольщаться игрой подобий и призраков.
+
+bИ вот бог, вознамерясь найти на него управу, построил вид печени и водворил в логово к зверю, [96] постаравшись, чтобы печень вышла плотной, гладкой, лоснящейся и на вкус сладкой, однако не без горечи. Цель бога состояла в том, чтобы исходящее из ума мыслительное воздействие оказалось отражено печенью, словно зеркалом, которое улавливает впечатления и являет взору призраки, и таким образом на зверя находил бы страх, когда это воздействие дойдет до него с суровыми угрозами и прибегнет к горькой части, стремительно разливая ее по всей печени, вызывая появление желчного оттенка и заставляя печень всю сморщиться и отвердеть;cвдобавок это воздействие выводит всю долю печени из прямого положения, искривляет и гнет ее, зажимает ее сосуды и сдавливает воротную вену, что приводит к болям и тошноте. Когда же, напротив, от мыслящей части души повеет дыханием кротости, которое вызовет к жизни видения совсем иного рода, это дыхание не только не взволнует горькой части печени, но и не прикоснется к этой противоположной себе природе; напротив, оно прибегнет к прирожденному печени свойству сладости, дабы распрямить, разгладить и высвободить все ее части. dБлагодаря этому обитающая в области печени часть души должна стать просветленной и радостной, ночью же вести себя спокойно, предаваясь пророческим снам, коль скоро она уже непричастна рассудку и мышлению. Ведь боги, построившие нас, помнили о заповеди своего отца, которая повелевала создать человеческий род настолько совершенным, насколько это возможно; во исполнение этого они постарались приобщить к истине даже низменную часть нашего существа и потому учредили в ней прорицалище.
+
+eТо, что бог уделил пророческий дар человеческому умопомрачению, может быть бесспорно доказано: никто, находясь в своем уме, не бывает причастен боговдохновенному и истинному пророчеству, но лишь тогда, когда мыслительная способность связана сном, недугом либо неким приступом одержимости. [97] Напротив, дело неповрежденного в уме человека – припомнить и восстановить то, что изрекла во сне либо наяву эта пророческая и вдохновленная природа, расчленить все видения с помощью мысли72и уразуметь, что же они знаменуют – зло или добро – и относятся ли они к будущим, к минувшим или к настоящим временам. Не тому же, кто обезумел и еще пребывает в безумии, судить о собственных видениях и речениях! Правду говорит старая пословица, что лишь рассудительный в силах понять сам себя и то, что он делает. [98] bОтсюда и возник обычай, чтобы обо всех боговдохновенных прорицаниях изрекало свой суд приставленное к тому племя истолкователей; правда, их и самих подчас называют пророками, но только по неведению, ибо они лишь разгадывают таинственные речения и видения, а потому должны быть по всей справедливости названы никак не пророками, но толкователями при тех, кто прорицает.
+
+Таковы причины, по которым печень получила вышеописанное устройство и местоположение; целью было пророчество. И в самом деле, покуда тело живет, печень дает весьма внятные знамения, с уходом же жизни она становится слепой, и тогда ее вещания слишком туманны, чтобы заключать в себе ясный смысл.
+
+cСоседствующий с печенью орган был создан и помещен налево от нее ради ее блага, дабы сохранять ее неизменно лоснящейся и чистой, служа ей наподобие губки, которая всегда лежит наготове подле зеркала. Стоит только каким-либо загрязнениям, порождаемым недугами тела, появиться близ печени, как их тотчас устраняет селезенка, вбирая их в свои бескровные полости. dТак и получается, что, когда она наполнена этими отбросами, ее пучит и раздувает, но, когда тело очищено, она опадает и возвращается к прежним размерам.`,
+        quote: "«...посадили эту часть души на цепь, как дикого зверя... печень служит зеркалом для ума... пророчествуют только в безумии или сне... селезенка служит губкой подле зеркала».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>В животе живет зверь (аппетит). Разум управляет им через печень, как через экран.</p>
+          <h3>Разбор</h3>
+          <p>Инстинкты не понимают слов. Печень — гладкое зеркало. Если человек грешит, разум посылает угрозу: печень выделяет едкую желчь, сжимается, крутит вены (тошнота, боль) — зверь пугается. Если разум спокоен, печень расправляется и дает вещие сны. Пророчат только в экстазе/сне, а расшифровывать видения обязан трезвый ум. Селезенка — губка, впитывающая яды возле печени.</p>
+        `
+      },
+      {
+        id: 24,
+        steph: "72d – 73a",
+        title: "24. Кишечник: защита от обжорства ради философии",
+        text: `Вот что мы думаем о душе, о ее смертной и божественной частях, а равно и о том, как, в каком соседстве и по каким причинам каждая из этих частей получила свое отдельное местожительство. Настаивать на том, что сказанное нами – истина, мы отважились бы разве что с прямого дозволения бога; но правдоподобие нами соблюдено, это мы можем смело сказать уже сейчас, а тем более имея в виду наше дальнейшее рассуждение. Так скажем же это!
+
+Переходя к следующему вопросу, мы будем держаться прежнего нашего пути; вопрос же состоит в том, как возникли остальные части тела. Их устройство правильнее всего объяснить путем следующего умозаключения. eТворившие наш род знали заранее, какая безудержность в еде и питье будет обуревать нас; они предвидели, что по своей жадности мы станем поглощать и того и другого больше, чем велят умеренность и необходимость. Опасаясь поэтому, как бы не разразился свирепый мор и еще не завершенный род смертных не исчез навсегда,73они предусмотрительно соорудили для приема излишков питья и еды ту кладовую, что именуют нижней полостью, и наполнили ее извивами кишок, дабы пища не слишком быстро покидала тело, принуждая его требовать новой пищи и тем склоняя к ненасытности, и дабы род человеческий из-за чревоугодия не стал чужд философии и Музам, явив непослушание сáмому божественному, что в нас есть.`,
+        quote: "«...наполнили ее извивами кишок, дабы пища не слишком быстро покидала тело... и дабы род человеческий из-за чревоугодия не стал чужд философии и Музам...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Извилистые кишки нужны для того, чтобы человек не жрал без остановки, а мог думать.</p>
+          <h3>Разбор</h3>
+          <p>Если бы пищевод был прямой трубой, еда бы пролетала мгновенно. Человек был бы вынужден жевать круглые сутки, став рабом желудка. Скрученные петли кишечника задерживают пищу, давая сытость на много часов, чтобы люди могли посвящать время культуре, науке и философии.</p>
+        `
+      },
+      {
+        id: 25,
+        steph: "73b – 74a",
+        title: "25. Мозг и Кости (якоря души и закалка материи)",
+        text: `bЧто касается костей, мышц и вообще всей подобной природы, то с ней дело обстоит вот как: начало всего этого – рождение мозга; в нем укоренены те узы жизни, которые связуют душу с телом, в нем лежат корни рода человеческого. Но сам мозг рожден из другого. Дело было так: среди всех исходных треугольников бог выбрал и обособил наиболее правильные и ровные, которые способны были в наибольшей чистоте представлять огонь и воду, воздух и землю; затем, отделив каждое от своего рода, cон соразмерно смесил их, приготовляя с общее семя для всего смертного рода, и устроил из этого мозг. В нем он насадил все роды душ, а утвердив их, разъял мозг уже при самом первом рассечении на такое множество тел, чтобы они своим числом и устройством соответствовали вышеназванным родам. Ту долю, которой суждено было, как некоей пашне, воспринять семя божественного начала, он сделал со всех сторон округлой и нарек эту долю головным мозгом, dпредвидя, что вместивший ее сосуд по завершении каждого живого существа станет головой. Другая доля должна была получить оставшуюся, то есть смертную, часть души; ее он разъял на округлые, и притом продолговатые, тела, также наименовав их все в целом мозгом, хоть и не в прямом смысле. От них, как от якорей, он протянул узы, долженствующие скрепить всю душу, а вокруг этой основы начал сооружать все наше тело, прежде всего одев мозг твердым костным покровом.
+
+eВот как он построял кость. Отобрав просеиванием чистую и гладкую землю, он замесил ее и увлажнил мозгом; после этого он ставит смесь в огонь, затем окунает в воду, потом снова в огонь и снова в воду. Закалив ее так по несколько раз в огне и воде, он сделал ее неразрушимой и для того, и для другого. В дело он употребил ее прежде всего затем, чтобы выточить из нее костную сферу вокруг головного мозга, оставив в этой сфере узкий проход; 74а для прикрытия затылочного и спинного мозга он изваял из этой же смеси позвонки, которые наложил друг на друга, как складывают дверные петли, протянув этот ряд от головы через все туловище. Так он замкнул все семя в защитную камнеподобную ограду и в последней построил суставы, прибегнув к посредствующей силе иного, дабы обеспечить подвижность и гибкость.`,
+        quote: "«...начало всего – рождение мозга; в нем лежат корни рода... землю замесил мозгом, окунал в огонь и воду, сделав кость неразрушимой...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Мозг — посадочная площадка души. Кости — каменный панцирь, закаленный огнем и водой.</p>
+          <h3>Разбор</h3>
+          <p>Бог взял чистейшие треугольники всех стихий и сделал мозг: круглый головной (для бессмертной души) и вытянутый спинной (якорь смертной души). Чтобы защитить его, он замесил землю на мозговой смазке и закалил, как кузнец: огонь-вода-огонь-вода. Получились череп и цепочка позвонков-петель.</p>
+        `
+      },
+      {
+        id: 26,
+        steph: "74b – 75d",
+        title: "26. Компромисс: короткая умная жизнь или долгая тупая?",
+        text: `bДалее он усмотрел, что природа кости сверх должного хрупка и несгибаема и что, если ей к тому же придется терпеть жар, а после охлаждаться, она не устоит против костоеды, которая загубит заключенное в ней семя; поэтому он измыслил род сухожилий и плоти. Сухожилия, связав друг с другом все члены, должны были своими сокращениями и растяжениями доставить возможность телу сгибаться и разгибаться в суставах; что до плоти, то ей назначено было служить защитой от жара и укрытием от холода, а равно и как бы войлочной подушкой, предохраняющей от ушибов, ибо напору тел она может противопоставить упругую податливость.cК тому же в ней таится теплая влага, которая летом выступает в виде пота и увлажняет кожу, уготовляя всему телу приятное охлаждение, а зимой, напротив, наилучшим образом разгоняет подступающую и обнимающую тело стужу силой скрытого в ней огня. Таков был замысел Ваятеля, и вот он соединил в должных количествах воду, огонь и землю, а после замесил их на острой и соленой закваске – dтак получилась мягкая и насыщенная соками плоть. Что касается природы сухожилий, то ее он образовал, смешав кость с еще не заквашенной плотью, и этой промежуточной смеси дал желтый цвет. Вот почему сухожилия получились более крепкими и тягучими, чем плоть, но более мягкими и влажными, чем кость.
+
+Итак, всем этим он покрыл кости вместе с лежащим в них мозгом, связуя их посредством сухожилий, а сверху окутывая одеянием плоти.eПри этом кости, в которых больше всего души, [99] он окутал наименее толстой плотью, а самые бездушные – наибольшей и особенно плотной; что касается костных сочленений, то, когда особые соображения не требовали чего-то иного, он взращивал на них опять-таки лишь скудную плоть, чтобы она не стеснила сгибание суставов и не обрекла тело на малоподвижность и беспомощность. Но желал он и того, чтобы обильные и плотные толщи мышц, налегая друг на друга и грубея от этого, притупили ощущение, отчего последовало бы угасание памяти и расслабление умственных способностей. Вот почему бедренные и берцовые, тазовые, плечевые и локтевые кости,75а также и вообще все кости, которые не имеют сочленений и в своем мозгу содержат мало души, а значит, лишены, мышления, – все это было щедро покрыто плотью; напротив, то, что несет в себе разум, покрыто ею куда меньше, кроме тех случаев, когда плоть сама по себе служит носителем ощущений: таково устройство языка. Но большей частью дело обстояло так, как сказано выше, ибо в природе, рожденной и живущей в силу необходимости, bплотная кость и обильная плоть никак не могут ужиться с тонким и отчетливым ощущением. Если бы то и другое было совместимо, строение головы было бы наделено всем этим в преизбытке, и тогда род человеческий, нося на плечах столь мясистую, жилистую и крепкую голову, получил бы вдвое, а то и во много крат более долгую, а притом и более здоровую и беспечальную жизнь. И вот, когда демиурги нашего рождения оказались перед выбором, сообщить ли созидаемому роду больше долговечности, но меньше совершенства или меньше долговечности, но больше совершенства, cони единодушно решили, что более короткую, но зато лучшую жизнь каждый, безусловно, должен предпочесть более долгой, но худшей. В соответствии с этим они покрыли голову рыхлой костью, не наложив сверху плоти и даже не дав ей сухожилий, ибо суставов здесь все равно не было. Поэтому голова являет собой самую чувствительную и самую разумную, но также и намного слабейшую часть каждого мужчины.`,
+        quote: "«...толстые толщи мышц притупляют ощущение и память... создатели решили, что короткую, но лучшую жизнь каждый должен предпочесть долгой, но худшей... голова – самая разумная, но и слабейшая часть».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Толстая плоть и тяжелая кость отупляют мозг. Боги пожертвовали броней головы ради интеллекта.</p>
+          <h3>Разбор</h3>
+          <p>Мясо греет зимой, потеет летом и защищает от ушибов. Но обилие мяса глушит сигналы. Безмозглые кости (бедра, плечи) укутаны толстыми мышцами. Если бы голову покрыли толстой броней, человек жил бы 300 лет неуязвимым, но соображал бы как пень. Боги выбрали: лучше прожить 70 лет мыслителем, чем 300 лет тупым скотом. Поэтому череп оставили тонким и ранимым.</p>
+        `
+      },
+      {
+        id: 27,
+        steph: "75d – 76e",
+        title: "27. Рот, волосы и ногти на будущее",
+        text: `По тем же причинам бог прикрепил сухожилия лишь к самому низу головы,dоднородно обвив ими шею и соединив с ними края челюстных костей под лицом; весь остальной запас сухожилий он распределил между прочими членами, связуя суставы. Что касается нашего рта, то строители снабдили его нынешним его оснащением – зубами, языком и губами, имея в виду как необходимое, так и наилучшее:eвход они созидали ради необходимого, а выход – ради наилучшего. В самом деле, все, что входит в тело и питает его, относится к необходимому, между тем как изливающийся наружу поток речей, служа мысли, являет собою прекраснейший и наилучший из всех потоков.
+
+И все же голову нельзя было оставить при одном голом костяном покрове, без защиты против годовых чередований жары и стужи, так же как нельзя было допустить, чтобы от обилия плоти она стала тупой и бесчувственной. 76Между тем от еще не засохшей плоти отслоилась довольно толстая пленка, которая ныне известна под названием кожи. Благодаря мозговой влаге она прирастала и разрасталась дальше, так что окружала всю голову, а влага, поднимаясь кверху через швы, орошала ее и понудила сомкнуться на макушке как бы в узел. Что касается швов, то различия в их формах обусловлены силой круговращений мысли и питанием: если противоборство того и другого сильнее, швов больше, а если оно слабее, швов меньше.
+
+bВсю эту кожу божество искололо кругом пронизывающей силой огня, и когда через эти проколы выступала наружу влага, то все беспримесные и теплые части испарялись; но примесь, состоявшая из тех же веществ, что и кожа, хотя и устремлялась в высоту, вытягиваясь в протяженное тело, по тонкости равное проколу, однако из-за медлительности оказывалась отброшенной окружающим воздухом обратно, врастала в кожу и пускала в ней корни. cТак возник род волос, произрастающих из кожи; по своей ремнеобразной природе они близки к коже, но жестче и плотнее, что объясняется сжимающим воздействием холода на каждый отдельный, обособившийся от кожи волос. Когда Устроитель делал нашу голову такой косматой, он руководствовался названными причинами,dи умысел его состоял в том, чтобы это был легкий покров мозга взамен плоти, затеняющий его летом и утепляющий зимой, но при этом не служил бы помехой его чувствительности.
+
+Что касается переплетения сухожилий, кожи и кости на концах пальцев, то там, когда все было перемешано, а смесь высушена, родилась жесткая кожа. Таковы были вспомогательные причины, участвовавшие в ее создании, но самой подлинной из причин была забота о существах, имеющих возникнуть в будущем. Те, кто устроил нас, ведали, что некогда от мужчин народятся женщины, а также и звери и что многие твари по многим причинам ощутят нужду в употреблении ногтей;eвот почему уже при самом рождении человечества они наметили их зачатки. Таковы, стало быть, те соображения и замыслы, которыми руководились боги, когда создавали кожу, волосы и ногти на оконечностях членов.`,
+        quote: "«...вход рта созидали ради необходимого [еда], а выход – ради наилучшего [речь и мысль]... волосы как легкий покров мозга взамен плоти... ногти с прицелом на будущих зверей».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Рот служит речи; волосы спасают мозг от погоды; ногти заложены под будущее перерождение в зверей.</p>
+          <h3>Разбор</h3>
+          <p>Рот принимает грубую еду (выживание), но выпускает поток слов и мыслей (высшее благо). Голову нельзя было покрывать мясом, поэтому боги пробили кожу огнем: вытекшие нити застыли в волосы — легкая панамка от солнца и мороза. Ногти заложены заранее, так как боги знали, что грешные люди потом переродятся в диких зверей, которым нужны будут когти.</p>
+        `
+      },
+      {
+        id: 28,
+        steph: "77a – 77c",
+        title: "28. Растения — живые существа с третьей душой",
+        text: `77Теперь все части и члены смертного живого существа срослись в единое целое, которому, однако, по необходимости предстояло жить среди огня и воздуха, а значит, терпеть от них распад и опустошение и потому погибнуть. Но боги пришли ему на помощь: они произрастили некую природу, родственную человеческой, но составленную из иных видов и ощущений и потому являющую собой иной род существ; это были те самые деревья, травы и вообще растения, которые ныне облагорожены трудами земледельцев и служат нашей пользе, но изначально существовали только в виде диких пород, более древних, чем ухоженные.bВсе, что причастно жизни, по всей справедливости и правде может быть названо живым существом; так, и предмет этого нашего рассуждения причастен третьему виду души, который, согласно сказанному прежде, водворен между грудобрюшной преградой и пупом и притом не имеет в себе ни мнения, ни рассудка, ни ума, а только ощущение удовольствия и боли, а также вожделения. В самом деле, растение проходит свой жизненный путь чисто страдательным образом, оно движется лишь в самом себе и в отношении себяcи противостоит воздействию внешнего движения, пользуясь собственным, так что оно не видит и не понимает своего состояния и природы. Поэтому, безусловно, оно живет и являет собой не что иное, как живое существо, однако прикреплено к своему месту и укоренено в нем, ибо способности двигаться [вовне] своей силой ему не дано.`,
+        quote: "«Все, что причастно жизни, есть живое существо... растение причастно третьему виду души: имеет ощущение боли, удовольствия и вожделения, но не имеет ума...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Деревья и травы — живые организмы, созданные для пропитания людей.</p>
+          <h3>Разбор</h3>
+          <p>В растениях живет та же растительная душа, что и в нашем животе: они чувствуют боль (засуха), удовольствие (полив) и вожделеют расти. Но у них нет разума, глаз и способности передвигаться. Боги создали их как безответную кормовую базу для человека.</p>
+        `
+      },
+      {
+        id: 29,
+        steph: "77c – 79a",
+        title: "29. Водопровод вен и верша дыхания (как огонь варит кровь)",
+        text: `Итак, все эти породы растительного царства произрастили они, мощные, нам, менее сильным, для пропитания. Затем они же прорубили в самом нашем теле протоки, как прорубают в саду водоотводные канавы, дабы оно орошалось притоком влаги. [100] dПрежде всего они провели два скрытых протока между кожей и сросшейся с нею плотью – две спинные жилы, соответствующие делению тела на правую и левую стороны; эти жилы они направили вниз по обе стороны от позвоночного столба, заключив между ними детородный мозг так, чтобы и он поддерживался в самом цветущем состоянии, и другие части получали равномерный приток легко разливающейся книзу крови. После этого они разделили жилы в области головы и переплели их таким образом, чтобы концы жил пересекали друг друга в противоположных направлениях; eте, которые шли от правой стороны тела, они направили к левой, а те, которые шли от левой, – соответственно к правой. Это было сделано, чтобы голова получила помимо кожи лишнюю связь с туловищем, поскольку она не имеет идущих по кругу до макушки сухожилий; другая цель состояла в том, чтобы ощущения, исходящие от обеих сторон, отчетливо получало все тело в целом.
+
+78Затем они начали устраивать водоснабжение таким способом, который станет нам понятнее, если мы наперед согласимся, что все тела, составленные из меньших частиц, непроходимы для больших, между тем как тела, составленные из больших частиц, проходимы для меньших. Поскольку же из всех родов самые малые частицы имеет огонь, значит, он прорывается сквозь воду, землю, воздух, а равно и сквозь все, что состоит из этих трех родов, так что для него нет ничего непроходимого. Если мы это будем иметь в виду применительно к нашей брюшной полости, обнаружится следующее: когда в нее входят яства и напитки, они там и остаются,bно воздух и огонь не могут быть ею удержаны, поскольку имеют меньшие сравнительно с нею частицы. К этим веществам и прибег бог, вознамерившись наладить отток влаги из брюшной полости в жилы. Он соткал из воздуха и огня особое плетение, похожее на рыболовную вершу и у входов имевшее две вставленные воронки, одна из которых в свой черед разделялась на два рукава; от этих воронок он протянул кругом во все стороны подобия канатиков, доведенные до самых краев плетения;cпри этом всю внутренность верши он составил из огня, а воронки и оболочку – из воздушных частиц. Затем он взял свое изделие и снабдил им то существо, что было им изваяно, а действовал при этом вот как: отверстия воронок он утвердил во рту, поскольку же их было две, то одну из них он вывел через дыхательные пути в легкие, а другую – мимо дыхательных путей в брюшную полость; при этом первую он рассек на две части, проведя к обеим общий проход через отверстия носа, так что, если проход через рот оказывается закрытым, приток воздуха восполняется по другому проходу. dДалее, всю оболочку верши он прикрепил вокруг полости тела и устроил так, чтобы все это попеременно то втекало в воронки – притом мягко, ибо последние состоят из воздуха, – то вытекало из воронок, при этом плетение утопало бы в глубине тела, которое пористо, а затем сызнова выходило наружу, между тем как огнистые лучи, заключенные в теле, следовали бы за движением воздуха в том и другом направлении. Все это должно непрестанно продолжаться, пока не распадутся жизненные связи смертного существа; eи мы беремся утверждать, что именно это учредитель имен нарек вдыханием и выдыханием. Благодаря всей этой череде действий и состояний орошаемое и охлаждаемое тело наше получает питание и жизнь, ибо всякий раз, как дыхание совершает свой путь внутрь и наружу, сопряженный с ним внутренний огонь следует за ним, вновь и вновь проходит через брюшную полость, охватывает находящиеся там еду и питье, разрушает их, разнимая на малые доли,79затем гонит по тем порам, сквозь которые проходит сам, направляя их в жилы, как воду из родника направляют в протоки, и таким образом понуждает струиться через тело, словно по водоносному рву, струи, текущие по жилам.`,
+        quote: "«...провели две жилы вдоль спины, перекрестив их в голове... соткал из воздуха и огня рыболовную вершу... огонь разрушает еду на малые доли и гонит ее в жилы, словно воду по рвам...»",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Внутренний огонь работает как кухонная плита: переваривает пищу и гонит ее в вены в виде крови.</p>
+          <h3>Разбор</h3>
+          <p>По спине идут главные магистрали вен, перекрещиваясь в голове (связывая правое и левое). Дыхательная система устроена как сетчатая рыболовная верша из воздуха и огня. Когда мы дышим, внутренний огонь раскаляет пищу в желудке, дробит ее в жидкую кашицу и проталкивает сквозь поры в вены — так рождается свежая кровь, омывающая все тело.</p>
+        `
+      },
+      {
+        id: 30,
+        steph: "79a – 79e",
+        title: "30. Механика дыхания: круговой толчок (колесо без вакуума)",
+        text: `Но рассмотрим еще раз причины, по которым устройство дыхания возникло именно таким, каким остается поныне. Дело обстоит следующим образом. Поскольку не существует пустоты, куда могло бы устремиться движущееся тело, bа выдыхаемый нами воздух движется наружу, для всякого должно быть ясно, что идет он отнюдь не в пустоту, но выталкивает со своего места соседний воздух; тот в свою очередь гонит с места воздух, который окажется рядом, а тот передает толчок дальше, так что весь окружающий воздух оказывается перемещенным в то место, откуда вышло дыхание, а войдя туда и наполнив эту полость, воздух следует по тому же пути. Все это происходит одновременно, как поворот колеса, ведь пустоты не существует.cПоэтому пространство груди и легких, откуда вышло дыхание, снова наполняется обступившим тело воздухом, который погружается в поры плоти и совершает свой круговорот; а когда этот воздух обращается вспять и идет сквозь тело наружу, он в свою очередь становится виновником кругового толчка, загоняющего дыхание в проходы рта и ноздрей. Следует предположить, что начало всего этого имеет вот какую причину: dвсякое живое существо обладает очень большим внутренним теплом в крови и в жилах, являющих собою как бы источник телесного огня; именно его мы уподобляли плетению нашей верши, когда говорили, что внутренняя ее часть соткана целиком из огня, в то время как внешние части – из воздуха. Между тем должно признать, что все горячее от природы стремится наружу, в соответствующее ему по природе место; поскольку же у него есть лишь два выхода, один из которых ведет наружу сквозь тело, а другой через рот и ноздри, eто стоит горячему устремиться в какой-либо один выход, как оно круговым толчком гонит воздух в другой, причем вдавленный [воздух] попадает в огонь и разогревается, а вышедший – охлаждается. И вот когда соотношение теплоты изменится и [воздух] станет более горячим у другого выхода, он в свою очередь сильнее устремится туда, куда повлечет его природа, а круговой толчок погонит [воздух] к противоположному выходу. Бесконечная череда этих действий и противодействий образует круговорот, направленный то туда, то сюда, который и дал начало входу и выходу.`,
+        quote: "«Поскольку пустоты не существует, выдыхаемый воздух толкает соседний... все происходит одновременно, как поворот колеса... горячее стремится наружу, рождая круговорот вдоха и выдоха».",
+        parse: `
+          <h3>Суть мысли</h3>
+          <p>Мы дышим не втягиванием вакуума, а круговым вытеснением воздуха, как вращающееся колесо.</p>
+          <h3>Разбор</h3>
+          <p>Пустоты в природе нет. Когда ты выдыхаешь струю воздуха, она толкает соседний пласт атмосферы. Возникает круговая волна: выдавленный наружу воздух огибает тело и через поры и нос силой вдавливается обратно внутрь. Этот круговорот питается внутренним теплом крови: горячий воздух рвется наружу, уступая место прохладному, а нагревшись внутри, снова выталкивается наружу.</p>
+        `
+      }
+    ];
+
+    // ==========================================
+    // ИНИЦИАЛИЗАЦИЯ
+    let highlights = [];
+    try {
+      highlights = JSON.parse(localStorage.getItem('plato_highlights') || '[]');
+      if (!Array.isArray(highlights)) highlights = [];
+    } catch (e) {
+      highlights = [];
+    }
+    let currentHlFilter = 'all';
+    let hlSearchQuery = '';
+    let pendingSelection = null;
+    let activeClickedHlId = null;
+
+    let currentPassageIdx = 0;
+    let isPlaying = false;
+    let speechRate = 1.0;
+    let wakeLock = null;
+    let keepAliveTimer = null;
+    let currentHtml5Audio = null;
+
+    // SVG иконки для UI
+    const ICONS = {
+      play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+      pause: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>',
+      prev: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>',
+      next: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>',
+      stop: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px; margin-right: 4px;"><path d="M6 6h12v12H6z"/></svg>',
+      copy: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>',
+      trash: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+      external: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>',
+      bulb: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>'
+    };
+
+    function formatTime(sec) {
+      if (isNaN(sec) || sec < 0) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ==========================================
+    // РЕНДЕР КАРТОЧЕК И ТЕКСТА
+    // ==========================================
+    function renderPassages() {
+      const container = document.getElementById('passagesList');
+      container.innerHTML = DATA.map((item, idx) => {
+        const isCurrent = isPlaying && currentPassageIdx === idx;
+        const paragraphs = item.text
+          .split(/\n\s*\n/)
+          .filter(p => p.trim())
+          .map(p => `<p>${p.trim()}</p>`)
+          .join('');
+        return `
+          <div class="passage ${isCurrent ? 'active-playing' : ''}" id="pass-${item.id}" onclick="handlePassageCardClick(event, ${item.id})">
+            <div class="passage-meta">
+              <span class="stephanus-badge">${item.steph}</span>
+              <div class="passage-actions">
+                <button class="mini-play-btn" onclick="playSinglePassage(event, ${idx})" title="${isCurrent ? 'Пауза' : 'Слушать'}">
+                  ${isCurrent ? ICONS.pause : ICONS.play}
+                </button>
+              </div>
+            </div>
+            <div class="passage-text" id="pass-text-${item.id}">
+              ${paragraphs}
+            </div>
+            <div class="tap-hint">${ICONS.bulb} ${item.title} (Нажмите для разбора)</div>
+          </div>
+        `;
+      }).join('');
+      reapplyAllHighlights();
+      updateHlCount();
+    }
+
+    function handlePassageCardClick(e, id) {
+      const sel = window.getSelection();
+      if (sel && sel.toString().trim().length > 0) return;
+      if (e.target.closest('.user-hl') || e.target.closest('#hlFloatingToolbar') || e.target.closest('#hlQuickPopup') || e.target.closest('.mini-play-btn')) {
+        return;
+      }
+      openSheet(id);
+    }
+
+    // ==========================================
+    // СИСТЕМА ХАЙЛАЙТОВ И МАРКЕРОВ
+    // ==========================================
+    function saveHighlights() {
+      try {
+        localStorage.setItem('plato_highlights', JSON.stringify(highlights));
+      } catch (e) {}
+    }
+
+    function updateHlCount() {
+      const el = document.getElementById('hlCount');
+      if (el) el.innerText = highlights.length;
+      const elModal = document.getElementById('hlCountModal');
+      if (elModal) elModal.innerText = highlights.length;
+    }
+
+    function reapplyAllHighlights() {
+      for (const hl of highlights) {
+        const container = document.getElementById(`pass-text-${hl.passageId}`);
+        if (container) {
+          highlightTextInElement(container, hl);
+        }
+      }
+    }
+
+    function highlightTextInElement(container, hl) {
+      if (!container || !hl.text) return false;
+      const searchText = hl.text.trim();
+      if (!searchText) return false;
+
+      if (container.querySelector(`mark[data-hl-id="${hl.id}"]`)) return true;
+
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!node.parentElement.closest(`mark[data-hl-id]`)) {
+          textNodes.push(node);
+        }
+      }
+
+      let fullText = '';
+      const nodeOffsets = [];
+      for (const tNode of textNodes) {
+        nodeOffsets.push({ node: tNode, start: fullText.length, end: fullText.length + tNode.nodeValue.length });
+        fullText += tNode.nodeValue;
+      }
+
+      let matchIdx = -1;
+      if (hl.prefix) {
+        const combo = (hl.prefix + searchText).toLowerCase();
+        const pos = fullText.toLowerCase().indexOf(combo);
+        if (pos !== -1) {
+          matchIdx = pos + hl.prefix.length;
+        }
+      }
+      if (matchIdx === -1) {
+        matchIdx = fullText.toLowerCase().indexOf(searchText.toLowerCase());
+      }
+      if (matchIdx === -1) return false;
+
+      const matchEnd = matchIdx + searchText.length;
+      const range = document.createRange();
+      let startFound = false;
+
+      for (const info of nodeOffsets) {
+        if (!startFound && matchIdx >= info.start && matchIdx < info.end) {
+          range.setStart(info.node, matchIdx - info.start);
+          startFound = true;
+        }
+        if (startFound && matchEnd > info.start && matchEnd <= info.end) {
+          range.setEnd(info.node, matchEnd - info.start);
+          break;
+        }
+      }
+
+      try {
+        const mark = document.createElement('mark');
+        mark.className = `user-hl hl-${hl.color || 'yellow'}`;
+        mark.dataset.hlId = hl.id;
+        mark.id = `hl-dom-${hl.id}`;
+        mark.title = 'Нажмите для управления хайлайтом';
+        mark.onclick = (e) => onHighlightElementClick(e, hl.id);
+
+        if (range.startContainer === range.endContainer) {
+          range.surroundContents(mark);
+        } else {
+          const frag = range.extractContents();
+          mark.appendChild(frag);
+          range.insertNode(mark);
+        }
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function handleSelectionChange() {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        hideHlToolbar();
+        return;
+      }
+
+      const text = sel.toString().trim();
+      if (text.length < 2) {
+        hideHlToolbar();
+        return;
+      }
+
+      const range = sel.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      const passageTextEl = container.nodeType === 1 ? container.closest('.passage-text') : container.parentElement.closest('.passage-text');
+
+      if (!passageTextEl) {
+        hideHlToolbar();
+        return;
+      }
+
+      const passageCard = passageTextEl.closest('.passage');
+      if (!passageCard) {
+        hideHlToolbar();
+        return;
+      }
+
+      const passageId = parseInt(passageCard.id.replace('pass-', ''), 10);
+      if (!passageId) {
+        hideHlToolbar();
+        return;
+      }
+
+      pendingSelection = {
+        passageId: passageId,
+        text: text,
+        range: range.cloneRange()
+      };
+
+      showHlToolbar(range);
+    }
+
+    function showHlToolbar(range) {
+      const toolbar = document.getElementById('hlFloatingToolbar');
+      if (!toolbar) return;
+      const rect = range.getBoundingClientRect();
+      const toolbarWidth = 190;
+      const toolbarHeight = 44;
+
+      let top = rect.top + window.scrollY - toolbarHeight - 12;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (toolbarWidth / 2);
+
+      if (left < 12) left = 12;
+      if (left + toolbarWidth > window.innerWidth - 12) {
+        left = window.innerWidth - toolbarWidth - 12;
+      }
+      if (top < window.scrollY + 10) {
+        top = rect.bottom + window.scrollY + 10;
+      }
+
+      toolbar.style.top = `${top}px`;
+      toolbar.style.left = `${left}px`;
+      toolbar.classList.add('visible');
+    }
+
+    function hideHlToolbar() {
+      const toolbar = document.getElementById('hlFloatingToolbar');
+      if (toolbar) toolbar.classList.remove('visible');
+      pendingSelection = null;
+    }
+
+    function applyHighlight(color) {
+      if (!pendingSelection || !pendingSelection.text) {
+        hideHlToolbar();
+        return;
+      }
+      const selText = pendingSelection.text;
+      const passId = pendingSelection.passageId;
+      const hlId = 'hl_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+
+      let prefix = '';
+      let suffix = '';
+      try {
+        const fullPassageText = document.getElementById(`pass-text-${passId}`).textContent;
+        const idx = fullPassageText.indexOf(selText);
+        if (idx !== -1) {
+          prefix = fullPassageText.substring(Math.max(0, idx - 25), idx);
+          suffix = fullPassageText.substring(idx + selText.length, Math.min(fullPassageText.length, idx + selText.length + 25));
+        }
+      } catch (e) {}
+
+      const newHl = {
+        id: hlId,
+        passageId: passId,
+        text: selText,
+        color: color,
+        prefix: prefix,
+        suffix: suffix,
+        date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }),
+        timestamp: Date.now()
+      };
+
+      highlights.push(newHl);
+      saveHighlights();
+
+      if (window.getSelection()) {
+        window.getSelection().removeAllRanges();
+      }
+      hideHlToolbar();
+      renderPassages();
+    }
+
+    function copySelectedText() {
+      if (!pendingSelection || !pendingSelection.text) return;
+      const item = DATA.find(d => d.id === pendingSelection.passageId);
+      const citation = item ? `\n— Платон, «Тимей» (${item.steph})` : '';
+      const textToCopy = `«${pendingSelection.text}»${citation}`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        hideHlToolbar();
+      }).catch(() => {
+        hideHlToolbar();
+      });
+    }
+
+    function onHighlightElementClick(e, hlId) {
+      e.stopPropagation();
+      const hl = highlights.find(h => h.id === hlId);
+      if (!hl) return;
+      activeClickedHlId = hlId;
+
+      const popup = document.getElementById('hlQuickPopup');
+      if (!popup) return;
+
+      const rect = e.currentTarget.getBoundingClientRect();
+      const popupWidth = 190;
+      const popupHeight = 40;
+
+      let top = rect.top + window.scrollY - popupHeight - 10;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (popupWidth / 2);
+
+      if (left < 12) left = 12;
+      if (left + popupWidth > window.innerWidth - 12) {
+        left = window.innerWidth - popupWidth - 12;
+      }
+      if (top < window.scrollY + 10) {
+        top = rect.bottom + window.scrollY + 8;
+      }
+
+      popup.style.top = `${top}px`;
+      popup.style.left = `${left}px`;
+      popup.classList.add('visible');
+    }
+
+    function hideHlQuickPopup() {
+      const popup = document.getElementById('hlQuickPopup');
+      if (popup) popup.classList.remove('visible');
+      activeClickedHlId = null;
+    }
+
+    function changeCurrentHighlightColor(newColor) {
+      if (!activeClickedHlId) return;
+      const hl = highlights.find(h => h.id === activeClickedHlId);
+      if (hl) {
+        hl.color = newColor;
+        saveHighlights();
+        renderPassages();
+      }
+      hideHlQuickPopup();
+    }
+
+    function copyCurrentHighlightQuote() {
+      if (!activeClickedHlId) return;
+      copyHighlightText(activeClickedHlId);
+      hideHlQuickPopup();
+    }
+
+    function deleteCurrentHighlight() {
+      if (!activeClickedHlId) return;
+      deleteHighlight(activeClickedHlId);
+      hideHlQuickPopup();
+    }
+
+    function deleteHighlight(hlId, e) {
+      if (e) e.stopPropagation();
+      highlights = highlights.filter(h => h.id !== hlId);
+      saveHighlights();
+      renderPassages();
+      renderHighlightsList();
+    }
+
+    function copyHighlightText(hlId, e) {
+      if (e) e.stopPropagation();
+      const hl = highlights.find(h => h.id === hlId);
+      if (!hl) return;
+      const item = DATA.find(d => d.id === hl.passageId);
+      const citation = item ? `\n— Платон, «Тимей» (${item.steph})` : '';
+      const textToCopy = `«${hl.text}»${citation}`;
+      navigator.clipboard.writeText(textToCopy);
+    }
+
+    function openHighlightsModal() {
+      renderHighlightsList();
+      document.getElementById('overlay').classList.add('active');
+      document.getElementById('highlightsModal').classList.add('active');
+    }
+
+    function setHighlightFilter(color) {
+      currentHlFilter = color;
+      ['all', 'yellow', 'green', 'blue', 'pink'].forEach(c => {
+        const chip = document.getElementById(`filterChip-${c}`);
+        if (chip) {
+          if (c === color) chip.classList.add('active');
+          else chip.classList.remove('active');
+        }
+      });
+      renderHighlightsList();
+    }
+
+    function onHlSearchInput(val) {
+      hlSearchQuery = val || '';
+      renderHighlightsList();
+    }
+
+    function renderHighlightsList() {
+      const list = document.getElementById('hlList');
+      if (!list) return;
+
+      updateHlCount();
+
+      if (!highlights || highlights.length === 0) {
+        list.innerHTML = `
+          <div class="hl-empty">
+            <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 6px;">Вы пока ничего не выделили</div>
+            <div style="font-size: 0.85rem; color: #8c8273; line-height: 1.5;">
+              Выделите любой фрагмент текста маркером — цитата появится здесь для быстрого перехода и копирования.
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      let filtered = highlights.slice().reverse();
+      if (currentHlFilter !== 'all') {
+        filtered = filtered.filter(h => h.color === currentHlFilter);
+      }
+      if (hlSearchQuery && hlSearchQuery.trim()) {
+        const q = hlSearchQuery.trim().toLowerCase();
+        filtered = filtered.filter(h => h.text.toLowerCase().includes(q));
+      }
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="hl-empty">
+            <div style="font-size: 0.9rem; color: #8c8273;">Ничего не найдено по этому фильтру</div>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(hl => {
+        const item = DATA.find(d => d.id === hl.passageId) || { title: `Фрагмент #${hl.passageId}`, steph: '' };
+        const colorClass = `border-${hl.color || 'yellow'}`;
+        return `
+          <div class="hl-item ${colorClass}" onclick="jumpToHighlight('${hl.id}', ${hl.passageId})">
+            <div class="hl-item-top">
+              <div class="hl-item-meta">
+                <span class="hl-item-tag">${item.steph}</span>
+                <span class="hl-item-title">${item.title}</span>
+              </div>
+              <span class="hl-item-date">${hl.date || ''}</span>
+            </div>
+            <div class="hl-item-quote">«${escapeHtml(hl.text)}»</div>
+            <div class="hl-item-actions">
+              <button class="hl-action-btn" onclick="jumpToHighlight('${hl.id}', ${hl.passageId})" title="Перейти к месту в тексте">
+                ${ICONS.external}Найти в тексте
+              </button>
+              <button class="hl-action-btn" onclick="copyHighlightText('${hl.id}', event)" title="Скопировать цитату">
+                ${ICONS.copy}Копировать
+              </button>
+              <button class="hl-action-btn del-btn" onclick="deleteHighlight('${hl.id}', event)" title="Удалить хайлайт">
+                ${ICONS.trash}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function jumpToHighlight(hlId, passageId) {
+      closeAllModals();
+
+      const passEl = document.getElementById(`pass-${passageId}`);
+      if (!passEl) return;
+
+      let markEl = document.querySelector(`mark[data-hl-id="${hlId}"]`);
+      if (!markEl) {
+        reapplyAllHighlights();
+        markEl = document.querySelector(`mark[data-hl-id="${hlId}"]`);
+      }
+
+      const targetEl = markEl || passEl;
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      setTimeout(() => {
+        if (markEl) {
+          markEl.classList.remove('hl-glow-pulse');
+          void markEl.offsetWidth;
+          markEl.classList.add('hl-glow-pulse');
+        } else {
+          passEl.classList.remove('hl-glow-pulse');
+          void passEl.offsetWidth;
+          passEl.classList.add('hl-glow-pulse');
+        }
+      }, 250);
+    }
+
+    // ==========================================
+    // ШТОРКА РАЗБОРА И МОДАЛКИ
+    // ==========================================
+    function openSheet(id) {
+      const idx = DATA.findIndex(d => d.id === id);
+      if (idx === -1) return;
+      currentPassageIdx = idx;
+      updateActivePassageUI(idx);
+      const item = DATA[idx];
+      document.getElementById('sheetTitle').innerText = item.title;
+      document.getElementById('sheetBody').innerHTML = `
+        <button class="sheet-play-btn" onclick="playFromSheet(${idx})">${ICONS.play} Слушать этот фрагмент</button>
+        <div class="quote-box">${item.quote}</div>
+        ${item.parse}
+      `;
+      document.getElementById('overlay').classList.add('active');
+      document.getElementById('sheet').classList.add('active');
+    }
+
+    function playFromSheet(idx) {
+      closeAllModals();
+      currentPassageIdx = idx;
+      startAudio();
+    }
+
+    function playSinglePassage(e, idx) {
+      e.stopPropagation();
+      if (isPlaying && currentPassageIdx === idx) {
+        pauseAudio();
+      } else {
+        currentPassageIdx = idx;
+        startAudio();
+      }
+    }
+
+    function openLecturesModal() {
+      document.getElementById('overlay').classList.add('active');
+      document.getElementById('lecturesModal').classList.add('active');
+    }
+
+    function closeAllModals() {
+      document.getElementById('overlay').classList.remove('active');
+      document.getElementById('sheet').classList.remove('active');
+      const hlM = document.getElementById('highlightsModal');
+      if (hlM) hlM.classList.remove('active');
+      const lecM = document.getElementById('lecturesModal');
+      if (lecM) lecM.classList.remove('active');
+      hideHlToolbar();
+      hideHlQuickPopup();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAllModals();
+    });
+
+    // ==========================================
+    // УПРАВЛЕНИЕ АУДИОПЛЕЕРОМ (СТУДИЙНАЯ АУДИОКНИГА)
+    // ==========================================
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      } catch (err) {}
+    }
+
+    function playSilentAudio() {
+      const audio = document.getElementById('silentAudio');
+      if (audio) audio.play().catch(() => {});
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pauseAudio();
+      } else {
+        startAudio();
+      }
+    }
+
+    async function startAudio() {
+      playSilentAudio();
+      requestWakeLock();
+      isPlaying = true;
+      document.getElementById('playBtn').innerHTML = ICONS.pause;
+      startKeepAlive();
+      playPassageAudio(currentPassageIdx);
+      renderPassages();
+    }
+
+    function playPassageAudio(index) {
+      if (index < 0 || index >= DATA.length) return;
+      const item = DATA[index];
+      currentPassageIdx = index;
+      updateActivePassageUI(index);
+
+      document.getElementById('playerTitle').innerText = `${item.id}. ${item.title}`;
+
+      const audioUrl = `audio/${item.id}.mp3`;
+      playAudioElement(audioUrl, item);
+    }
+
+    function playAudioElement(url, item) {
+      if (currentHtml5Audio) {
+        currentHtml5Audio.pause();
+      }
+
+      const playBtn = document.getElementById('playBtn');
+      if (playBtn) {
+        playBtn.innerHTML = ICONS.pause;
+        playBtn.classList.remove('loading');
+      }
+      document.getElementById('playerTitle').innerText = `${item.id}. ${item.title}`;
+
+      currentHtml5Audio = new Audio(url);
+      currentHtml5Audio.playbackRate = speechRate;
+
+      currentHtml5Audio.ontimeupdate = () => {
+        if (!currentHtml5Audio) return;
+        const cur = currentHtml5Audio.currentTime || 0;
+        const dur = currentHtml5Audio.duration || 1;
+        const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+        const bar = document.getElementById('progressBar');
+        if (bar) bar.style.width = pct + '%';
+
+        const curEl = document.getElementById('currentTime');
+        const totEl = document.getElementById('totalTime');
+        if (curEl) curEl.innerText = formatTime(cur);
+        if (totEl && !isNaN(dur) && dur > 1) totEl.innerText = formatTime(dur);
+      };
+
+      currentHtml5Audio.onended = () => {
+        if (isPlaying) {
+          if (currentPassageIdx < DATA.length - 1) {
+            currentPassageIdx++;
+            playPassageAudio(currentPassageIdx);
+            renderPassages();
+          } else {
+            stopAudio();
+          }
+        }
+      };
+
+      currentHtml5Audio.onerror = (e) => {
+        console.warn('Playback error for audio file:', url, e);
+      };
+
+      currentHtml5Audio.play().catch(e => {
+        console.warn('Audio play was interrupted:', e);
+      });
+
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: item.title,
+          artist: 'Платон • «Тимей» (Студийная аудиокнига)',
+          album: `Стефановская пагинация ${item.steph}`
+        });
+        navigator.mediaSession.setActionHandler('play', () => {
+          if (currentHtml5Audio) currentHtml5Audio.play();
+          isPlaying = true;
+          document.getElementById('playBtn').innerHTML = ICONS.pause;
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          if (currentHtml5Audio) currentHtml5Audio.pause();
+          isPlaying = false;
+          document.getElementById('playBtn').innerHTML = ICONS.play;
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', playNext);
+        navigator.mediaSession.setActionHandler('previoustrack', playPrev);
+      }
+    }
+
+    function pauseAudio() {
+      isPlaying = false;
+      document.getElementById('playBtn').innerHTML = ICONS.play;
+      document.getElementById('playBtn').classList.remove('loading');
+      if (currentHtml5Audio) {
+        currentHtml5Audio.pause();
+      }
+      stopKeepAlive();
+      const audio = document.getElementById('silentAudio');
+      if (audio) audio.pause();
+      if (wakeLock) {
+        try { wakeLock.release(); } catch (e) {}
+        wakeLock = null;
+      }
+      renderPassages();
+    }
+
+    function stopAudio() {
+      pauseAudio();
+      if (currentHtml5Audio) {
+        currentHtml5Audio.pause();
+        currentHtml5Audio.currentTime = 0;
+      }
+      currentPassageIdx = 0;
+      clearHighlights();
+      document.getElementById('playerTitle').innerText = 'Готов к чтению';
+      const pBar = document.getElementById('progressBar');
+      if (pBar) pBar.style.width = '0%';
+      const curEl = document.getElementById('currentTime');
+      if (curEl) curEl.innerText = '0:00';
+    }
+
+    function playNext() {
+      if (currentPassageIdx < DATA.length - 1) {
+        currentPassageIdx++;
+        updateActivePassageUI(currentPassageIdx);
+        if (isPlaying) {
+          playPassageAudio(currentPassageIdx);
+          renderPassages();
+        }
+      }
+    }
+
+    function playPrev() {
+      if (currentPassageIdx > 0) {
+        currentPassageIdx--;
+        updateActivePassageUI(currentPassageIdx);
+        if (isPlaying) {
+          playPassageAudio(currentPassageIdx);
+          renderPassages();
+        }
+      }
+    }
+
+    function cycleSpeed() {
+      if (speechRate === 1.0) speechRate = 1.25;
+      else if (speechRate === 1.25) speechRate = 1.5;
+      else if (speechRate === 1.5) speechRate = 2.0;
+      else speechRate = 1.0;
+      document.getElementById('speedBtn').innerText = speechRate.toFixed(1) + 'x';
+      if (currentHtml5Audio) {
+        currentHtml5Audio.playbackRate = speechRate;
+      }
+    }
+
+    function clearHighlights() {
+      document.querySelectorAll('.passage').forEach(p => p.classList.remove('active-playing'));
+    }
+
+    function updateActivePassageUI(index) {
+      clearHighlights();
+      const el = document.getElementById(`pass-${DATA[index].id}`);
+      if (el) {
+        el.classList.add('active-playing');
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function seekAudio(e) {
+      if (!currentHtml5Audio || !currentHtml5Audio.duration) return;
+      const wrap = document.getElementById('progressWrap');
+      const rect = wrap.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      currentHtml5Audio.currentTime = ratio * currentHtml5Audio.duration;
+    }
+
+    function startKeepAlive() {
+      stopKeepAlive();
+      keepAliveTimer = setInterval(() => {
+        if (isPlaying && currentHtml5Audio && currentHtml5Audio.paused) {
+          currentHtml5Audio.play().catch(() => {});
+        }
+      }, 5000);
+    }
+
+    function stopKeepAlive() {
+      if (keepAliveTimer) {
+        clearInterval(keepAliveTimer);
+        keepAliveTimer = null;
+      }
+    }
+
+    // Слушатели событий выделения текста для маркерной панели
+    document.addEventListener('mouseup', () => {
+      setTimeout(handleSelectionChange, 10);
+    });
+    document.addEventListener('touchend', () => {
+      setTimeout(handleSelectionChange, 100);
+    });
+    document.addEventListener('mousedown', (e) => {
+      if (!e.target.closest('#hlFloatingToolbar')) {
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) hideHlToolbar();
+      }
+      if (!e.target.closest('#hlQuickPopup') && !e.target.closest('.user-hl')) {
+        hideHlQuickPopup();
+      }
+    });
+
+    // ==========================================
+    // СТАРТ ПРИЛОЖЕНИЯ
+    // ==========================================
+    renderPassages();
+  </script>
+
+<!-- Mobile Back Button -->
+<a href="index.html" class="mobile-nav-pill" style="position:fixed; bottom:20px; right:20px; z-index:9999; background:#2563eb; color:#ffffff; padding:10px 18px; border-radius:30px; font-weight:600; font-size:0.86rem; text-decoration:none; box-shadow:0 4px 18px rgba(37,99,235,0.4); display:inline-flex; align-items:center; gap:6px; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; transition:transform 0.15s; -webkit-tap-highlight-color:transparent;">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+  Меню
+</a>
+</body>
+
+</html>

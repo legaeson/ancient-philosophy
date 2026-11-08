@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#ffffff" id="metaThemeColor">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Античная философия & Наука</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --badge-bg: #eff6ff;
+      --badge-text: #1d4ed8;
+      --success: #10b981;
+      --success-soft: rgba(16, 185, 129, 0.12);
+      --star: #f59e0b;
+      --radius: 16px;
+      --shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-serif: Georgia, "Times New Roman", serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --card-bg: #151d2f;
+      --card-border: #232f48;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.16);
+      --badge-bg: #1e293b;
+      --badge-text: #93c5fd;
+      --success: #34d399;
+      --success-soft: rgba(52, 211, 153, 0.16);
+      --star: #fbbf24;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      --shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+      padding-bottom: 60px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* Safe container for mobile */
+    .app-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Top App Bar */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 16px;
+    }
+    .app-title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .app-title-group p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .theme-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, background 0.15s;
+    }
+    .theme-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Minimal Progress Banner */
+    .progress-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .progress-val {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .progress-track {
+      background: var(--bg);
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--success) 100%);
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* Search Bar */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      box-shadow: var(--shadow);
+      transition: border-color 0.15s;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+    }
+
+    /* Category Filter Tabs (Horizontally scrollable on mobile) */
+    .tabs-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs-row::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .tab-pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Cards List */
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .card-item:active {
+      transform: scale(0.985);
+    }
+    .card-item.completed {
+      border-color: var(--success);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--success-soft) 100%);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-badges {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+    }
+    .badge-time {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .action-btn.check.active {
+      color: var(--success);
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--card-border);
+      margin-top: 2px;
+    }
+    .btn-open {
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-arrow {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <div class="app-container">
+    
+    <!-- Top Bar -->
+    <header class="app-header">
+      <div class="app-title-group">
+        <h1>Античная мысль</h1>
+        <p>Материалы курса и первоисточники</p>
+      </div>
+      <button class="theme-btn" id="themeBtn" title="Сменить тему">
+        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg id="sunIcon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress-box">
+      <div class="progress-info">
+        <span>Прогресс чтения</span>
+        <span class="progress-val" id="progressLabel">0 / 4</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" class="search-input" placeholder="Поиск по лекциям..." autocomplete="off">
+      <button id="searchClear" class="search-clear" onclick="clearSearch()">✕</button>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="tabs-row">
+      <button class="tab-pill active" data-tab="all" onclick="filterCategory('all')">Все (4)</button>
+      <button class="tab-pill" data-tab="lectures" onclick="filterCategory('lectures')">🎓 Лекции (3)</button>
+      <button class="tab-pill" data-tab="source" onclick="filterCategory('source')">📖 Книга (1)</button>
+    </div>
+
+    <!-- Items List -->
+    <div class="cards-list" id="cardsList">
+      
+      <!-- Лекция 1 -->
+      <a href="lecture1.html" class="card-item" data-id="lec1" data-cat="lectures">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge">Лекция 1</span>
+            <span class="badge-time">⏱ 45 мин</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn check" onclick="toggleDone('lec1', event)" title="Отметить прочитанным">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-title">Предпосылки науки в античности</div>
+        <div class="card-desc">От мифа к логосу: Милетская школа, элеаты, пифагорейцы, софисты, Академия Платона и Ликей Аристотеля.</div>
+        <div class="card-footer">
+          <span class="btn-arrow">Читать лекцию →</span>
+        </div>
+      </a>
+
+      <!-- Лекция 2 -->
+      <a href="lecture2.html" class="card-item" data-id="lec2" data-cat="lectures">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge">Лекция 2</span>
+            <span class="badge-time">⏱ 60 мин</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn check" onclick="toggleDone('lec2', event)" title="Отметить прочитанным">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-title">Философия и натурфилософия Платона</div>
+        <div class="card-desc">Мир идей, космология диалога «Тимей», Демиург, 4 стихии, геометрический атомизм и природа человека.</div>
+        <div class="card-footer">
+          <span class="btn-arrow">Читать лекцию →</span>
+        </div>
+      </a>
+
+      <!-- Лекция 3 -->
+      <a href="3.html" class="card-item" data-id="lec3" data-cat="lectures">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge">Лекция 3</span>
+            <span class="badge-time">⏱ 50 мин</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn check" onclick="toggleDone('lec3', event)" title="Отметить прочитанным">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-title">Аристотель: наследие и теория познания</div>
+        <div class="card-desc">Ликей, классификация наук, учение о 4-х причинах, критика мира идей и концепция перводвигателя.</div>
+        <div class="card-footer">
+          <span class="btn-arrow">Читать лекцию →</span>
+        </div>
+      </a>
+
+      <!-- Платон: Диалог «Тимей» -->
+      <a href="тимей.html" class="card-item" data-id="timey" data-cat="source">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge" style="background:#fef3c7; color:#92400e;">Первоисточник</span>
+            <span class="badge-time">⏱ 2 часа</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn check" onclick="toggleDone('timey', event)" title="Отметить прочитанным">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-title">Платон — Диалог «Тимей» (51c–79e)</div>
+        <div class="card-desc">30 ключевых смысловых фрагментов первоисточника с аудиодорожками, комментариями и разбором.</div>
+        <div class="card-footer">
+          <span class="btn-arrow">Открыть книгу →</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+
+  <script>
+    const KEY_THEME = 'antiq_mobile_theme';
+    const KEY_DONE = 'antiq_mobile_done';
+
+    let doneSet = new Set(JSON.parse(localStorage.getItem(KEY_DONE) || '[]'));
+    let currentCat = 'all';
+    let searchQuery = '';
+
+    // Theme logic
+    const themeBtn = document.getElementById('themeBtn');
+    const moonIcon = document.getElementById('moonIcon');
+    const sunIcon = document.getElementById('sunIcon');
+    const metaTheme = document.getElementById('metaThemeColor');
+
+    function setTheme(t) {
+      document.body.setAttribute('data-theme', t);
+      localStorage.setItem(KEY_THEME, t);
+      if (t === 'dark') {
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+        metaTheme.setAttribute('content', '#0b0f19');
+      } else {
+        moonIcon.style.display = 'block';
+        sunIcon.style.display = 'none';
+        metaTheme.setAttribute('content', '#ffffff');
+      }
+    }
+
+    const savedTheme = localStorage.getItem(KEY_THEME) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const cur = document.body.getAttribute('data-theme');
+      setTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+
+    // Check done
+    function toggleDone(id, ev) {
+      if (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+      }
+      if (doneSet.has(id)) {
+        doneSet.delete(id);
+      } else {
+        doneSet.add(id);
+      }
+      localStorage.setItem(KEY_DONE, JSON.stringify([...doneSet]));
+      updateUI();
+    }
+
+    function updateUI() {
+      const cards = document.querySelectorAll('.card-item');
+      let doneCount = 0;
+      cards.forEach(card => {
+        const id = card.getAttribute('data-id');
+        const isDone = doneSet.has(id);
+        if (isDone) doneCount++;
+        card.classList.toggle('completed', isDone);
+        const checkBtn = card.querySelector('.action-btn.check');
+        if (checkBtn) checkBtn.classList.toggle('active', isDone);
+
+        // Filter & Search
+        const cat = card.getAttribute('data-cat');
+        const text = card.textContent.toLowerCase();
+        const matchesCat = (currentCat === 'all' || cat === currentCat);
+        const matchesSearch = (!searchQuery || text.includes(searchQuery));
+        card.style.display = (matchesCat && matchesSearch) ? 'flex' : 'none';
+      });
+
+      // Progress bar
+      const pct = Math.round((doneCount / cards.length) * 100);
+      document.getElementById('progressLabel').textContent = `${doneCount} / ${cards.length} (${pct}%)`;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+    }
+
+    // Filter
+    function filterCategory(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.tab-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-tab') === cat);
+      });
+      updateUI();
+    }
+
+    // Search
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      searchClear.style.display = searchQuery ? 'block' : 'none';
+      updateUI();
+    });
+
+    function clearSearch() {
+      searchInput.value = '';
+      searchQuery = '';
+      searchClear.style.display = 'none';
+      updateUI();
+      searchInput.focus();
+    }
+
+    // Initial render
+    updateUI();
+  </script>
+</body>
+</html>
